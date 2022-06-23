@@ -1,0 +1,107 @@
+*{
+  padding: 0;
+  margin: 0
+}
+body{
+  background-color: #590C69;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+body::-webkit-scrollbar {
+  width: 0.1em;
+}
+ 
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.card{
+  width: 350px;
+  height: 460px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 20px;
+  position: relative;
+  overflow-y: auto;
+}
+.task_inputs{
+  width: 100%;
+  display: flex;
+  gap: 10px
+}
+.content span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: #fff
+}
+.task_inputs input{
+  width: 100%;
+  box-sizing: border-box;
+  height: 45px;
+  padding: 0px 10px;
+  border: 2px solid #eee;
+  border-radius: 3px;
+  transition: all 1s
+}
+.task_inputs button{
+  width: 120px;
+  height: 45px;
+  border: none;
+  background-color: #590C69;
+  font-size: 16px;color: #FFF;
+  cursor: pointer;
+  border-radius: 3px
+}
+.strike-none{
+  text-decoration: none
+}
+.item_list{
+  list-style: none;
+  margin-top: 30px
+}
+.item_list li{
+  padding: 15px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid #eee
+}
+.item_list li .content{
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+.content span{
+  display: flex;
+  height: 25px;
+  width: 25px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-top: 2px;
+  cursor: pointer
+}
+.content span.active{
+  background-color: green
+}
+.delete{
+  height: 25px;
+  width: 25px;
+  background: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 13px
+}
