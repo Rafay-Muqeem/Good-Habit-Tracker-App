@@ -21,6 +21,14 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.SignInCard p {
+    color: rgb(189, 39, 39);
+    font-size: 15px;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .cancelIcon {
     color: #590C69;
     max-width: 10px;

@@ -16,7 +16,7 @@ function App() {
         <Route path="/home" element={ <Home />} />
         <Route path="/add" element={<AddHabit />} />
         <Route path="/edit/:id" element={<EditModal />} />
-        <Route element={<Navigate to={"/signin"} replace/>} />
+        <Route path="/" element={<Navigate to={"/signin"} replace/>} />
       </Routes>
     </Router>
   );
