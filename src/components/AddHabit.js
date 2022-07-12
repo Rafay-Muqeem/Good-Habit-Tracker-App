@@ -22,7 +22,7 @@ const AddHabit = () => {
             }
             
             try {
-                const response = await addHabits(token, data);
+                await addHabits(token, data);
                 // console.log(response);
                 
             } catch (error) {
@@ -40,7 +40,7 @@ const AddHabit = () => {
     return(
         <div>
             <div className="card">
-                <Link className="listIcon" to="/home" state={{token: token}}> <FontAwesomeIcon icon={faListCheck} /></Link>
+                <Link className="listIcon" to="/dashboard" replace={true} state={{token: token}}> <FontAwesomeIcon icon={faListCheck} /></Link>
                 <h1>Add Habit</h1>
                 <div className="task_inputs">
                     <input type="text" value={inputName} placeholder="Enter name here..." onChange={(e) => setInputName(e.target.value) } />

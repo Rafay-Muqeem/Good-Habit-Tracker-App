@@ -1,7 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './SignIn.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signIn } from '../../services/signIn';
 
@@ -21,6 +19,19 @@ const SignIn = () => {
         password: signInPass
     }
 
+    useEffect( () => {
+        let handler = (e) => {
+            if(e.keyCode == 13){
+                sign_In();
+            }
+        }
+        document.addEventListener("keydown", handler);
+
+        return () => {
+            document.removeEventListener("keydown", handler);
+        }
+    })
+
     async function sign_In(){
             try {
                 const res = await signIn(data);
@@ -29,9 +40,10 @@ const SignIn = () => {
                 setSignInPass('');
                 if(res.status >= 200 && res.status <= 299){
                     setError(false);
-                    navigate('/home', {state: {token : token} });
+                    navigate('/dashboard', {replace: true, state: {token : token}});
                 }
                 else{
+                    console.log(res.status);
                     setError(true);
                 }
             }catch (error) {
@@ -50,7 +62,7 @@ const SignIn = () => {
             </div>
             <div className='signInBottomLine'>
                 <span>Don't have an account</span>
-                <Link to={"/SignUp"}>Sign Up</Link>
+                <Link to={"/SignUp"} replace>Sign Up</Link>
             </div>
         </div>
     );

@@ -32,7 +32,7 @@ const EditModal = () => {
     }
     return(
         <div className="modalCard">
-            <Link className="cancelIcon" to="/"> <FontAwesomeIcon icon={faTimesCircle} /></Link>
+            <Link className="cancelIcon" to="/dashboard" replace={true} state={{token: token}}> <FontAwesomeIcon icon={faTimesCircle} /></Link>
             <h1>Edit Habit</h1>
             <p>(Add new credentials)</p>
             <div className="edit_inputs">

@@ -42,7 +42,7 @@ const SignUp = () => {
             </div>
             <div className='signUpBottomLine'>
                 <p>Already have an account</p>
-                <Link to={"/SignIn"}>Sign In</Link>
+                <Link to={"/SignIn"} replace>Sign In</Link>
             </div>
         </div>
     );
