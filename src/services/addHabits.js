@@ -10,7 +10,7 @@ export async function addHabits(token, data){
             body: JSON.stringify(data)
         })
 
-        return response.json();
+        return response;
 
     } catch (error) {
         console.log(error);

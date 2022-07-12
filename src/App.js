@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import Dashboard from './components/Dashboard';
-import AddHabit from './components/AddHabit';
+import AddHabit from './components/Add_Habit/AddHabit';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import EditModal from './components/Edit_Modal/EditModal';
 import SignUp from './components/Sign_Up/SignUp';
