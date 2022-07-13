@@ -11,7 +11,8 @@ const SignUp = () => {
 
     const [signUpName,setSignUpName] = useState("");
     const [signUpEmail,setSignUpEmail] = useState("");
-    const [signUpPass,setSignUpPass] = useState(""); 
+    const [signUpPass,setSignUpPass] = useState("");
+    const [empty, setEmpty] = useState(false); 
 
     // const id = location.state.id;
 
@@ -23,10 +24,17 @@ const SignUp = () => {
 
     async function sign_Up(data){
             try {
-                await signUp(data);
-                setSignUpName('');
-                setSignUpEmail('');
-                setSignUpPass('');
+                if(signUpName !== '' && signUpEmail !== '' && signUpPass !== ''){
+                    await signUp(data);
+                    setSignUpName('');
+                    setSignUpEmail('');
+                    setSignUpPass('');
+                    setEmpty(false);
+                }
+                else{
+                    setEmpty(true);
+                }
+                
             } catch (error) {
                 console.log(error);
             }
@@ -34,6 +42,7 @@ const SignUp = () => {
     return(
         <div className="SignUpCard">
             <h1>Sign Up</h1>
+            {empty? <p>Please! fill each field</p> : null}
             <div className="signUp_inputs">
                 <input type="text" value={signUpName} placeholder="Enter name here..." onChange={(e) => setSignUpName(e.target.value) } />
                 <input type="email" value={signUpEmail} placeholder="Enter email here..." onChange={(e) => setSignUpEmail(e.target.value) } />

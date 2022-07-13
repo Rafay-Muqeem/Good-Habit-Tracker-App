@@ -4,9 +4,10 @@ import { fetctHabits } from "../services/fetchHabits";
 import { delHabits } from "../services/delHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getUserDetails } from "../services/getUserDetails";
+import { ThreeDots } from 'react-loader-spinner'
 
 const Home = () => {
     const location = useLocation();
@@ -17,13 +18,13 @@ const Home = () => {
     const [listItems, setListItems] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     const [logOut, setLogOut] = useState(false);
+    const [loaded, setLoaded] = useState(true);
 
     const timeInSec = moment().endOf('day').valueOf();
     const Interval = timeInSec - Date.now();
 
     useEffect(() => {
         const timer = setInterval(() => {
-            console.log(Interval);
             setCallAdd(!callAdd);
         }, Interval)
 
@@ -33,20 +34,25 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        async function habits() {
-            try {
-                const habitsArr = await fetctHabits(token);
-                setListItems(habitsArr);
-                const UserInfo = await getUserDetails(token);
-                setUserInfo(UserInfo);
-                // navigate('/home', {replace: true})
+        const timer2 = setTimeout(() => {
+            async function habits() {
+                try {
+                    const habitsArr = await fetctHabits(token);
+                    setListItems(habitsArr);
+                    const UserInfo = await getUserDetails(token);
+                    setUserInfo(UserInfo);
+                    setLoaded(false);
+                }
+                catch (error) {
+                    console.log(error);
+                }
             }
-            catch (error) {
-                console.log(error);
-            }
-        }
-        habits();
+            habits();
+        }, 1500)
 
+        return () => {
+            clearTimeout(timer2);
+        }
     }, [callAdd]);
 
     let modalRef = useRef();
@@ -66,7 +72,7 @@ const Home = () => {
     })
 
     const signInYes = () => {
-        navigate('/signin', {replace: true});
+        navigate('/signin', { replace: true });
     }
 
     function Log_out() {
@@ -101,19 +107,25 @@ const Home = () => {
             <div id={logOut ? "container" : null} className="card">
                 <div className="homeUpper">
                     <Link className="addIcon" to="/dashboard/add" replace={true} state={token}><FontAwesomeIcon icon={faAdd} /></Link>
-                    <span>{userInfo.name}</span>
+                    <span>{!userInfo.name? <ThreeDots color="#590C69" width={20} height={20} /> : userInfo.name}</span>
                     <span className="logOutIcon" onClick={() => setLogOut(true)} ><FontAwesomeIcon icon={faSignOut} /></span>
-
                 </div>
                 <h1>Habits List</h1>
-                <ul className="item_list">
-                    {listItems.map((itemval) => {
-                        return (
-                            <div key={itemval._id} ><ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} callAdd={callAdd} token={token} setCallAdd={setCallAdd} onSelect={DeList} /></div>
-                        );
-                    })}
+                {
+                    loaded ?
+                        <div className="loader">
+                            <ThreeDots color="#590C69" height={60} width={60} />
+                        </div>
+                        :
+                        <ul className="item_list">
+                            {listItems.map((itemval) => {
+                                return (
+                                    <div key={itemval._id} ><ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} callAdd={callAdd} token={token} setCallAdd={setCallAdd} onSelect={DeList} /></div>
+                                );
+                            })}
 
-                </ul>
+                        </ul>
+                }
             </div>
         </div>
     );

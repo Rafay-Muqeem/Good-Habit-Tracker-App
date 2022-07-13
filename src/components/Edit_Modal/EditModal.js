@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './EditModal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -9,8 +9,9 @@ const EditModal = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [editName,setEditName] = useState("");
-    const [editDesc,setEditDesc] = useState(""); 
+    const [editName, setEditName] = useState("");
+    const [editDesc, setEditDesc] = useState("");
+    const [empty, setEmpty] = useState(false);
 
     const id = location.state.id;
     const token = location.state.token;
@@ -20,25 +21,33 @@ const EditModal = () => {
         description: editDesc
     }
 
-    async function UpdateHabit(){
-            try {
+    async function UpdateHabit() {
+        try {
+            if (editName !== '' || editDesc !== '') {
                 await updateHabit(id, data, token);
                 setEditName('');
                 setEditDesc('');
-                navigate('/home', {state: {token: token}});
-            } catch (error) {
-                console.log(error);
+                navigate('/dashboard', { state: { token: token } });
+                setEmpty(false)
             }
+            else{
+                setEmpty(true);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     }
-    return(
+    return (
         <div className="modalCard">
-            <Link className="cancelIcon" to="/dashboard" replace={true} state={{token: token}}> <FontAwesomeIcon icon={faTimesCircle} /></Link>
+            <Link className="cancelIcon" to="/dashboard" replace={true} state={{ token: token }}> <FontAwesomeIcon icon={faTimesCircle} /></Link>
             <h1>Edit Habit</h1>
             <p>(Add new credentials)</p>
+            {empty ? <p>Please! enter a new name or description</p> : null}
             <div className="edit_inputs">
-                <input type="text" value={editName} placeholder="Enter name here..." onChange={(e) => setEditName(e.target.value) } />
-                <input type="text" value={editDesc} placeholder="Enter description here..." onChange={(e) => setEditDesc(e.target.value) } />
-                <button onClick={ () => {UpdateHabit()}} className="editButton">edit</button>
+                <input type="text" value={editName} placeholder="Enter name here..." onChange={(e) => setEditName(e.target.value)} />
+                <input type="text" value={editDesc} placeholder="Enter description here..." onChange={(e) => setEditDesc(e.target.value)} />
+                <button onClick={() => { UpdateHabit() }} className="editButton">edit</button>
             </div>
         </div>
     );

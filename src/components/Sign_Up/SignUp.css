@@ -22,6 +22,15 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.SignUpCard p {
+    color: red;
+    font-size: 15px;
+    white-space: nowrap;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .cancelIcon {
     color: #590C69;
     max-width: 10px;
@@ -71,4 +80,8 @@
     justify-content: center;
     font-size: 13px;
     font-weight: 500;
+}
+
+.signUpBottomLine p {
+    color: black;
 }

@@ -54,7 +54,7 @@ const SignIn = () => {
     return (
         <div className="SignInCard">
             <h1>Sign In</h1>
-            {!error ? <p></p> : <p>Please! provide correct credentials</p>}
+            {!error ? null: <p>Please! provide correct credentials</p>}
             <div className="signIn_inputs">
                 <input type="email" value={signInEmail} placeholder="Enter email here..." onChange={(e) => setSignInEmail(e.target.value)} />
                 <input type="password" value={signInPass} placeholder="Enter password here..." onChange={(e) => setSignInPass(e.target.value)} />
