@@ -18,13 +18,13 @@ const List_Items = (props) => {
 
     const [show, setShow] = useState(false);
     const weekDays = [
-        { day: "Mon", done: false },
-        { day: "Tue", done: false },
-        { day: "Wed", done: false },
-        { day: "Thu", done: false },
-        { day: "Fri", done: false },
-        { day: "Sat", done: false },
-        { day: "Sun", done: false }
+        { day: "SUN", done: false },
+        { day: "MON", done: false },
+        { day: "TUE", done: false },
+        { day: "WED", done: false },
+        { day: "THU", done: false },
+        { day: "FRI", done: false },
+        { day: "SAT", done: false }
     ];
 
     for (let i = 0; i < 7; i++) {
