@@ -5,7 +5,6 @@ import { doneHabit } from "../services/doneHabit";
 import { Link } from "react-router-dom";
 
 async function doneHabits(id, token, callAdd, setCallAdd) {
-    // CheckList(id);
 
     try {
         await doneHabit(id, token);
@@ -15,18 +14,26 @@ async function doneHabits(id, token, callAdd, setCallAdd) {
     }
 }
 
-// const CheckList = (li_id) => {
-//     var active_span = document.getElementById("#checked" + li_id);
-//     active_span.classList.toggle("active");
-
-//     var strike = document.getElementById("#strike" + li_id);
-//     strike.classList.toggle("strike-none");
-
-// };
-
 const List_Items = (props) => {
 
     const [show, setShow] = useState(false);
+    const weekDays = [
+        { day: "Mon", done: false },
+        { day: "Tue", done: false },
+        { day: "Wed", done: false },
+        { day: "Thu", done: false },
+        { day: "Fri", done: false },
+        { day: "Sat", done: false },
+        { day: "Sun", done: false }
+    ];
+
+    for (let i = 0; i < 7; i++) {
+        props.weekData.map((day) => {
+            if (day == i) {
+                weekDays[i].done = true;
+            }
+        })
+    }
 
     return (
 
@@ -36,26 +43,42 @@ const List_Items = (props) => {
                 <div className="upper">
 
                     {
-                    props.done? 
-                    <span id="check" className="done" ><FontAwesomeIcon icon={faCheck} /></span>:
-                    <span className="done" onClick={() => { doneHabits(props.id, props.token, props.callAdd, props.setCallAdd) }}></span>
+                        props.done ?
+                            <span id="check" className="done" ><FontAwesomeIcon icon={faCheck} /></span> :
+                            <span className="done" onClick={() => { doneHabits(props.id, props.token, props.callAdd, props.setCallAdd) }}></span>
                     }
 
                     <span className="name">{props.list_name}</span>
 
                     {
-                    !show? 
-                    <span onClick={() => { setShow(true) }} className="showDesc"><FontAwesomeIcon icon={faAngleDown} /></span>:
-                    <span onClick={() => { setShow(false) }} className="showDesc"><FontAwesomeIcon icon={faAngleUp} /></span>
+                        !show ?
+                            <span onClick={() => { setShow(true) }} className="showDesc"><FontAwesomeIcon icon={faAngleDown} /></span> :
+                            <span onClick={() => { setShow(false) }} className="showDesc"><FontAwesomeIcon icon={faAngleUp} /></span>
                     }
 
-                    <Link className="edit" to={`/dashboard/edit/${props.id}`} replace={true} state={{id: props.id, token: props.token}}><FontAwesomeIcon icon={faEdit} /></Link>
+                    <Link className="edit" to={`/dashboard/edit/${props.id}`} replace={true} state={{ id: props.id, token: props.token }}><FontAwesomeIcon icon={faEdit} /></Link>
                     <span onClick={() => { props.onSelect(props.id); }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
 
                 </div>
                 <div className={show ? "lower" : "disNone"}>
                     <p>{props.list_desc}</p>
-                    {props.streak == 0 ? <p>No Streak Yet</p> : <p>Habit's Streak is {props.streak} days</p>}
+                    <div className="weeklyRecord">
+                        {weekDays.map((dayObj, ind) => {
+
+                            if (dayObj.done) {
+                                return (
+                                    <span key={ind} className="doneDay">{dayObj.day}</span>
+                                );
+                            }
+                            else {
+                                return (
+                                    <span key={ind} className="unDoneDay">{dayObj.day}</span>
+                                );
+                            }
+
+                        })}
+                    </div>
+                    {props.streak == 0 || props.streak == 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is {props.streak} days</p>}
                 </div>
 
             </div>

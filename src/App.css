@@ -1,8 +1,9 @@
-*{
+* {
   padding: 0;
   margin: 0
 }
-body{
+
+body {
   background-color: #590C69;
   height: 100vh;
   display: flex;
@@ -23,13 +24,13 @@ body{
   border-radius: 10px 60px 60px 10px;
   margin: 12px 0;
 }
- 
+
 ::-webkit-scrollbar-thumb {
   background-color: darkgrey;
   border-radius: 10px 60px 60px 10px;
 }
 
-.card{
+.card {
   width: 350px;
   height: 460px;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
@@ -44,14 +45,14 @@ body{
   z-index: 1;
 }
 
-.card .homeUpper{
+.card .homeUpper {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 5px;
 }
 
-.card .homeUpper :nth-child(2){
+.card .homeUpper :nth-child(2) {
   color: #590C69;
   font-size: 15px;
   white-space: nowrap;
@@ -61,7 +62,7 @@ body{
   text-transform: uppercase;
 }
 
-.card h1{
+.card h1 {
   color: #590C69;
   font-size: 25px;
   white-space: nowrap;
@@ -70,41 +71,30 @@ body{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.card h2{
-  color: rgba(221, 21, 21, 0.766);
-  font-size: 20px;
-  white-space: nowrap;
-  text-align: center;
-  font-weight: 600;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.homeUpper .addIcon{
+.homeUpper .addIcon {
   color: #590C69;
   max-width: 10px;
   font-size: 23px;
   text-decoration: none;
-  /* display: flex;
-  flex-direction: row; */
 }
-.homeUpper .addIcon :hover{
+
+.homeUpper .addIcon :hover {
   opacity: 0.7;
 }
 
-.homeUpper .logOutIcon{
+.homeUpper .logOutIcon {
   color: #590C69;
   max-width: 10px;
   font-size: 23px;
   text-decoration: none;
   cursor: pointer;
-  /* display: flex;
-  flex-direction: row; */
 }
-.homeUpper .logOutIcon :hover{
+
+.homeUpper .logOutIcon :hover {
   opacity: 0.7;
 }
 
-.listIcon{
+.listIcon {
   color: #590C69;
   max-width: 10px;
   font-size: 23px;
@@ -112,24 +102,27 @@ body{
   display: flex;
   flex-direction: row;
 }
-.listIcon :hover{
+
+.listIcon :hover {
   opacity: 0.7;
 }
 
-.task_inputs{
+.task_inputs {
   width: 100%;
   display: flex;
   gap: 10px;
   flex-direction: column;
 }
-.content span{
+
+.content span {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 12px;
   color: #fff
 }
-.task_inputs input{
+
+.task_inputs input {
   width: 100%;
   box-sizing: border-box;
   height: 45px;
@@ -138,36 +131,33 @@ body{
   border-radius: 3px;
   transition: all 1s
 }
-.task_inputs button{
+
+.task_inputs button {
   width: 100%;
   height: 45px;
   border: none;
   background-color: #590C69;
-  font-size: 16px;color: #FFF;
+  font-size: 16px;
+  color: #FFF;
   cursor: pointer;
   border-radius: 3px
 }
-.strike-none{
+
+.strike-none {
   text-decoration: none
 }
-.item_list{
+
+.item_list {
   list-style: none;
   margin-top: 15px
 }
-.item_list li{
-  padding: 15px 10px;
-  /* display: flex;
-  align-items: center; */
-  border-top: 2px solid #eee
-}
-/* .item_list li .content{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px
-} */
 
-.content .upper{
+.item_list li {
+  padding: 15px 10px;
+  border-top: 2px solid #eee;
+}
+
+.content .upper {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -175,7 +165,7 @@ body{
   gap: 5px;
 }
 
-.content .upper .done{
+.content .upper .done {
   display: flex;
   height: 25px;
   width: 25px;
@@ -185,22 +175,18 @@ body{
   cursor: pointer
 }
 
-/* .content .upper span.active{
-  background-color: green
-} */
-
-.content .upper #check{
+.content .upper #check {
   background-color: green;
 }
 
-.content .upper .name{
+.content .upper .name {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
   font-size: 18px;
   color: black;
 }
 
-.content .upper .showDesc{
+.content .upper .showDesc {
   height: 25px;
   width: 25px;
   background: #ccc;
@@ -214,11 +200,11 @@ body{
   margin-left: auto;
 }
 
-.content .upper .showDesc :hover{
+.content .upper .showDesc :hover {
   color: rgb(40, 40, 218);
 }
 
-.content .upper .edit{
+.content .upper .edit {
   height: 25px;
   width: 25px;
   background: #ccc;
@@ -231,11 +217,11 @@ body{
   color: black;
 }
 
-.content .upper .edit :hover{
+.content .upper .edit :hover {
   color: rgb(40, 40, 218);
 }
 
-.content .upper .delete{
+.content .upper .delete {
   height: 25px;
   width: 25px;
   background: #ccc;
@@ -248,18 +234,18 @@ body{
   color: black;
 }
 
-.content .upper .delete :hover{
+.content .upper .delete :hover {
   color: rgb(218, 28, 28);
 }
 
-.content .lower{
+.content .lower {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.content .lower :nth-child(1){
+.content .lower p:nth-child(1) {
   font-size: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
@@ -267,37 +253,68 @@ body{
   border-bottom: 2px dashed #ccc;
 }
 
-.content .lower :nth-child(2){
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  align-self: center;
-  font-weight: 400;
-  font-size: 15px;
+.content .lower .weeklyRecord {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 5px;
+  margin: 5px 0;
 }
 
-.disNone{
+.content .lower .weeklyRecord .doneDay {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  color: white;
+  height: 25px;
+  width: 25px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  background-color: green;
+}
+
+.content .lower .weeklyRecord .unDoneDay {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  color: black;
+  height: 25px;
+  width: 25px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+}
+
+.content .lower :nth-child(3) {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-self: center;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.disNone {
   display: none;
 }
 
 /* LogOut Modal CSS */
 
-#container{
+#container {
   filter: brightness(50%);
   -webkit-filter: brightness(8px);
   pointer-events: none;
 }
 
-#showLogOutModal{
+#showLogOutModal {
   visibility: visible;
 }
 
-.logOutCard{
+.logOutCard {
   visibility: hidden;
   position: absolute;
   top: 0;
   z-index: 2;
 }
 
-.logOutCardContent{
+.logOutCardContent {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -307,24 +324,24 @@ body{
   width: 150px;
   height: 80px;
   padding: 10px;
-  position:fixed; 
-  top: calc(50% - 300px); 
+  position: fixed;
+  top: calc(50% - 300px);
   left: calc(50% - 80px);
 }
 
-.logOutCardContent h1{
+.logOutCardContent h1 {
   font-size: 17px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
 }
 
-.logOutCardContent span{
+.logOutCardContent span {
   font-size: 11px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
 }
 
-.logOut_buttons{
+.logOut_buttons {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -332,7 +349,7 @@ body{
   align-items: center;
 }
 
-.logOut_buttons button{
+.logOut_buttons button {
   background-color: #590C69;
   border: none;
   font-size: 12px;
@@ -346,6 +363,6 @@ body{
 
 /* Loader */
 
-.loader{
+.loader {
   margin: auto auto;
 }

@@ -3,7 +3,7 @@ import { addHabits } from "../../services/addHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from "react-router-dom";
-import './addHabit.css';
+import './AddHabit.css';
 
 const AddHabit = () => {
 

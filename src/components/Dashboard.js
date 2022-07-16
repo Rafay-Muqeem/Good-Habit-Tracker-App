@@ -31,7 +31,7 @@ const Home = () => {
         return () => {
             clearInterval(timer);
         }
-    }, []);
+    });
 
     useEffect(() => {
         const timer2 = setTimeout(() => {
@@ -100,14 +100,13 @@ const Home = () => {
         }
 
     }
-
     return (
         <div >
             <Log_out />
             <div id={logOut ? "container" : null} className="card">
                 <div className="homeUpper">
                     <Link className="addIcon" to="/dashboard/add" replace={true} state={token}><FontAwesomeIcon icon={faAdd} /></Link>
-                    <span>{!userInfo.name? <ThreeDots color="#590C69" width={20} height={20} /> : userInfo.name}</span>
+                    <span>{!userInfo.name ? <ThreeDots color="#590C69" width={20} height={20} /> : userInfo.name}</span>
                     <span className="logOutIcon" onClick={() => setLogOut(true)} ><FontAwesomeIcon icon={faSignOut} /></span>
                 </div>
                 <h1>Habits List</h1>
@@ -120,7 +119,7 @@ const Home = () => {
                         <ul className="item_list">
                             {listItems.map((itemval) => {
                                 return (
-                                    <div key={itemval._id} ><ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} callAdd={callAdd} token={token} setCallAdd={setCallAdd} onSelect={DeList} /></div>
+                                    <div key={itemval._id} ><ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} weekData={itemval.doneDate} token={token} callAdd={callAdd} setCallAdd={setCallAdd} onSelect={DeList} /></div>
                                 );
                             })}
 
