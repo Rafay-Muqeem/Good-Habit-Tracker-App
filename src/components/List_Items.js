@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCheck, faEdit, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { doneHabit } from "../services/doneHabit";
+import { delHabits } from "../services/delHabits";
 import { Link } from "react-router-dom";
 import { TailSpin } from 'react-loader-spinner'
 
@@ -16,14 +17,31 @@ async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
     } catch (error) {
         console.log(error);
         setCallAdd(!callAdd);
-        setDoneLoad(false);
+        setDoneLoad(true);
     }
+}
+
+async function DeList(id, token, callAdd, setCallAdd, setDeleteLoad) {
+    setDeleteLoad(false);
+    try {
+        await delHabits(id, token);
+        setCallAdd(!callAdd);
+        setTimeout(() => {
+            setDeleteLoad(true);
+        }, 1500);
+    } catch (error) {
+        console.log(error);
+        setCallAdd(!callAdd);
+        setDeleteLoad(true);
+    }
+
 }
 
 const List_Items = (props) => {
 
     const [show, setShow] = useState(false);
     const [doneLoad, setDoneLoad] = useState(true);
+    const [deleteLoad, setDeleteLoad] = useState(true);
 
     const weekDays = [
         { day: "SUN", done: false },
@@ -51,8 +69,8 @@ const List_Items = (props) => {
 
                     {
                         !doneLoad ?
-                            <div className="listLoader">
-                                <TailSpin color="green" width={25} height={25}  />
+                            <div className="doneLoader">
+                                <TailSpin color="green" width={25} height={25} />
                             </div>
                             :
                             props.done ?
@@ -70,7 +88,14 @@ const List_Items = (props) => {
                     }
 
                     <Link className="edit" to={`/dashboard/edit/${props.id}`} replace={true} state={{ id: props.id, token: props.token }}><FontAwesomeIcon icon={faEdit} /></Link>
-                    <span onClick={() => { props.onSelect(props.id); }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
+                    {
+                        !deleteLoad ?
+                            <div className="deleteLoader">
+                                <TailSpin color="red" width={25} height={25} />
+                            </div>
+                            :
+                            <span onClick={() => { DeList(props.id, props.token, props.callAdd, props.setCallAdd, setDeleteLoad) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
+                    }
 
                 </div>
                 <div className={show ? "lower" : "disNone"}>

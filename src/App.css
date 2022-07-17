@@ -374,8 +374,13 @@ body {
   margin: auto auto;
 }
 
-.listLoader{
+.doneLoader{
   margin-top: 2px;
   border: 2px solid #ccc;
+  border-radius: 50%;
+}
+
+.deleteLoader{
+  background: #ccc;
   border-radius: 50%;
 }

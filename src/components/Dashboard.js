@@ -91,16 +91,6 @@ const Home = () => {
         );
     }
 
-    async function DeList(id) {
-
-        try {
-            await delHabits(id, token);
-            setCallAdd(!callAdd);
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
     return (
         <div >
             <Log_out />
@@ -121,7 +111,7 @@ const Home = () => {
                             {listItems.map((itemval) => {
                                 return (
                                     <div key={itemval._id} >
-                                        <ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} weekData={itemval.doneDate} token={token} callAdd={callAdd} setCallAdd={setCallAdd} onSelect={DeList} />
+                                        <ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} weekData={itemval.weeklyRecord} token={token} callAdd={callAdd} setCallAdd={setCallAdd} />
                                     </div>
                                 );
                             })}
