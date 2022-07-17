@@ -114,14 +114,6 @@ body {
   flex-direction: column;
 }
 
-.content span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  color: #fff
-}
-
 .task_inputs input {
   width: 100%;
   box-sizing: border-box;
@@ -165,6 +157,14 @@ body {
   gap: 5px;
 }
 
+.content .done {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: #fff
+}
+
 .content .upper .done {
   display: flex;
   height: 25px;
@@ -177,6 +177,7 @@ body {
 
 .content .upper #check {
   background-color: green;
+  cursor: default;
 }
 
 .content .upper .name {
@@ -271,6 +272,9 @@ body {
   border: 2px solid #ccc;
   border-radius: 50%;
   background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .content .lower .weeklyRecord .unDoneDay {
@@ -282,6 +286,9 @@ body {
   width: 27px;
   border: 2px solid #ccc;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .content .lower :nth-child(3) {
@@ -365,4 +372,10 @@ body {
 
 .loader {
   margin: auto auto;
+}
+
+.listLoader{
+  margin-top: 2px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
 }

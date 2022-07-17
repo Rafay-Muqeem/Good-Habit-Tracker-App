@@ -3,20 +3,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCheck, faEdit, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { doneHabit } from "../services/doneHabit";
 import { Link } from "react-router-dom";
+import { TailSpin } from 'react-loader-spinner'
 
-async function doneHabits(id, token, callAdd, setCallAdd) {
-
+async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
+    setDoneLoad(false);
     try {
         await doneHabit(id, token);
         setCallAdd(!callAdd);
+        setTimeout(() => {
+            setDoneLoad(true);
+        }, 1500);
     } catch (error) {
         console.log(error);
+        setCallAdd(!callAdd);
+        setDoneLoad(false);
     }
 }
 
 const List_Items = (props) => {
 
     const [show, setShow] = useState(false);
+    const [doneLoad, setDoneLoad] = useState(true);
+
     const weekDays = [
         { day: "SUN", done: false },
         { day: "MON", done: false },
@@ -28,24 +36,29 @@ const List_Items = (props) => {
     ];
 
     for (let i = 0; i < 7; i++) {
-        props.weekData.map((day) => {
-            if (day == i) {
+        for (let j = 0; j < props.weekData.length; j++) {
+            if (props.weekData[j] == i) {
                 weekDays[i].done = true;
             }
-        })
+        }
     }
 
     return (
 
         <li id={props.id}>
             <div className="content">
-
                 <div className="upper">
 
                     {
-                        props.done ?
-                            <span id="check" className="done" ><FontAwesomeIcon icon={faCheck} /></span> :
-                            <span className="done" onClick={() => { doneHabits(props.id, props.token, props.callAdd, props.setCallAdd) }}></span>
+                        !doneLoad ?
+                            <div className="listLoader">
+                                <TailSpin color="green" width={25} height={25}  />
+                            </div>
+                            :
+                            props.done ?
+                                <span id="check" className="done" ><FontAwesomeIcon icon={faCheck} /></span> :
+                                <span className="done" onClick={() => { doneHabits(props.id, props.token, props.callAdd, props.setCallAdd, setDoneLoad) }}></span>
+
                     }
 
                     <span className="name">{props.list_name}</span>
@@ -80,13 +93,10 @@ const List_Items = (props) => {
                     </div>
                     {props.streak == 0 || props.streak == 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is {props.streak} days</p>}
                 </div>
-
             </div>
-
         </li>
 
     );
-
 };
 
 export default List_Items;

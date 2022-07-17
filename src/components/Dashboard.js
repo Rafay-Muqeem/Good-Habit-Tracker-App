@@ -18,7 +18,7 @@ const Home = () => {
     const [listItems, setListItems] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     const [logOut, setLogOut] = useState(false);
-    const [loaded, setLoaded] = useState(true);
+    const [loaded, setLoaded] = useState(false);
 
     const timeInSec = moment().endOf('day').valueOf();
     const Interval = timeInSec - Date.now();
@@ -41,14 +41,15 @@ const Home = () => {
                     setListItems(habitsArr);
                     const UserInfo = await getUserDetails(token);
                     setUserInfo(UserInfo);
-                    setLoaded(false);
+                    setLoaded(true);
                 }
                 catch (error) {
                     console.log(error);
+                    setLoaded(true);
                 }
             }
             habits();
-        }, 1500)
+        }, 1000)
 
         return () => {
             clearTimeout(timer2);
@@ -111,7 +112,7 @@ const Home = () => {
                 </div>
                 <h1>Habits List</h1>
                 {
-                    loaded ?
+                    !loaded ?
                         <div className="loader">
                             <ThreeDots color="#590C69" height={60} width={60} />
                         </div>
@@ -119,7 +120,9 @@ const Home = () => {
                         <ul className="item_list">
                             {listItems.map((itemval) => {
                                 return (
-                                    <div key={itemval._id} ><ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} weekData={itemval.doneDate} token={token} callAdd={callAdd} setCallAdd={setCallAdd} onSelect={DeList} /></div>
+                                    <div key={itemval._id} >
+                                        <ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} weekData={itemval.doneDate} token={token} callAdd={callAdd} setCallAdd={setCallAdd} onSelect={DeList} />
+                                    </div>
                                 );
                             })}
 

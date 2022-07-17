@@ -16,7 +16,7 @@ const AddHabit = () => {
 
     async function addHabit() {
 
-        if (inputName.length > 2 && inputDesc.length > 4) {
+        if (inputName.length > 2 ) {
 
             const data = {
                 name: inputName,
