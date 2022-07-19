@@ -108,9 +108,9 @@ const Dashboard = () => {
 
     return (
         <motion.div
-            initial={{ scale: 1.5 }}
+            initial={{ scale: 1.2 }}
             animate={{ scale: 1 }}
-            exit={{opacity:0}}
+            exit={{ opacity: 0 }}
             transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
         >
             <AnimatePresence>
