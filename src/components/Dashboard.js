@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import ListItems from './List_Items';
 import { fetctHabits } from "../services/fetchHabits";
-import { delHabits } from "../services/delHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getUserDetails } from "../services/getUserDetails";
 import { ThreeDots } from 'react-loader-spinner'
+import { AnimatePresence, motion } from "framer-motion";
 
-const Home = () => {
+const Dashboard = () => {
     const location = useLocation();
-    let token = location.state.token;
+    const token = location.state;
     const navigate = useNavigate();
 
     const [callAdd, setCallAdd] = useState(false);
@@ -22,6 +22,21 @@ const Home = () => {
 
     const timeInSec = moment().endOf('day').valueOf();
     const Interval = timeInSec - Date.now();
+
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.3
+            }
+        }
+    };
+
+    const listItem = {
+        hidden: { opacity: 0 },
+        show: { opacity: 1 }
+    };
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -61,7 +76,7 @@ const Home = () => {
     useEffect(() => {
 
         let handler = (e) => {
-            if (!modalRef.current.contains(e.target)) {
+            if (logOut && !modalRef.current.contains(e.target)) {
                 setLogOut(false);
             }
         }
@@ -78,7 +93,7 @@ const Home = () => {
 
     function Log_out() {
         return (
-            <div ref={modalRef} id={logOut ? "showLogOutModal" : null} className="logOutCard">
+            <div ref={modalRef} className="logOutCard">
                 <div className="logOutCardContent">
                     <h1>Log Out</h1>
                     <span>Do you want to Log out?</span>
@@ -92,8 +107,24 @@ const Home = () => {
     }
 
     return (
-        <div >
-            <Log_out />
+        <motion.div
+            initial={{ scale: 1.5 }}
+            animate={{ scale: 1 }}
+            exit={{opacity:0}}
+            transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+        >
+            <AnimatePresence>
+                {logOut && (
+                    <motion.div
+                        initial={{ position: "absolute", zIndex: 2, x: "65%", y: -300, opacity: 0 }}
+                        animate={{ position: "absolute", zIndex: 2, x: "65%", y: 0, opacity: 1 }}
+                        exit={{ position: "absolute", zIndex: 2, x: "65%", y: -300, opacity: 0 }}
+                        transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+                    >
+                        <Log_out />
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <div id={logOut ? "container" : null} className="card">
                 <div className="homeUpper">
                     <Link className="addIcon" to="/dashboard/add" replace={true} state={token}><FontAwesomeIcon icon={faAdd} /></Link>
@@ -107,21 +138,24 @@ const Home = () => {
                             <ThreeDots color="#590C69" height={60} width={60} />
                         </div>
                         :
-                        <ul className="item_list">
+                        <motion.ul variants={container} initial="hidden" animate="show" className="item_list">
                             {listItems.map((itemval) => {
                                 return (
-                                    <div key={itemval._id} >
-                                        <ListItems id={itemval._id} list_name={itemval.name} list_desc={itemval.description} streak={itemval.streak} done={itemval.done} weekData={itemval.weeklyRecord} token={token} callAdd={callAdd} setCallAdd={setCallAdd} />
-                                    </div>
+                                    <motion.div
+                                        variants={listItem}
+                                        key={itemval._id}
+                                    >
+                                        <ListItems item={itemval} token={token} callAdd={callAdd} setCallAdd={setCallAdd} />
+                                    </motion.div>
                                 );
                             })}
 
-                        </ul>
+                        </motion.ul>
                 }
             </div>
-        </div>
+        </motion.div>
     );
 
 }
 
-export default Home;
+export default Dashboard;

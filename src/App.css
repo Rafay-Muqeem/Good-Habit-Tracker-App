@@ -8,12 +8,9 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
+  overflow-x: hidden;
 }
-
-/* body::-webkit-scrollbar {
-  width: 0.1em;
-} */
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -240,7 +237,7 @@ body {
 }
 
 .content .lower {
-  margin-top: 10px;
+  /* margin-top: 10px; */
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -259,7 +256,9 @@ body {
   flex-direction: row;
   justify-content: space-between;
   gap: 5px;
-  margin: 5px 0;
+  margin: 15px 0 5px 0;
+  padding-top: 10px;
+  border-top: 2px dashed #ccc;
 }
 
 .content .lower .weeklyRecord .doneDay {
@@ -291,15 +290,11 @@ body {
   align-items: center;
 }
 
-.content .lower :nth-child(3) {
+.content .lower :nth-child(2) {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   align-self: center;
   font-weight: 500;
   font-size: 13px;
-}
-
-.disNone {
-  display: none;
 }
 
 /* LogOut Modal CSS */
@@ -308,17 +303,6 @@ body {
   filter: brightness(50%);
   -webkit-filter: brightness(8px);
   pointer-events: none;
-}
-
-#showLogOutModal {
-  visibility: visible;
-}
-
-.logOutCard {
-  visibility: hidden;
-  position: absolute;
-  top: 0;
-  z-index: 2;
 }
 
 .logOutCardContent {
@@ -331,9 +315,6 @@ body {
   width: 150px;
   height: 80px;
   padding: 10px;
-  position: fixed;
-  top: calc(50% - 300px);
-  left: calc(50% - 80px);
 }
 
 .logOutCardContent h1 {

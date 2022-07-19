@@ -4,7 +4,8 @@ import { faTrash, faCheck, faEdit, faAngleDown, faAngleUp } from '@fortawesome/f
 import { doneHabit } from "../services/doneHabit";
 import { delHabits } from "../services/delHabits";
 import { Link } from "react-router-dom";
-import { TailSpin } from 'react-loader-spinner'
+import { TailSpin } from 'react-loader-spinner';
+import { motion, AnimatePresence } from 'framer-motion'
 
 async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
     setDoneLoad(false);
@@ -43,6 +44,11 @@ const List_Items = (props) => {
     const [doneLoad, setDoneLoad] = useState(true);
     const [deleteLoad, setDeleteLoad] = useState(true);
 
+    const variants = {
+        open: { rotate: -180 },
+        closed: { rotate: 0 },
+    }
+
     const weekDays = [
         { day: "SUN", done: false },
         { day: "MON", done: false },
@@ -54,8 +60,8 @@ const List_Items = (props) => {
     ];
 
     for (let i = 0; i < 7; i++) {
-        for (let j = 0; j < props.weekData.length; j++) {
-            if (props.weekData[j] == i) {
+        for (let j = 0; j < props.item.weeklyRecord.length; j++) {
+            if (props.item.weeklyRecord[j] == i) {
                 weekDays[i].done = true;
             }
         }
@@ -63,7 +69,7 @@ const List_Items = (props) => {
 
     return (
 
-        <li id={props.id}>
+        <li id={props.item._id}>
             <div className="content">
                 <div className="upper">
 
@@ -73,51 +79,70 @@ const List_Items = (props) => {
                                 <TailSpin color="green" width={25} height={25} />
                             </div>
                             :
-                            props.done ?
+                            props.item.done ?
                                 <span id="check" className="done" ><FontAwesomeIcon icon={faCheck} /></span> :
-                                <span className="done" onClick={() => { doneHabits(props.id, props.token, props.callAdd, props.setCallAdd, setDoneLoad) }}></span>
+                                <span className="done" onClick={() => { doneHabits(props.item._id, props.token, props.callAdd, props.setCallAdd, setDoneLoad) }}></span>
 
                     }
 
-                    <span className="name">{props.list_name}</span>
+                    <span className="name">{props.item.name}</span>
 
-                    {
-                        !show ?
-                            <span onClick={() => { setShow(true) }} className="showDesc"><FontAwesomeIcon icon={faAngleDown} /></span> :
-                            <span onClick={() => { setShow(false) }} className="showDesc"><FontAwesomeIcon icon={faAngleUp} /></span>
-                    }
+                    <motion.span
+                        animate={show ? "open" : "closed"}
+                        variants={variants}
+                        onClick={() => { setShow(!show) }}
+                        className="showDesc"
+                    >
+                        <FontAwesomeIcon icon={faAngleDown} />
+                    </motion.span>
 
-                    <Link className="edit" to={`/dashboard/edit/${props.id}`} replace={true} state={{ id: props.id, token: props.token }}><FontAwesomeIcon icon={faEdit} /></Link>
+                    <Link className="edit" to={`/dashboard/edit/${props.item._id}`} replace={true} state={{ id: props.item._id, token: props.token }}><FontAwesomeIcon icon={faEdit} /></Link>
                     {
                         !deleteLoad ?
                             <div className="deleteLoader">
                                 <TailSpin color="red" width={25} height={25} />
                             </div>
                             :
-                            <span onClick={() => { DeList(props.id, props.token, props.callAdd, props.setCallAdd, setDeleteLoad) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
+                            <span onClick={() => { DeList(props.item._id, props.token, props.callAdd, props.setCallAdd, setDeleteLoad) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
                     }
 
                 </div>
-                <div className={show ? "lower" : "disNone"}>
-                    <p>{props.list_desc}</p>
-                    <div className="weeklyRecord">
-                        {weekDays.map((dayObj, ind) => {
+                <AnimatePresence >
+                    {show && (
 
-                            if (dayObj.done) {
-                                return (
-                                    <span key={ind} className="doneDay">{dayObj.day}</span>
-                                );
-                            }
-                            else {
-                                return (
-                                    <span key={ind} className="unDoneDay">{dayObj.day}</span>
-                                );
-                            }
+                        <motion.div
+                            initial="collapsed"
+                            animate="open"
+                            exit="collapsed"
+                            variants={{
+                                open: { opacity: 1, height: "auto" },
+                                collapsed: { opacity: 0, height: 0 }
+                            }}
+                            transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
+                            className="lower"
+                        >
+                            {/* <p>{props.item.description}</p> */}
+                            <div className="weeklyRecord">
+                                {weekDays.map((dayObj, ind) => {
 
-                        })}
-                    </div>
-                    {props.streak == 0 || props.streak == 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is {props.streak} days</p>}
-                </div>
+                                    if (dayObj.done) {
+                                        return (
+                                            <span key={ind} className="doneDay">{dayObj.day}</span>
+                                        );
+                                    }
+                                    else {
+                                        return (
+                                            <span key={ind} className="unDoneDay">{dayObj.day}</span>
+                                        );
+                                    }
+
+                                })}
+                            </div>
+                            {props.item.streak == 0 || props.item.streak == 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is <b>{props.item.streak} days</b></p>}
+                        </motion.div>
+
+                    )}
+                </AnimatePresence>
             </div>
         </li>
 
