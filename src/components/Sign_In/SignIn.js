@@ -21,7 +21,7 @@ const SignIn = () => {
     }
 
     useEffect(() => {
-        let handler = (e) => {
+        const handler = (e) => {
             if (e.keyCode == 13) {
                 sign_In();
             }
