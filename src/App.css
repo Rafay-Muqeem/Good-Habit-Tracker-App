@@ -554,6 +554,18 @@ body {
   font-weight: 500;
 }
 
+.googleSignOutBtn{
+  background-color: #590C69;
+  border: none;
+  font-size: 12px;
+  color: #FFF;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 3px 13px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+}
+
 /* Loader */
 
 .loader {

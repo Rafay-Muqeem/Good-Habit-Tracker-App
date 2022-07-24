@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import './AddHabit.css';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion/dist/framer-motion';
 
 const AddHabit = () => {
 
@@ -17,7 +17,7 @@ const AddHabit = () => {
 
     useEffect(() => {
         const handler = (e) => {
-            if (e.keyCode == 13) {
+            if (e.keyCode === 13) {
                 addHabit();
             }
         }

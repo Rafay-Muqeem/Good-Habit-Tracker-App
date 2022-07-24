@@ -7,8 +7,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getUserDetails } from "../services/getUserDetails";
 import { ThreeDots } from 'react-loader-spinner'
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
 import { updateHabit } from '../services/updateHabit';
+import { GoogleLogout } from "react-google-login";
 
 function Description(props) {
 
@@ -127,10 +128,10 @@ function Description(props) {
                                 initial={{ opacity: 0, width: 0 }}
                                 animate={{ opacity: 1, width: "auto" }}
                                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                                size={editName.length > 0? editName.length : 1 }
+                                size={editName.length > 0 ? editName.length : 1}
                                 type="text"
                                 value={editName}
-                                onChange={(e) => setEditName(e.target.value.length < 15? e.target.value : editName)} autoFocus
+                                onChange={(e) => setEditName(e.target.value.length < 15 ? e.target.value : editName)} autoFocus
                             />
 
                         }
@@ -280,19 +281,32 @@ const Dashboard = () => {
         }
     })
 
-    const signInYes = () => {
+    const signOutYes = () => {
         navigate('/signin', { replace: true });
     }
 
-    function Log_out() {
+    function LogOut() {
         return (
             <div ref={logOutModalRef} className="logOutCard">
                 <div className="logOutCardContent">
                     <h1>Log Out</h1>
                     <span>Do you want to Log out?</span>
                     <div className="logOut_buttons">
-                        <button onClick={() => { setLogOut(false); setModal(false) }} className="signInButton">No</button>
-                        <button onClick={signInYes} className="signInButton">Yes</button>
+                        <button onClick={() => { setLogOut(false); setModal(false) }} >No</button>
+                        {
+                            !userInfo.emailVerifiedByGoogle ?
+                                <button onClick={signOutYes}>Yes</button>
+                                :
+                                <GoogleLogout
+                                    clientId="379779189631-jt9om5rcmavpjm2t8qfcnl1ahb1kcb14.apps.googleusercontent.com"
+                                    render={(renderProps) => (
+                                        <button className='logOut_buttons' onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                                            Yes
+                                        </button>
+                                    )}
+                                    onLogoutSuccess={signOutYes}
+                                />
+                        }
                     </div>
                 </div>
             </div>
@@ -314,7 +328,7 @@ const Dashboard = () => {
                         exit={{ position: "absolute", zIndex: 2, x: "65%", y: -300, opacity: 0 }}
                         transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
                     >
-                        <Log_out />
+                        <LogOut />
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -322,9 +336,9 @@ const Dashboard = () => {
             <AnimatePresence>
                 {showDes && (
                     <motion.div
-                        initial={{ position: "absolute", zIndex: 3, x: 0, y: -300, opacity: 0 }}
-                        animate={{ position: "absolute", zIndex: 3, x: 0, y: 100, opacity: 1 }}
-                        exit={{ position: "absolute", zIndex: 3, x: 0, y: -300, opacity: 0 }}
+                        initial={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
+                        animate={{ position: "absolute", zIndex: 2, x: 0, y: 100, opacity: 1 }}
+                        exit={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
                         transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
                     >
                         <Description token={token} showDes={showDes} setShowDes={setShowDes} callAdd={callAdd} setCallAdd={setCallAdd} setModal={setModal} habitObj={habitObj} setHabitObj={setHabitObj} />

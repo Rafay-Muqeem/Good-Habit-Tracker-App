@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate, useLocation} from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion/dist/framer-motion';
 import Dashboard from '../components/Dashboard';
 import AddHabit from '../components/Add_Habit/AddHabit';
 import SignUp from '../components/Sign_Up/SignUp';

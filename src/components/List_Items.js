@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faCheck, faEdit, faInfo } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faCheck, faInfo } from '@fortawesome/free-solid-svg-icons';
 import { doneHabit } from "../services/doneHabit";
 import { delHabits } from "../services/delHabits";
-import { Link } from "react-router-dom";
 import { TailSpin } from 'react-loader-spinner';
 
 async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
@@ -41,11 +40,6 @@ const List_Items = (props) => {
 
     const [doneLoad, setDoneLoad] = useState(true);
     const [deleteLoad, setDeleteLoad] = useState(true);
-
-    const variants = {
-        open: { rotate: -180 },
-        closed: { rotate: 0 },
-    }
 
     const weekDays = [
         { day: "SUN", done: false, current: false },
