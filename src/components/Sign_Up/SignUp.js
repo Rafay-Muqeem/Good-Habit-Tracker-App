@@ -22,12 +22,14 @@ const SignUp = () => {
     async function sign_Up(data) {
         try {
             if (signUpName !== '' && signUpEmail !== '' && signUpPass !== '') {
-                await signUp(data);
-                setSignUpName('');
-                setSignUpEmail('');
-                setSignUpPass('');
-                setEmpty(false);
-                navigate('/signin', { replace: true });
+                const res = await signUp(data);
+                if (res.status >= 200 && res.status <= 299) {
+                    setSignUpName('');
+                    setSignUpEmail('');
+                    setSignUpPass('');
+                    setEmpty(false);
+                    navigate('/signin', { replace: true });
+                }
             }
             else {
                 setEmpty(true);

@@ -2,7 +2,7 @@
 export async function updateHabit(id, data, token){
 
     try {
-        const response = await fetch(`http://localhost:5000/api/habit/updatehabit/${id}`, {
+        const response = await fetch(`https://habit-app-backend.herokuapp.com/api/habit/updatehabit/${id}`, {
             method: "PUT",
             headers: {
                 "auth-token": token,

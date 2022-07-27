@@ -12,6 +12,7 @@ import { ReactComponent as Google } from './google.svg';
 const SignIn = () => {
 
     const navigate = useNavigate();
+    const  CLIENT_ID = "379779189631-jt9om5rcmavpjm2t8qfcnl1ahb1kcb14.apps.googleusercontent.com"
 
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPass, setSignInPass] = useState("");
@@ -54,14 +55,16 @@ const SignIn = () => {
     }
 
     useEffect(() => {
+
         function start() {
             gapi.client.init({
-                client_id: "379779189631-jt9om5rcmavpjm2t8qfcnl1ahb1kcb14.apps.googleusercontent.com",
+                client_id: CLIENT_ID,
                 scope: "profile"
             });
         };
 
         gapi.load('client:auth2', start);
+
     });
 
     async function sign_In_Google(data) {
@@ -79,7 +82,7 @@ const SignIn = () => {
         const userObject = jwt_decode(response.tokenId);
 
         const userDataByGoogle = {
-            id: userObject.sub,
+            ID: userObject.sub,
             name: userObject.name,
             email: userObject.email,
             client_id: userObject.aud,

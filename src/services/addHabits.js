@@ -1,7 +1,8 @@
+require('dotenv').config();
 
 export async function addHabits(token, data){
     try {
-        const response = await fetch("http://localhost:5000/api/habit/addhabit", {
+        const response = await fetch("https://habit-app-backend.herokuapp.com/api/habit/addhabit", {
             method: "POST",
             headers: {
                 "auth-token": token,
