@@ -3,16 +3,13 @@ import './SignIn.css';
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from '../../services/signIn';
 import { motion } from 'framer-motion/dist/framer-motion';
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
-import jwt_decode from 'jwt-decode';
 import { signInWithGoogle } from '../../services/signInWithGoogle';
 import { ReactComponent as Google } from './google.svg';
+import { SignInWithGoogle } from '../../Firebase';
 
 const SignIn = () => {
 
     const navigate = useNavigate();
-    const  CLIENT_ID = "379779189631-jt9om5rcmavpjm2t8qfcnl1ahb1kcb14.apps.googleusercontent.com"
 
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPass, setSignInPass] = useState("");
@@ -54,19 +51,6 @@ const SignIn = () => {
         }
     }
 
-    useEffect(() => {
-
-        function start() {
-            gapi.client.init({
-                client_id: CLIENT_ID,
-                scope: "profile"
-            });
-        };
-
-        gapi.load('client:auth2', start);
-
-    });
-
     async function sign_In_Google(data) {
         try {
             const res = await signInWithGoogle(data);
@@ -77,26 +61,14 @@ const SignIn = () => {
         }
     }
 
-    const OnSuccess = async (response) => {
+    const OnSuccess = async () => {
 
-        const userObject = jwt_decode(response.tokenId);
-
-        const userDataByGoogle = {
-            ID: userObject.sub,
-            name: userObject.name,
-            email: userObject.email,
-            client_id: userObject.aud,
-            emailVerified: userObject.email_verified
-        }
+        const userDataByGoogle = await SignInWithGoogle();
 
         sign_In_Google(userDataByGoogle);
 
     }
 
-    const OnFailure = (response) => {
-
-        console.log("failure", response);
-    }
 
     return (
         <motion.div
@@ -118,22 +90,11 @@ const SignIn = () => {
                 <Link to={"/SignUp"} replace>Sign Up</Link>
             </div>
             <span>Or</span>
-            <div >
+            <button className='googleSignInBtn' onClick={OnSuccess} >
+                <Google />
+                Sign In with Google
+            </button>
 
-                <GoogleLogin
-                    clientId="379779189631-jt9om5rcmavpjm2t8qfcnl1ahb1kcb14.apps.googleusercontent.com"
-                    render={(renderProps) => (
-                        <button className='googleSignInBtn' onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                            <Google />
-                            Sign In with Google
-                        </button>
-                    )}
-                    onSuccess={OnSuccess}
-                    onFailure={OnFailure}
-                    cookiePolicy={'single_host_origin'}
-                />
-
-            </div>
         </motion.div>
     );
 }

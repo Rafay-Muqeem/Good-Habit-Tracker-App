@@ -9,7 +9,6 @@ import { getUserDetails } from "../services/getUserDetails";
 import { ThreeDots } from 'react-loader-spinner'
 import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
 import { updateHabit } from '../services/updateHabit';
-import { GoogleLogout } from "react-google-login";
 
 function Description(props) {
 
@@ -293,20 +292,7 @@ const Dashboard = () => {
                     <span>Do you want to Log out?</span>
                     <div className="logOut_buttons">
                         <button onClick={() => { setLogOut(false); setModal(false) }} >No</button>
-                        {
-                            !userInfo.emailVerifiedByGoogle ?
-                                <button onClick={signOutYes}>Yes</button>
-                                :
-                                <GoogleLogout
-                                    clientId="379779189631-jt9om5rcmavpjm2t8qfcnl1ahb1kcb14.apps.googleusercontent.com"
-                                    render={(renderProps) => (
-                                        <button className='logOut_buttons' onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                                            Yes
-                                        </button>
-                                    )}
-                                    onLogoutSuccess={signOutYes}
-                                />
-                        }
+                        <button className='logOut_buttons' onClick={signOutYes}>Yes</button>
                     </div>
                 </div>
             </div>
