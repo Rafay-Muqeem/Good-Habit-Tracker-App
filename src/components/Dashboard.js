@@ -215,6 +215,8 @@ const Dashboard = () => {
     const timeInSec = moment().endOf('day').valueOf();
     const Interval = timeInSec - Date.now();
 
+    const logOutModalRef = useRef();
+    
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -241,29 +243,22 @@ const Dashboard = () => {
     });
 
     useEffect(() => {
-        const timer2 = setTimeout(() => {
-            async function habits() {
-                try {
-                    const habitsArr = await fetctHabits(token);
-                    setListItems(habitsArr);
-                    const UserInfo = await getUserDetails(token);
-                    setUserInfo(UserInfo);
-                    setLoaded(true);
-                }
-                catch (error) {
-                    console.log(error);
-                    setLoaded(true);
-                }
+        async function habits() {
+            try {
+                const habitsArr = await fetctHabits(token);
+                setListItems(habitsArr);
+                const UserInfo = await getUserDetails(token);
+                setUserInfo(UserInfo);
+                setLoaded(true);
             }
-            habits();
-        }, 800)
-
-        return () => {
-            clearTimeout(timer2);
+            catch (error) {
+                console.log(error);
+                setLoaded(true);
+            }
         }
+        habits();
+       
     }, [callAdd]);
-
-    const logOutModalRef = useRef();
 
     useEffect(() => {
 
@@ -331,6 +326,7 @@ const Dashboard = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+            
             <div id={modal ? "backDull" : null} className="card">
                 <div className="dashboardUpper">
                     <div className="dashboardUpperBar">

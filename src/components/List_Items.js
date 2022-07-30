@@ -10,9 +10,7 @@ async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
     try {
         await doneHabit(id, token);
         setCallAdd(!callAdd);
-        setTimeout(() => {
-            setDoneLoad(true);
-        }, 1500);
+        setDoneLoad(true);
     } catch (error) {
         console.log(error);
         setCallAdd(!callAdd);
@@ -25,9 +23,7 @@ async function DeList(id, token, callAdd, setCallAdd, setDeleteLoad) {
     try {
         await delHabits(id, token);
         setCallAdd(!callAdd);
-        setTimeout(() => {
-            setDeleteLoad(true);
-        }, 1500);
+        setDeleteLoad(true);
     } catch (error) {
         console.log(error);
         setCallAdd(!callAdd);
@@ -82,7 +78,7 @@ const List_Items = (props) => {
 
                     <span className="name">{props.item.name}</span>
 
-                    <span onClick={() => { props.setShowDes(true); props.setModal(true) ; props.setHabitObj(props.item) }} className="showDesc"> <FontAwesomeIcon icon={faInfo} /></span>
+                    <span onClick={() => { props.setShowDes(true); props.setModal(true); props.setHabitObj(props.item) }} className="showDesc"> <FontAwesomeIcon icon={faInfo} /></span>
 
                     {
                         !deleteLoad ?
@@ -94,7 +90,7 @@ const List_Items = (props) => {
                     }
 
                 </div>
-                
+
             </div>
         </li>
 
