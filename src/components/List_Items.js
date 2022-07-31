@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCheck, faInfo } from '@fortawesome/free-solid-svg-icons';
 import { doneHabit } from "../services/doneHabit";
 import { delHabits } from "../services/delHabits";
-import { TailSpin, Circles } from 'react-loader-spinner';
-import {ReactComponent as Check } from './check.svg';
 
 async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
     setDoneLoad(false);
