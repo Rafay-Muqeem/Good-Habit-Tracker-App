@@ -157,7 +157,7 @@ function Description(props) {
                                 animate={{ opacity: 1, width: "auto" }}
                                 exit={{ opacity: 0, width: 0 }}
                                 transition={{ duration: 0.4, ease: "easeInOut" }}
-                                size={40}
+                                size={35}
                                 type="text" value={editDesc}
                                 onChange={(e) => setEditDesc(e.target.value)}
                             />
@@ -216,7 +216,7 @@ const Dashboard = () => {
     const Interval = timeInSec - Date.now();
 
     const logOutModalRef = useRef();
-    
+
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -304,9 +304,9 @@ const Dashboard = () => {
             <AnimatePresence>
                 {logOut && (
                     <motion.div
-                        initial={{ position: "absolute", zIndex: 2, x: "65%", y: -300, opacity: 0 }}
-                        animate={{ position: "absolute", zIndex: 2, x: "65%", y: 0, opacity: 1 }}
-                        exit={{ position: "absolute", zIndex: 2, x: "65%", y: -300, opacity: 0 }}
+                        initial={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
+                        animate={{ position: "absolute", zIndex: 2, y: 0, opacity: 1 }}
+                        exit={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
                         transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
                     >
                         <LogOut />
@@ -339,7 +339,7 @@ const Dashboard = () => {
                 {
                     !loaded ?
                         <div className="loader">
-                            <ThreeDots color="#590C69" height={60} width={60} />
+                            <ThreeDots color="#590C69" />
                         </div>
                         :
                         <div className="dashboardContent">

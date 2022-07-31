@@ -62,3 +62,58 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0 auto;
 }
+
+/* CSS for device's width less than 430px and greather than 330px */
+
+@media screen and (min-width: 330px) and (max-width: 430px) {
+    .addCard {
+        width: 280px;
+        height: 70vh;
+    }
+    
+    .addCard .listIcon{
+        font-size: 22px;
+    }
+
+    .addCard h1{
+        font-size: 22px;
+    }
+    
+    .add_task_inputs input {
+        height: 42px;
+    }
+    
+    .add_task_inputs button {
+        height: 42px;
+        font-size: 14px;
+    }
+
+}
+
+/* CSS for device's width less than 330px */
+
+@media screen and (max-width: 329px) {
+    .addCard {
+        width: 220px;
+        height: 70vh;
+    }
+    
+    .addCard .listIcon{
+        font-size: 18px;
+    }
+
+    .addCard h1{
+        font-size: 20px;
+    }
+    
+    .add_task_inputs input {
+        height: 38px;
+        font-size: 12px;
+    }
+    
+    .add_task_inputs button {
+        height: 38px;
+        font-size: 14px;
+    }
+
+}

@@ -110,3 +110,91 @@
     width: 20px;
 }
 
+@media screen and (min-width: 330px) and (max-width: 430px) {
+
+    .SignInCard {
+        width: 280px;
+    }
+    
+    .SignInCard h1 {
+        font-size: 22px;
+    }
+    
+    .SignInCard p {
+        font-size: 12px;
+    }
+    
+    .cancelIcon {
+        max-width: 9px;
+        font-size: 22px;
+    }
+    
+    .signIn_inputs input {
+        height: 42px;
+        padding: 0px 10px;
+    }
+    
+    .signIn_inputs button {
+        height: 42px;
+        font-size: 14px;
+    }
+    
+    .signInBottomLine{
+        font-size: 11px;
+    }
+    
+    .SignInCard :nth-child(4){
+        font-size: 10px;
+    }
+    
+    .googleSignInBtn :nth-child(1){
+        width: 18px;
+    }
+}
+
+@media screen and (max-width: 329px) {
+
+    .SignInCard {
+        width: 220px;
+    }
+    
+    .SignInCard h1 {
+        font-size: 20px;
+    }
+    
+    .SignInCard p {
+        font-size: 10px;
+    }
+    
+    .cancelIcon {
+        max-width: 8px;
+        font-size: 20px;
+    }
+    
+    .signIn_inputs input {
+        height: 38px;
+        padding: 0px 10px;
+    }
+    
+    .signIn_inputs button {
+        height: 38px;
+        font-size: 13px;
+    }
+    
+    .signInBottomLine{
+        font-size: 10px;
+    }
+    
+    .SignInCard :nth-child(4){
+        font-size: 10px;
+    }
+    
+    .googleSignInBtn{
+        font-size: 13px;
+    }
+
+    .googleSignInBtn :nth-child(1){
+        width: 16px;
+    }
+
+}

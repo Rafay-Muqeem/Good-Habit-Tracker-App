@@ -3,18 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCheck, faInfo } from '@fortawesome/free-solid-svg-icons';
 import { doneHabit } from "../services/doneHabit";
 import { delHabits } from "../services/delHabits";
-import { TailSpin } from 'react-loader-spinner';
+import { TailSpin, Circles } from 'react-loader-spinner';
+import {ReactComponent as Check } from './check.svg';
 
 async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
     setDoneLoad(false);
     try {
         await doneHabit(id, token);
+        setTimeout( () => {
+            setDoneLoad(true);
+        }, 1000);
         setCallAdd(!callAdd);
-        setDoneLoad(true);
     } catch (error) {
         console.log(error);
-        setCallAdd(!callAdd);
         setDoneLoad(true);
+        setCallAdd(!callAdd);
     }
 }
 
@@ -22,12 +25,14 @@ async function DeList(id, token, callAdd, setCallAdd, setDeleteLoad) {
     setDeleteLoad(false);
     try {
         await delHabits(id, token);
+        setTimeout( () => {
+            setDeleteLoad(true);
+        }, 1000);
         setCallAdd(!callAdd);
-        setDeleteLoad(true);
     } catch (error) {
         console.log(error);
-        setCallAdd(!callAdd);
         setDeleteLoad(true);
+        setCallAdd(!callAdd);
     }
 
 }
@@ -66,9 +71,10 @@ const List_Items = (props) => {
 
                     {
                         !doneLoad ?
-                            <div className="doneLoader">
-                                <TailSpin color="green" width={25} height={25} />
-                            </div>
+                            // <div className="doneLoader">
+                                
+                            // </div>
+                            <span className="skeletonDoneAnimation"></span>
                             :
                             props.item.done ?
                                 <span id="check" className="done" ><FontAwesomeIcon icon={faCheck} /></span> :
@@ -82,9 +88,10 @@ const List_Items = (props) => {
 
                     {
                         !deleteLoad ?
-                            <div className="deleteLoader">
-                                <TailSpin color="red" width={25} height={25} />
-                            </div>
+                            // <div className="deleteLoader">
+                            //     <TailSpin color="red" width={25} height={25} />
+                            // </div>
+                            <span className="skeletonDeleteAnimation"></span>
                             :
                             <span onClick={() => { DeList(props.item._id, props.token, props.callAdd, props.setCallAdd, setDeleteLoad) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
                     }

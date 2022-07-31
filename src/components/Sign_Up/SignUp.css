@@ -1,7 +1,7 @@
 
 .SignUpCard {
     width: 350px;
-    height: 460px;
+    height: 70vh;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #fff;
@@ -84,4 +84,80 @@
 
 .signUpBottomLine p {
     color: black;
+}
+
+@media screen and (min-width: 330px) and (max-width: 430px) {
+
+    .SignUpCard {
+        width: 280px;
+    }
+    
+    .SignUpCard h1 {
+        font-size: 22px;
+    }
+    
+    .SignUpCard p {
+        font-size: 12px;
+    }
+    
+    .cancelIcon {
+        max-width: 9px;
+        font-size: 22px;
+    }
+    
+    .signUp_inputs input {
+        height: 42px;
+        padding: 0px 10px;
+    }
+    
+    .signUp_inputs button {
+        height: 42px;
+        font-size: 14px;
+    }
+    
+    .signUpBottomLine{
+        font-size: 11px;
+    }
+    
+    .signUpBottomLine p {
+        color: black;
+    }
+}
+
+@media screen and (max-width: 329px) {
+    
+    .SignUpCard {
+        width: 220px;
+    }
+    
+    .SignUpCard h1 {
+        font-size: 20px;
+    }
+    
+    .SignUpCard p {
+        font-size: 11px;
+    }
+    
+    .cancelIcon {
+        max-width: 8px;
+        font-size: 20px;
+    }
+    
+    .signUp_inputs input {
+        height: 38px;
+        padding: 0px 10px;
+    }
+    
+    .signUp_inputs button {
+        height: 38px;
+        font-size: 13px;
+    }
+    
+    .signUpBottomLine{
+        font-size: 11px;
+    }
+    
+    .signUpBottomLine p {
+        color: black;
+    }
 }
