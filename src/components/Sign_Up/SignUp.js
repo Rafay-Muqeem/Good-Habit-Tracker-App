@@ -11,7 +11,8 @@ const SignUp = () => {
     const [signUpName, setSignUpName] = useState("");
     const [signUpEmail, setSignUpEmail] = useState("");
     const [signUpPass, setSignUpPass] = useState("");
-    const [empty, setEmpty] = useState(false);
+    const [error, setError] = useState(false);
+    let errMessage = '';
 
     const data = {
         name: signUpName,
@@ -27,12 +28,21 @@ const SignUp = () => {
                     setSignUpName('');
                     setSignUpEmail('');
                     setSignUpPass('');
-                    setEmpty(false);
+                    setError(false);
                     navigate('/signin', { replace: true });
+                }
+                else if( res.status === 400 ) {
+                    errMessage = "Please! Provide correct credentials";
+                    setError(true);
+                }
+                else if( res.status === 403) {
+                    errMessage = "This email is already linked with an account!";
+                    setError(true);
                 }
             }
             else {
-                setEmpty(true);
+                errMessage = "Please! Fill each field"
+                setError(true);
             }
 
         } catch (error) {
@@ -48,7 +58,7 @@ const SignUp = () => {
             className="SignUpCard"
         >
             <h1>Sign Up</h1>
-            {empty ? <p>Please! fill each field</p> : null}
+            {error ? <p>{errMessage}</p> : null}
             <div className="signUp_inputs">
                 <input type="text" value={signUpName} placeholder="Enter name here..." onChange={(e) => setSignUpName(e.target.value)} autoFocus />
                 <input type="email" value={signUpEmail} placeholder="Enter email here..." onChange={(e) => setSignUpEmail(e.target.value)} />

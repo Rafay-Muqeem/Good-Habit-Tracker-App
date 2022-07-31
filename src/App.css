@@ -321,6 +321,28 @@ body {
   margin-bottom: 2px;
 }
 
+.desMain .nameSkeletonAnimation{
+  margin: 6px 0;
+  width: 150px;
+  height:20px;
+  background-color: #ccc;
+  animation: skeleton 0.5s ease-in-out infinite alternate;
+}
+
+.desMain .descSkeletonAnimation{
+  margin-bottom: 4px;
+  width: 300px;
+  height: 15px;
+  background-color: #ccc;
+  animation: skeleton 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton {
+  to{
+    opacity: 0.5;
+  }
+}
+
 .desMain input {
   outline: 0;
   border-width: 0 0 2px;
@@ -332,7 +354,6 @@ body {
   font-size: 20px;
   font-weight: 700;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-transform: uppercase;
   text-align: center;
 }
 
@@ -479,17 +500,6 @@ body {
   height: 50px;
 }
 
-.doneLoader {
-  margin-top: 2px;
-  border: 2px solid #ccc;
-  border-radius: 50%;
-}
-
-.deleteLoader {
-  background: #ccc;
-  border-radius: 50%;
-}
-
 /* CSS for device's width less than 430px and greather than 330px */
 
 @media screen and (min-width: 330px) and (max-width: 430px) {
@@ -581,12 +591,36 @@ body {
 
   .desMain h2 {
     font-size: 17px;
+    font-weight: 500;
     margin-bottom: 1px;
   }
 
   .desMain p {
     font-size: 12px;
+    font-weight: 400;
     margin-bottom: 1px;
+  }
+
+  .desMain .nameSkeletonAnimation{
+    margin: 3px 0;
+    width: 100px;
+    height:18px;
+    background-color: #ccc;
+    animation: skeleton 0.5s ease-in-out infinite alternate;
+  }
+  
+  .desMain .descSkeletonAnimation{
+    margin-bottom: 3px;
+    width: 250px;
+    height: 13px;
+    background-color: #ccc;
+    animation: skeleton 0.5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes skeleton {
+    to{
+      opacity: 0.5;
+    }
   }
 
   .desMain input {
@@ -594,11 +628,13 @@ body {
   }
 
   .desMain input:nth-child(1) {
-    font-size: 17px;
+    font-size: 15px;
+    font-weight: 500;
   }
 
   .desMain input:nth-child(2) {
     font-size: 12px;
+    font-weight: 400;
   }
 
   .desCard .weeklyRecord {
@@ -758,12 +794,36 @@ body {
 
   .desMain h2 {
     font-size: 15px;
+    font-weight: 500;
     margin-bottom: 0;
   }
 
   .desMain p {
     font-size: 11px;
+    font-weight: 400;
     margin-bottom: 0;
+  }
+
+  .desMain .nameSkeletonAnimation{
+    margin: 2px 0;
+    width: 70px;
+    height:16px;
+    background-color: #ccc;
+    animation: skeleton 0.5s ease-in-out infinite alternate;
+  }
+  
+  .desMain .descSkeletonAnimation{
+    margin-bottom: 4px;
+    width: 200px;
+    height: 12px;
+    background-color: #ccc;
+    animation: skeleton 0.5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes skeleton {
+    to{
+      opacity: 0.5;
+    }
   }
 
   .desMain input {
@@ -771,11 +831,13 @@ body {
   }
 
   .desMain input:nth-child(1) {
-    font-size: 15px;
+    font-size: 13px;
+    font-weight: 500;
   }
 
   .desMain input:nth-child(2) {
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 400;
   }
 
   .desCard .weeklyRecord {

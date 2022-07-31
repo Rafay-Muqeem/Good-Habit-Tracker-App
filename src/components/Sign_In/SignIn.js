@@ -14,6 +14,7 @@ const SignIn = () => {
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPass, setSignInPass] = useState("");
     const [error, setError] = useState(false);
+    let errMessage = "";
 
     const data = {
         email: signInEmail,
@@ -43,7 +44,12 @@ const SignIn = () => {
                 setError(false);
                 navigate('/dashboard', { replace: true, state: token });
             }
-            else {
+            else if (res.status === 400) {
+                errMessage = "Oops something wrong! You may provide a wrong email or an empty password field";
+                setError(true);
+            }
+            else if (res.status === 404) {
+                errMessage = "Oops something wrong! This email is not linked to any account. please Sign up first";
                 setError(true);
             }
         } catch (error) {
@@ -79,7 +85,7 @@ const SignIn = () => {
             className="SignInCard"
         >
             <h1>Sign In</h1>
-            {!error ? null : <p>Please! provide correct credentials</p>}
+            {!error ? null : <p>{errMessage}</p>}
             <div className="signIn_inputs">
                 <input type="email" value={signInEmail} placeholder="Enter email here..." onChange={(e) => setSignInEmail(e.target.value)} autoFocus />
                 <input type="password" value={signInPass} placeholder="Enter password here..." onChange={(e) => setSignInPass(e.target.value)} />
@@ -89,7 +95,7 @@ const SignIn = () => {
                 <span>Don't have an account</span>
                 <Link to={"/SignUp"} replace>Sign Up</Link>
             </div>
-            <span>Or</span>
+            <span className='orText'>Or</span>
             <button className='googleSignInBtn' onClick={OnSuccess} >
                 <Google />
                 Sign In with Google

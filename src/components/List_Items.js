@@ -69,9 +69,6 @@ const List_Items = (props) => {
 
                     {
                         !doneLoad ?
-                            // <div className="doneLoader">
-                                
-                            // </div>
                             <span className="skeletonDoneAnimation"></span>
                             :
                             props.item.done ?
@@ -86,9 +83,6 @@ const List_Items = (props) => {
 
                     {
                         !deleteLoad ?
-                            // <div className="deleteLoader">
-                            //     <TailSpin color="red" width={25} height={25} />
-                            // </div>
                             <span className="skeletonDeleteAnimation"></span>
                             :
                             <span onClick={() => { DeList(props.item._id, props.token, props.callAdd, props.setCallAdd, setDeleteLoad) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>

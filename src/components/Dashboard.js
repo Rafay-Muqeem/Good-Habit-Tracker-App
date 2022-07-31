@@ -13,9 +13,11 @@ import { updateHabit } from '../services/updateHabit';
 function Description(props) {
 
     const [edit, setEdit] = useState(false);
+    const [updateLoad, setUpdateLoad] = useState(true);
     const [editName, setEditName] = useState(props.habitObj.name);
     const [editDesc, setEditDesc] = useState(props.habitObj.description);
     const desModalRef = useRef();
+    const editFormRef = useRef();
 
     const data = {
         name: editName,
@@ -33,6 +35,7 @@ function Description(props) {
     ];
 
     async function UpdateHabit() {
+        setUpdateLoad(false);
         try {
             if (editName !== '' && props.token) {
                 const res = await updateHabit(props.habitObj._id, data, props.token);
@@ -40,6 +43,9 @@ function Description(props) {
                 await props.setHabitObj(res.habit);
                 setEditName(res.habit.name);
                 setEditDesc(res.habit.description);
+                setTimeout(() => {
+                    setUpdateLoad(true);
+                }, 1000)
                 setEdit(false);
             }
 
@@ -71,6 +77,9 @@ function Description(props) {
             if (props.showDes && !desModalRef.current.contains(e.target)) {
                 props.setShowDes(false);
                 props.setModal(false);
+            }
+            else if (edit && !editFormRef.current.contains(e.target) && desModalRef.current.contains(e.target)) {
+                UpdateHabit();
             }
         }
         document.addEventListener("mousedown", handler);
@@ -109,10 +118,11 @@ function Description(props) {
                     <span className="backIcon" onClick={() => { props.setShowDes(false); props.setModal(false) }}><FontAwesomeIcon icon={faTimesCircle} /></span>
                     <span className="editIcon" onClick={() => setEdit(true)}><FontAwesomeIcon icon={faEdit} /></span>
                 </div>
-                <div className="desMain">
+                <div ref={editFormRef} id="skeletonEditFormAnimation" className="desMain">
 
                     <AnimatePresence>
                         {!edit ?
+
                             <motion.h2
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -122,16 +132,22 @@ function Description(props) {
                                 {props.habitObj.name}
 
                             </motion.h2>
+
                             :
-                            <motion.input
-                                initial={{ opacity: 0, width: 0 }}
-                                animate={{ opacity: 1, width: "auto" }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                size={editName.length > 0 ? editName.length : 1}
-                                type="text"
-                                value={editName}
-                                onChange={(e) => setEditName(e.target.value.length < 15 ? e.target.value : editName)} autoFocus
-                            />
+
+                            !updateLoad ?
+                                <span className="nameSkeletonAnimation"></span>
+                                :
+                                <motion.input
+                                    initial={{ opacity: 0, width: 0 }}
+                                    animate={{ opacity: 1, width: "auto" }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    size={editName.length > 0 ? editName.length : 1}
+                                    type="text"
+                                    value={editName}
+                                    onChange={(e) => setEditName(e.target.value.length < 15 ? e.target.value : editName)} autoFocus
+                                />
+
 
                         }
 
@@ -140,6 +156,8 @@ function Description(props) {
                     <AnimatePresence>
 
                         {!edit ?
+
+
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -151,17 +169,25 @@ function Description(props) {
                                     props.habitObj.description
                                 }
                             </motion.p>
-                            :
-                            <motion.input
-                                initial={{ opacity: 0, width: 0 }}
-                                animate={{ opacity: 1, width: "auto" }}
-                                exit={{ opacity: 0, width: 0 }}
-                                transition={{ duration: 0.4, ease: "easeInOut" }}
-                                size={35}
-                                type="text" value={editDesc}
-                                onChange={(e) => setEditDesc(e.target.value)}
-                            />
 
+
+                            :
+
+                            // <div>
+                            !updateLoad ?
+                                <span className="descSkeletonAnimation"></span>
+                                :
+                                <motion.input
+                                    initial={{ opacity: 0, width: 0 }}
+                                    animate={{ opacity: 1, width: "auto" }}
+                                    exit={{ opacity: 0, width: 0 }}
+                                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                                    size={35}
+                                    type="text" value={editDesc}
+                                    onChange={(e) => setEditDesc(e.target.value)}
+                                />
+
+                            // </div>
                         }
                     </AnimatePresence>
                 </div>
@@ -257,7 +283,7 @@ const Dashboard = () => {
             }
         }
         habits();
-       
+
     }, [callAdd]);
 
     useEffect(() => {
@@ -326,7 +352,7 @@ const Dashboard = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            
+
             <div id={modal ? "backDull" : null} className="card">
                 <div className="dashboardUpper">
                     <div className="dashboardUpperBar">
