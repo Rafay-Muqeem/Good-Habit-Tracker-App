@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './SignIn.css';
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from '../../services/signIn';
@@ -6,6 +6,7 @@ import { motion } from 'framer-motion/dist/framer-motion';
 import { signInWithGoogle } from '../../services/signInWithGoogle';
 import { ReactComponent as Google } from './google.svg';
 import { SignInWithGoogle } from '../../Firebase';
+import { RotatingLines } from 'react-loader-spinner';
 
 const SignIn = () => {
 
@@ -13,8 +14,10 @@ const SignIn = () => {
 
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPass, setSignInPass] = useState("");
+    const [signInLoad, setSignInLoad] = useState(true);
+    const [googleSignInLoad, setGoogleSignInLoad] = useState(true);
     const [error, setError] = useState(false);
-    const [resMessage, setResMessage] = useState("");
+    const [errMessage, setErrMessage] = useState("");
 
     let reqStatusCode = 0;
 
@@ -23,55 +26,54 @@ const SignIn = () => {
         password: signInPass
     }
 
-    useEffect(() => {
-        const handler = (e) => {
-            if (e.keyCode === 13) {
-                sign_In();
-            }
-        }
-        document.addEventListener("keydown", handler);
-
-        return () => {
-            document.removeEventListener("keydown", handler);
-        }
-    })
-
     async function sign_In() {
+
+        setSignInLoad(false);
+
         try {
+            setErrMessage("");
             const res = await signIn(data);
             reqStatusCode = res.status;
+
             if (reqStatusCode >= 200 && reqStatusCode <= 299) {
                 const token = await res.json();
                 setSignInEmail('');
                 setSignInPass('');
                 setError(false);
-                setResMessage("Successfully Sign in");
+                setSignInLoad(true);
                 navigate('/dashboard', { replace: true, state: token });
             }
             else if (reqStatusCode === 400) {
-                console.log("here")
-                setResMessage("Oops something wrong! You may provide a wrong email or an empty password field");
+                setErrMessage("Oops something wrong! You may provide a wrong email or an empty password field");
+                setSignInLoad(true);
                 setError(true);
             }
             else if (reqStatusCode === 404) {
-                console.log("here")
-                setResMessage("Oops something wrong! This email is not linked with any account. please Sign up first");
+                setErrMessage("Oops something wrong! This email is not linked with any account. Please Sign Up first");
+                setSignInLoad(true);
                 setError(true);
             }
-            
+
         } catch (error) {
-            console.log(error);            
+            console.log(error);
+            setSignInLoad(true);
         }
     }
 
     async function sign_In_Google(data) {
+
+        setGoogleSignInLoad(false);
+
         try {
+            setErrMessage("");
             const res = await signInWithGoogle(data);
             const token = await res.json();
-            setResMessage("Successfully Sign in");
+            setError(false);
+            setGoogleSignInLoad(true);
             navigate('/dashboard', { state: token, replace: true });
         } catch (error) {
             console.log(error);
+            setGoogleSignInLoad(true);
         }
     }
 
@@ -93,22 +95,57 @@ const SignIn = () => {
             className="SignInCard"
         >
             <h1>Sign In</h1>
-            {error ? <p className='errText'>{resMessage}</p> : <p className='succText'>{resMessage}</p>}
+
+            {error && ( 
+                <motion.p 
+                    className='errText'
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                >
+                    {errMessage}
+                </motion.p>
+            )}
+
             <div className="signIn_inputs">
                 <input type="email" value={signInEmail} placeholder="Enter email here..." onChange={(e) => setSignInEmail(e.target.value)} autoFocus />
                 <input type="password" value={signInPass} placeholder="Enter password here..." onChange={(e) => setSignInPass(e.target.value)} />
-                <button onClick={() => { sign_In() }} className="signInButton">Sign In</button>
+                {
+                    signInLoad ?
+                        <motion.button onClick={() => { sign_In() }} className="signInButton" whileTap={{ scale: 0.9 }} >Sign In</motion.button>
+                        :
+                        <button className="signInButton" >
+                            <RotatingLines
+                                strokeColor="white"
+                                strokeWidth="5"
+                                animationDuration="0.75"
+                                width="20"
+                                visible={true}
+                            />
+                        </button>
+                }
             </div>
             <div className='signInBottomLine'>
                 <span>Don't have an account</span>
                 <Link to={"/SignUp"} replace>Sign Up</Link>
             </div>
             <span className='orText'>Or</span>
-            <button className='googleSignInBtn' onClick={OnSuccess} >
-                <Google />
-                Sign In with Google
-            </button>
-
+            {
+                googleSignInLoad ?
+                    <motion.button className='googleSignInBtn' onClick={OnSuccess} whileTap={{ scale: 0.9 }} >
+                        <Google />
+                        Sign In with Google
+                    </motion.button>
+                    :
+                    <button className='googleSignInBtn'>
+                        <RotatingLines
+                            strokeColor="gray"
+                            strokeWidth="5"
+                            animationDuration="0.75"
+                            width="20"
+                            visible={true}
+                        />
+                    </button>
+            }
         </motion.div>
     );
 }

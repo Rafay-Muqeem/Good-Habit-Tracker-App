@@ -1,6 +1,6 @@
 .addCard {
     width: 350px;
-    height: 460px;
+    height: 70vh;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #fff;
@@ -13,14 +13,30 @@
     z-index: 1;
 }
 
-.addCard h1{
+.addCard h1 {
     color: #590C69;
     font-size: 25px;
     white-space: nowrap;
     text-align: center;
     font-weight: 700;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+}
+
+.addCard .errText {
+    color: rgb(189, 39, 39);
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.addCard .succText {
+    color: #1fd655;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 .add_task_inputs {
     width: 100%;
@@ -50,39 +66,35 @@
     border-radius: 3px
 }
 
-.successText{
-    color: white;
-    background-color: green;
-    width: fit-content;
-    height: fit-content;
-    box-shadow: rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    text-align: center;
-    padding: 7px 15px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0 auto;
-}
-
 /* CSS for device's width less than 430px and greather than 330px */
 
 @media screen and (min-width: 330px) and (max-width: 430px) {
     .addCard {
         width: 280px;
-        height: 70vh;
     }
-    
-    .addCard .listIcon{
+
+    .addCard .listIcon {
         font-size: 22px;
     }
 
-    .addCard h1{
+    .addCard h1 {
         font-size: 22px;
     }
+
+    .addCard .errText {
+        font-size: 11px;
+        font-weight: 400;
+    }
     
+    .addCard .succText {
+        font-size: 11px;
+        font-weight: 400;
+    }
+
     .add_task_inputs input {
         height: 42px;
     }
-    
+
     .add_task_inputs button {
         height: 42px;
         font-size: 14px;
@@ -95,22 +107,31 @@
 @media screen and (max-width: 329px) {
     .addCard {
         width: 220px;
-        height: 70vh;
     }
-    
-    .addCard .listIcon{
+
+    .addCard .listIcon {
         font-size: 18px;
     }
 
-    .addCard h1{
+    .addCard h1 {
         font-size: 20px;
     }
+
+    .addCard .errText {
+        font-size: 9px;
+        font-weight: 400;
+    }
     
+    .addCard .succText {
+        font-size: 9px;
+        font-weight: 400;
+    }
+
     .add_task_inputs input {
         height: 38px;
         font-size: 12px;
     }
-    
+
     .add_task_inputs button {
         height: 38px;
         font-size: 14px;

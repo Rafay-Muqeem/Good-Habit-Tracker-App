@@ -29,14 +29,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.SignInCard .succText {
-    color: #1fd655;
-    font-size: 15px;
-    text-align: center;
-    font-weight: 500;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 .cancelIcon {
     color: #590C69;
     max-width: 10px;
@@ -136,12 +128,7 @@
         font-size: 10px;
         font-weight: 400;
     }
-    
-    .SignInCard .succText {
-        font-size: 10px;
-        font-weight: 400;
-    }
-    
+
     .cancelIcon {
         max-width: 9px;
         font-size: 22px;
@@ -186,11 +173,6 @@
     }
     
     .SignInCard .errText {
-        font-size: 9px;
-        font-weight: 400;
-    }
-    
-    .SignInCard .succText {
         font-size: 9px;
         font-weight: 400;
     }
