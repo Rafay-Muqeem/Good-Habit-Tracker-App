@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import './SignUp.css';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { signUp } from '../../services/signUp';
 import { motion } from 'framer-motion/dist/framer-motion';
 
 const SignUp = () => {
 
-    const navigate = useNavigate();
-
     const [signUpName, setSignUpName] = useState("");
     const [signUpEmail, setSignUpEmail] = useState("");
     const [signUpPass, setSignUpPass] = useState("");
     const [error, setError] = useState(false);
-    let errMessage = '';
+    const [resMessage, setResMessage] = useState(false);
+
+    let reqStatusCode = 0;
 
     const data = {
         name: signUpName,
@@ -24,24 +24,26 @@ const SignUp = () => {
         try {
             if (signUpName !== '' && signUpEmail !== '' && signUpPass !== '') {
                 const res = await signUp(data);
-                if (res.status >= 200 && res.status <= 299) {
+                reqStatusCode = res.status;
+
+                if (reqStatusCode >= 200 && reqStatusCode <= 299) {
                     setSignUpName('');
                     setSignUpEmail('');
                     setSignUpPass('');
                     setError(false);
-                    navigate('/signin', { replace: true });
+                    setResMessage("Successfully Sign up! Now you can Sign in");
                 }
-                else if( res.status === 400 ) {
-                    errMessage = "Please! Provide correct credentials";
+                else if( reqStatusCode === 400 ) {
+                    setResMessage("Please! Provide correct credentials");
                     setError(true);
                 }
-                else if( res.status === 403) {
-                    errMessage = "This email is already linked with an account!";
+                else if( reqStatusCode === 403) {
+                    setResMessage("This email is already linked with an account!");
                     setError(true);
                 }
             }
             else {
-                errMessage = "Please! Fill each field"
+                setResMessage("Please! Fill each field");
                 setError(true);
             }
 
@@ -58,7 +60,7 @@ const SignUp = () => {
             className="SignUpCard"
         >
             <h1>Sign Up</h1>
-            {error ? <p>{errMessage}</p> : null}
+            {error ? <p className='errText'>{resMessage}</p> : <p className='succText'>{resMessage}</p>}
             <div className="signUp_inputs">
                 <input type="text" value={signUpName} placeholder="Enter name here..." onChange={(e) => setSignUpName(e.target.value)} autoFocus />
                 <input type="email" value={signUpEmail} placeholder="Enter email here..." onChange={(e) => setSignUpEmail(e.target.value)} />

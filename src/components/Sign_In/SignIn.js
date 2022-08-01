@@ -14,7 +14,9 @@ const SignIn = () => {
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPass, setSignInPass] = useState("");
     const [error, setError] = useState(false);
-    let errMessage = "";
+    const [resMessage, setResMessage] = useState("");
+
+    let reqStatusCode = 0;
 
     const data = {
         email: signInEmail,
@@ -37,23 +39,28 @@ const SignIn = () => {
     async function sign_In() {
         try {
             const res = await signIn(data);
-            const token = await res.json();
-            if (res.status >= 200 && res.status <= 299) {
+            reqStatusCode = res.status;
+            if (reqStatusCode >= 200 && reqStatusCode <= 299) {
+                const token = await res.json();
                 setSignInEmail('');
                 setSignInPass('');
                 setError(false);
+                setResMessage("Successfully Sign in");
                 navigate('/dashboard', { replace: true, state: token });
             }
-            else if (res.status === 400) {
-                errMessage = "Oops something wrong! You may provide a wrong email or an empty password field";
+            else if (reqStatusCode === 400) {
+                console.log("here")
+                setResMessage("Oops something wrong! You may provide a wrong email or an empty password field");
                 setError(true);
             }
-            else if (res.status === 404) {
-                errMessage = "Oops something wrong! This email is not linked to any account. please Sign up first";
+            else if (reqStatusCode === 404) {
+                console.log("here")
+                setResMessage("Oops something wrong! This email is not linked with any account. please Sign up first");
                 setError(true);
             }
+            
         } catch (error) {
-            console.log(error);
+            console.log(error);            
         }
     }
 
@@ -61,6 +68,7 @@ const SignIn = () => {
         try {
             const res = await signInWithGoogle(data);
             const token = await res.json();
+            setResMessage("Successfully Sign in");
             navigate('/dashboard', { state: token, replace: true });
         } catch (error) {
             console.log(error);
@@ -85,7 +93,7 @@ const SignIn = () => {
             className="SignInCard"
         >
             <h1>Sign In</h1>
-            {!error ? null : <p>{errMessage}</p>}
+            {error ? <p className='errText'>{resMessage}</p> : <p className='succText'>{resMessage}</p>}
             <div className="signIn_inputs">
                 <input type="email" value={signInEmail} placeholder="Enter email here..." onChange={(e) => setSignInEmail(e.target.value)} autoFocus />
                 <input type="password" value={signInPass} placeholder="Enter password here..." onChange={(e) => setSignInPass(e.target.value)} />

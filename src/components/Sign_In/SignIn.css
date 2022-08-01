@@ -1,6 +1,6 @@
 .SignInCard {
     width: 350px;
-    height: 460px;
+    height: 70vh;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #fff;
@@ -21,8 +21,16 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.SignInCard p {
+.SignInCard .errText {
     color: rgb(189, 39, 39);
+    font-size: 15px;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.SignInCard .succText {
+    color: #1fd655;
     font-size: 15px;
     text-align: center;
     font-weight: 500;
@@ -124,8 +132,14 @@
         font-size: 22px;
     }
     
-    .SignInCard p {
-        font-size: 12px;
+    .SignInCard .errText {
+        font-size: 10px;
+        font-weight: 400;
+    }
+    
+    .SignInCard .succText {
+        font-size: 10px;
+        font-weight: 400;
     }
     
     .cancelIcon {
@@ -171,8 +185,14 @@
         font-size: 20px;
     }
     
-    .SignInCard p {
-        font-size: 10px;
+    .SignInCard .errText {
+        font-size: 9px;
+        font-weight: 400;
+    }
+    
+    .SignInCard .succText {
+        font-size: 9px;
+        font-weight: 400;
     }
     
     .cancelIcon {
