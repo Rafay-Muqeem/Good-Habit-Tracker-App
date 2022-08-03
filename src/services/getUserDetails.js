@@ -7,8 +7,7 @@ export async function getUserDetails(token){
             }
         })
         
-        const response = await userInfo.json();
-        return response;
+        return userInfo;
 
     } catch (error) {
         return error;

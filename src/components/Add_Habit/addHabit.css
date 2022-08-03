@@ -1,6 +1,19 @@
+/* Setting  height */
+@media screen and (max-height: 1023px) {
+    .addCard{
+        min-height: 50vh;
+        max-height: 70vh;
+    }
+}
+
+@media screen and (min-height: 1024px) {
+    .addCard{
+        height: 530px;
+    }
+}
+
 .addCard {
     width: 350px;
-    height: 70vh;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #fff;
@@ -137,4 +150,10 @@
         font-size: 14px;
     }
 
+}
+
+@media screen and (min-height: 1024px) {
+    .addCard{
+        height: 620px;
+    }
 }

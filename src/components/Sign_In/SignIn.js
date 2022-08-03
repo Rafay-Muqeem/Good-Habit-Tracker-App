@@ -42,6 +42,7 @@ const SignIn = () => {
                 setError(false);
                 setSignInLoad(true);
                 navigate('/dashboard', { replace: true, state: token });
+
             }
             else if (reqStatusCode === 400) {
                 setErrMessage("Oops something wrong! You may provide a wrong email or an empty password field");
@@ -70,7 +71,7 @@ const SignIn = () => {
             const token = await res.json();
             setError(false);
             setGoogleSignInLoad(true);
-            navigate('/dashboard', { state: token, replace: true });
+            navigate('/dashboard', { replace: true, state: token });
         } catch (error) {
             console.log(error);
             setGoogleSignInLoad(true);
@@ -85,7 +86,6 @@ const SignIn = () => {
 
     }
 
-
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -96,11 +96,11 @@ const SignIn = () => {
         >
             <h1>Sign In</h1>
 
-            {error && ( 
-                <motion.p 
+            {error && (
+                <motion.p
                     className='errText'
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                 >
                     {errMessage}
                 </motion.p>

@@ -1,0 +1,71 @@
+/* Setting  height */
+@media screen and (max-height: 1023px) {
+    .err401Main{
+        height: 50vh;
+    }
+}
+
+@media screen and (min-height: 1024px) {
+    .err401Main{
+        height: 530px;
+    }
+}
+
+.err401Main{
+    width: 350px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8x;
+}
+
+.err401Main button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: black;
+    background-color: rgb(215, 215, 215);
+    border: 1px solid #E1E1E1;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 8px 15px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.err401Main .arrowIcon{
+    margin-top: 2px;
+}
+
+@media screen and (min-width: 330px) and (max-width: 430px) {
+    .err401Main{
+        width: 280px;
+    }
+
+    .err401Main button{
+        font-size: 11px;
+        font-weight: 500;
+    }
+}
+
+@media screen and (max-width: 329px) {
+    .err401Main{
+        width: 220px;
+    }
+
+    .err401Main button{
+        font-size: 9px;
+        font-weight: 500;
+    }
+}

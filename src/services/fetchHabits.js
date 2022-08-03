@@ -7,9 +7,8 @@ export async function fetctHabits(token){
                 "auth-token": token
             }
         })
-        const response = await habitsArray.json();
 
-        return response;
+        return habitsArray;
     }
     catch(error){
         console.log(error);

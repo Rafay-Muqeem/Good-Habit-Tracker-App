@@ -2,227 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import ListItems from './List_Items';
 import { fetctHabits } from "../services/fetchHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd, faSignOut, faEdit, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getUserDetails } from "../services/getUserDetails";
-import { ThreeDots } from 'react-loader-spinner'
+import { ThreeDots } from 'react-loader-spinner';
 import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
-import { updateHabit } from '../services/updateHabit';
+import Description from "./Description/Description";
+import Error404 from "./404Error/Error404";
 
-function Description(props) {
-
-    const [edit, setEdit] = useState(false);
-    const [updateLoad, setUpdateLoad] = useState(true);
-    const [editName, setEditName] = useState(props.habitObj.name);
-    const [editDesc, setEditDesc] = useState(props.habitObj.description);
-    const desModalRef = useRef();
-    const editFormRef = useRef();
-
-    const data = {
-        name: editName,
-        description: editDesc
-    }
-
-    const weekDays = [
-        { day: "SUN", done: false, current: false },
-        { day: "MON", done: false, current: false },
-        { day: "TUE", done: false, current: false },
-        { day: "WED", done: false, current: false },
-        { day: "THU", done: false, current: false },
-        { day: "FRI", done: false, current: false },
-        { day: "SAT", done: false, current: false }
-    ];
-
-    async function UpdateHabit() {
-        setUpdateLoad(false);
-        try {
-            if (editName !== '' && props.token) {
-                const res = await updateHabit(props.habitObj._id, data, props.token);
-                props.setCallAdd(!props.callAdd);
-                await props.setHabitObj(res.habit);
-                setEditName(res.habit.name);
-                setEditDesc(res.habit.description);
-                setTimeout(() => {
-                    setUpdateLoad(true);
-                }, 1000)
-                setEdit(false);
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const getWeekData = (habit) => {
-        if (habit) {
-            for (let i = 0; i < 7; i++) {
-                for (let j = 0; j < habit.weeklyRecord.length; j++) {
-                    if (habit.weeklyRecord[j] === i) {
-                        weekDays[i].done = true;
-                    }
-                }
-                if ((new Date()).getDay() === i) {
-                    weekDays[i].current = true;
-                }
-            }
-        }
-
-        return weekDays;
-    }
-
-    useEffect(() => {
-
-        let handler = (e) => {
-            if (props.showDes && !desModalRef.current.contains(e.target)) {
-                props.setShowDes(false);
-                props.setModal(false);
-            }
-            else if (edit && !editFormRef.current.contains(e.target) && desModalRef.current.contains(e.target)) {
-                UpdateHabit();
-            }
-        }
-        document.addEventListener("mousedown", handler);
-
-        return () => {
-            document.removeEventListener("mousedown", handler);
-        }
-    })
-
-    useEffect(() => {
-
-        let handler = (e) => {
-
-            if (e.keyCode === 13) {
-                UpdateHabit()
-            }
-        }
-
-        document.addEventListener("keydown", handler);
-
-        return () => {
-            document.removeEventListener("keydown", handler);
-        }
-    })
-
-    let week;
-
-    if (props.habitObj) {
-        week = getWeekData(props.habitObj, weekDays);
-    }
-
-    if (props.habitObj) {
-        return (
-            <div ref={desModalRef} className="desCard">
-                <div className="desUpper">
-                    <span className="backIcon" onClick={() => { props.setShowDes(false); props.setModal(false) }}><FontAwesomeIcon icon={faTimesCircle} /></span>
-                    <span className="editIcon" onClick={() => setEdit(true)}><FontAwesomeIcon icon={faEdit} /></span>
-                </div>
-                <div ref={editFormRef} id="skeletonEditFormAnimation" className="desMain">
-
-                    <AnimatePresence>
-                        {!edit ?
-
-                            <motion.h2
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.5, ease: "easeInOut" }}
-                            >
-
-                                {props.habitObj.name}
-
-                            </motion.h2>
-
-                            :
-
-                            !updateLoad ?
-                                <span className="nameSkeletonAnimation"></span>
-                                :
-                                <motion.input
-                                    initial={{ opacity: 0, width: 0 }}
-                                    animate={{ opacity: 1, width: "auto" }}
-                                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                                    size={editName.length > 0 ? editName.length : 1}
-                                    type="text"
-                                    value={editName}
-                                    onChange={(e) => setEditName(e.target.value.length < 15 ? e.target.value : editName)} autoFocus
-                                />
-
-
-                        }
-
-                    </AnimatePresence>
-
-                    <AnimatePresence>
-
-                        {!edit ?
-
-
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.5, ease: "easeInOut" }}
-                            >
-                                {props.habitObj.description === '' ?
-                                    "No Description"
-                                    :
-                                    props.habitObj.description
-                                }
-                            </motion.p>
-
-
-                            :
-
-                            // <div>
-                            !updateLoad ?
-                                <span className="descSkeletonAnimation"></span>
-                                :
-                                <motion.input
-                                    initial={{ opacity: 0, width: 0 }}
-                                    animate={{ opacity: 1, width: "auto" }}
-                                    exit={{ opacity: 0, width: 0 }}
-                                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                                    size={35}
-                                    type="text" value={editDesc}
-                                    onChange={(e) => setEditDesc(e.target.value)}
-                                />
-
-                            // </div>
-                        }
-                    </AnimatePresence>
-                </div>
-                <div className="weeklyRecord">
-                    {week.map((dayObj, ind) => {
-
-                        if (dayObj.done) {
-                            if (dayObj.current) {
-                                return (
-                                    <span key={ind} className="currentAndDoneDay">{dayObj.day}</span>
-                                );
-                            }
-                            return (
-                                <span key={ind} className="doneDay">{dayObj.day}</span>
-                            );
-                        }
-                        else {
-                            if (dayObj.current) {
-                                return (
-                                    <span key={ind} className="currentAndUnDoneDay">{dayObj.day}</span>
-                                );
-                            }
-                            return (
-                                <span key={ind} className="unDoneDay">{dayObj.day}</span>
-                            );
-                        }
-
-                    })}
-                </div>
-                {props.habitObj.streak === 0 || props.habitObj.streak === 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is <b>{props.habitObj.streak} days</b></p>}
-            </div>
-        );
-    }
-
-}
 
 const Dashboard = () => {
     const location = useLocation();
@@ -237,6 +25,7 @@ const Dashboard = () => {
     const [showDes, setShowDes] = useState(false);
     const [modal, setModal] = useState(false);
     const [habitObj, setHabitObj] = useState({});
+    // const [resStatusCode, setResStatusCode] = useState(0);
 
     const timeInSec = moment().endOf('day').valueOf();
     const Interval = timeInSec - Date.now();
@@ -269,20 +58,31 @@ const Dashboard = () => {
     });
 
     useEffect(() => {
-        async function habits() {
-            try {
-                const habitsArr = await fetctHabits(token);
-                setListItems(habitsArr);
-                const UserInfo = await getUserDetails(token);
-                setUserInfo(UserInfo);
-                setLoaded(true);
-            }
-            catch (error) {
-                console.log(error);
-                setLoaded(true);
-            }
-        }
-        habits();
+
+
+            async function habits() {
+                    
+                    try {
+                        const habitsArr = await fetctHabits(token);
+                        // setResStatusCode(habitsArr.status);
+
+                        if (habitsArr.status >= 200 && habitsArr.status <= 299) {
+                            setListItems(await habitsArr.json());
+                        }
+
+                        const UserInfo = await getUserDetails(token);
+
+                        if (UserInfo.status >= 200 && UserInfo.status <= 299) {
+                            setUserInfo(await UserInfo.json());
+                        }
+                        setLoaded(true);
+                    }
+                    catch (error) {
+                        console.log(error);
+                        setLoaded(true);
+                    }
+                }
+            habits();
 
     }, [callAdd]);
 
@@ -320,74 +120,81 @@ const Dashboard = () => {
         );
     }
 
-    return (
-        <motion.div
-            initial={{ scale: 1.2 }}
-            animate={{ scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
-        >
-            <AnimatePresence>
-                {logOut && (
-                    <motion.div
-                        initial={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
-                        animate={{ position: "absolute", zIndex: 2, y: 0, opacity: 1 }}
-                        exit={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
-                        transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
-                    >
-                        <LogOut />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+    if (!token) {
+        return <Error404 />
+    }
+    if (token) {
+        return (
+            <motion.div
+                initial={{ scale: 1.2 }}
+                animate={{ scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+            >
 
-            <AnimatePresence>
-                {showDes && (
-                    <motion.div
-                        initial={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
-                        animate={{ position: "absolute", zIndex: 2, x: 0, y: 100, opacity: 1 }}
-                        exit={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
-                        transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
-                    >
-                        <Description token={token} showDes={showDes} setShowDes={setShowDes} callAdd={callAdd} setCallAdd={setCallAdd} setModal={setModal} habitObj={habitObj} setHabitObj={setHabitObj} />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                <AnimatePresence>
+                    {logOut && (
+                        <motion.div
+                            initial={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
+                            animate={{ position: "absolute", zIndex: 2, y: 0, opacity: 1 }}
+                            exit={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
+                            transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+                        >
+                            <LogOut />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-            <div id={modal ? "backDull" : null} className="card">
-                <div className="dashboardUpper">
-                    <div className="dashboardUpperBar">
-                        <Link className="addIcon" to="/dashboard/add" replace={true} state={token}><FontAwesomeIcon icon={faAdd} /></Link>
-                        <span>{!userInfo.name ? <ThreeDots color="#590C69" width={20} height={20} /> : userInfo.name}</span>
-                        <span className="logOutIcon" onClick={() => { setLogOut(true); setModal(true) }} ><FontAwesomeIcon icon={faSignOut} /></span>
+                <AnimatePresence>
+                    {showDes && (
+                        <motion.div
+                            initial={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
+                            animate={{ position: "absolute", zIndex: 2, x: 0, y: 100, opacity: 1 }}
+                            exit={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
+                            transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+                        >
+                            <Description token={token} showDes={showDes} setShowDes={setShowDes} callAdd={callAdd} setCallAdd={setCallAdd} setModal={setModal} habitObj={habitObj} setHabitObj={setHabitObj} />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                <div id={modal ? "backDull" : null} className="card">
+                    <div className="dashboardUpper">
+                        <div className="dashboardUpperBar">
+                            <Link className="addIcon" to="/dashboard/add" replace={true} state={token}><FontAwesomeIcon icon={faAdd} /></Link>
+                            <span>{!userInfo.name ? <ThreeDots color="#590C69" width={20} height={20} /> : userInfo.name}</span>
+                            <span className="logOutIcon" onClick={() => { setLogOut(true); setModal(true) }} ><FontAwesomeIcon icon={faSignOut} /></span>
+                        </div>
+                        <h1>Habits List</h1>
                     </div>
-                    <h1>Habits List</h1>
+                    {
+                        !loaded ?
+                            <div className="loader">
+                                <ThreeDots color="#590C69" />
+                            </div>
+                            :
+                            <div className="dashboardContent">
+                                <motion.ul variants={container} initial="hidden" animate="show" className="item_list">
+                                    {
+                                        listItems.map((itemval) => {
+                                            return (
+                                                <motion.div
+                                                    variants={listItem}
+                                                    key={itemval._id}
+                                                >
+                                                    <ListItems item={itemval} token={token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} />
+                                                </motion.div>
+                                            );
+                                        })
+                                    }
+
+                                </motion.ul>
+                            </div>
+                    }
                 </div>
-                {
-                    !loaded ?
-                        <div className="loader">
-                            <ThreeDots color="#590C69" />
-                        </div>
-                        :
-                        <div className="dashboardContent">
-                            <motion.ul variants={container} initial="hidden" animate="show" className="item_list">
-                                {listItems.map((itemval) => {
-                                    return (
-                                        <motion.div
-                                            variants={listItem}
-                                            key={itemval._id}
-                                        >
-                                            <ListItems item={itemval} token={token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} />
-                                        </motion.div>
-                                    );
-                                })}
-
-                            </motion.ul>
-                        </div>
-                }
-            </div>
-        </motion.div>
-    );
-
+            </motion.div>
+        );
+    }
 }
 
 export default Dashboard;

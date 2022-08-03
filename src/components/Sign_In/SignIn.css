@@ -1,6 +1,19 @@
+/* Setting  height */
+@media screen and (max-height: 1023px) {
+    .SignInCard{
+        min-height: 50vh;
+        max-height: 70vh;
+    }
+}
+
+@media screen and (min-height: 1024px) {
+    .SignInCard{
+        height: 530px;
+    }
+}
+
 .SignInCard {
     width: 350px;
-    height: 70vh;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #fff;
