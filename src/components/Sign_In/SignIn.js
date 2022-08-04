@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SignIn.css';
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from '../../services/signIn';
@@ -21,6 +21,14 @@ const SignIn = () => {
 
     let reqStatusCode = 0;
 
+
+    useEffect(() => {
+
+        const token = JSON.parse(localStorage.getItem('Token'));
+        if (token) navigate(-1);
+
+    }, []);
+
     const data = {
         email: signInEmail,
         password: signInPass
@@ -41,8 +49,8 @@ const SignIn = () => {
                 setSignInPass('');
                 setError(false);
                 setSignInLoad(true);
-                navigate('/dashboard', { replace: true, state: token });
-
+                localStorage.setItem('Token', JSON.stringify(token));
+                navigate('/dashboard', { replace: true });
             }
             else if (reqStatusCode === 400) {
                 setErrMessage("Oops something wrong! You may provide a wrong email or an empty password field");
@@ -71,7 +79,8 @@ const SignIn = () => {
             const token = await res.json();
             setError(false);
             setGoogleSignInLoad(true);
-            navigate('/dashboard', { replace: true, state: token });
+            localStorage.setItem('Token', JSON.stringify(token));
+            navigate('/dashboard', { replace: true });
         } catch (error) {
             console.log(error);
             setGoogleSignInLoad(true);

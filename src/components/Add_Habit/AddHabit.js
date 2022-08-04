@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addHabits } from "../../services/addHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './AddHabit.css';
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
 import { RotatingLines } from 'react-loader-spinner';
-import Error404 from '../404Error/Error404';
 
 const AddHabit = () => {
 
-    const location = useLocation();
-    const token = location.state;
+    const navigate = useNavigate();
 
     const [inputName, setInputName] = useState("");
     const [inputDesc, setInputDesc] = useState("");
@@ -19,7 +17,16 @@ const AddHabit = () => {
     const [added, setAdded] = useState(false);
     const [addLoad, setAddLoad] = useState(true);
     const [resMessage, setResMessage] = useState("");
+    const [Token, setToken] = useState('');
     // const [resStatusCode, setResStatusCode] = useState(0);
+
+    useEffect(() => {
+
+        const token = JSON.parse(localStorage.getItem('Token'));
+        if (token) setToken(token);
+        if (!token) navigate('/signin');
+
+    }, [])
 
     async function addHabit() {
 
@@ -33,7 +40,7 @@ const AddHabit = () => {
             }
 
             try {
-                const res = await addHabits(token, data);
+                const res = await addHabits(Token, data);
                 // setResStatusCode(res.status);
 
                 if (res.status >= 200 && res.status <= 299) {
@@ -67,10 +74,7 @@ const AddHabit = () => {
         }
     };
 
-    if (!token) {
-        return <Error404 />
-    }
-    if (token) {
+    if (Token) {
         return (
             <motion.div
                 initial={{ scale: 0.2 }}
@@ -79,7 +83,7 @@ const AddHabit = () => {
                 transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
             >
                 <div className="addCard">
-                    <Link className="listIcon" to="/dashboard" replace={true} state={token}> <FontAwesomeIcon icon={faListCheck} /></Link>
+                    <Link className="listIcon" to="/dashboard" replace={true}> <FontAwesomeIcon icon={faListCheck} /></Link>
                     <h1>Add Habit</h1>
 
                     <AnimatePresence>

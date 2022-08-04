@@ -3,19 +3,18 @@ import ListItems from './List_Items';
 import { fetctHabits } from "../services/fetchHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getUserDetails } from "../services/getUserDetails";
 import { ThreeDots } from 'react-loader-spinner';
 import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
 import Description from "./Description/Description";
-import Error404 from "./404Error/Error404";
-
 
 const Dashboard = () => {
-    const location = useLocation();
-    const token = location.state;
+
     const navigate = useNavigate();
+
+
 
     const [callAdd, setCallAdd] = useState(false);
     const [listItems, setListItems] = useState([]);
@@ -25,6 +24,7 @@ const Dashboard = () => {
     const [showDes, setShowDes] = useState(false);
     const [modal, setModal] = useState(false);
     const [habitObj, setHabitObj] = useState({});
+    const [Token, setToken] = useState('');
     // const [resStatusCode, setResStatusCode] = useState(0);
 
     const timeInSec = moment().endOf('day').valueOf();
@@ -59,32 +59,39 @@ const Dashboard = () => {
 
     useEffect(() => {
 
+        const token = JSON.parse(localStorage.getItem('Token'));
+        if (token) setToken(token)
+        if (!token) navigate('/signin')
 
-            async function habits() {
-                    
-                    try {
-                        const habitsArr = await fetctHabits(token);
-                        // setResStatusCode(habitsArr.status);
+        async function habits() {
 
-                        if (habitsArr.status >= 200 && habitsArr.status <= 299) {
-                            setListItems(await habitsArr.json());
-                        }
+            if (Token !== '') {
 
-                        const UserInfo = await getUserDetails(token);
+                try {
+                    const habitsArr = await fetctHabits(Token);
+                    // setResStatusCode(habitsArr.status);
 
-                        if (UserInfo.status >= 200 && UserInfo.status <= 299) {
-                            setUserInfo(await UserInfo.json());
-                        }
-                        setLoaded(true);
+                    if (habitsArr.status >= 200 && habitsArr.status <= 299) {
+                        setListItems(await habitsArr.json());
                     }
-                    catch (error) {
-                        console.log(error);
-                        setLoaded(true);
+
+                    const UserInfo = await getUserDetails(Token);
+
+                    if (UserInfo.status >= 200 && UserInfo.status <= 299) {
+                        setUserInfo(await UserInfo.json());
                     }
+                    setLoaded(true);
                 }
-            habits();
+                catch (error) {
+                    console.log(error);
+                    setLoaded(true);
+                }
+            }
 
-    }, [callAdd]);
+        }
+        habits();
+
+    }, [callAdd, Token]);
 
     useEffect(() => {
 
@@ -102,7 +109,9 @@ const Dashboard = () => {
     })
 
     const signOutYes = () => {
-        navigate('/signin', { replace: true });
+        // localStorage.setItem('Token', JSON.stringify(''));
+        localStorage.removeItem('Token')
+        navigate('/signin');
     }
 
     function LogOut() {
@@ -120,10 +129,7 @@ const Dashboard = () => {
         );
     }
 
-    if (!token) {
-        return <Error404 />
-    }
-    if (token) {
+    if (Token) {
         return (
             <motion.div
                 initial={{ scale: 1.2 }}
@@ -153,7 +159,7 @@ const Dashboard = () => {
                             exit={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
                             transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
                         >
-                            <Description token={token} showDes={showDes} setShowDes={setShowDes} callAdd={callAdd} setCallAdd={setCallAdd} setModal={setModal} habitObj={habitObj} setHabitObj={setHabitObj} />
+                            <Description token={Token} showDes={showDes} setShowDes={setShowDes} callAdd={callAdd} setCallAdd={setCallAdd} setModal={setModal} habitObj={habitObj} setHabitObj={setHabitObj} />
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -161,7 +167,7 @@ const Dashboard = () => {
                 <div id={modal ? "backDull" : null} className="card">
                     <div className="dashboardUpper">
                         <div className="dashboardUpperBar">
-                            <Link className="addIcon" to="/dashboard/add" replace={true} state={token}><FontAwesomeIcon icon={faAdd} /></Link>
+                            <Link className="addIcon" to="/dashboard/add" replace={true} state={Token}><FontAwesomeIcon icon={faAdd} /></Link>
                             <span>{!userInfo.name ? <ThreeDots color="#590C69" width={20} height={20} /> : userInfo.name}</span>
                             <span className="logOutIcon" onClick={() => { setLogOut(true); setModal(true) }} ><FontAwesomeIcon icon={faSignOut} /></span>
                         </div>
@@ -182,7 +188,7 @@ const Dashboard = () => {
                                                     variants={listItem}
                                                     key={itemval._id}
                                                 >
-                                                    <ListItems item={itemval} token={token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} />
+                                                    <ListItems item={itemval} token={Token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} />
                                                 </motion.div>
                                             );
                                         })

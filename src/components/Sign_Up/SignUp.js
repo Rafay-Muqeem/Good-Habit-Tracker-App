@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUp.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUp } from '../../services/signUp';
 import { motion } from 'framer-motion/dist/framer-motion';
 import { RotatingLines } from 'react-loader-spinner';
@@ -15,6 +15,15 @@ const SignUp = () => {
     const [resMessage, setResMessage] = useState(false);
 
     let reqStatusCode = 0;
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+        const token = JSON.parse(localStorage.getItem('Token'));
+        if (token) navigate(-1);
+
+    }, []);
 
     const data = {
         name: signUpName,
@@ -96,19 +105,19 @@ const SignUp = () => {
                 <input type="password" value={signUpPass} placeholder="Enter password here..." onChange={(e) => setSignUpPass(e.target.value)} />
                 {
                     signUpLoad ?
-                    <motion.button onClick={() => { sign_Up(data) }} className="signUpButton" whileTap={{ scale: 0.9 }} >Sign Up</motion.button>
-                    :
-                    <button className="signUpButton" >
-                        <RotatingLines
+                        <motion.button onClick={() => { sign_Up(data) }} className="signUpButton" whileTap={{ scale: 0.9 }} >Sign Up</motion.button>
+                        :
+                        <button className="signUpButton" >
+                            <RotatingLines
                                 strokeColor="white"
                                 strokeWidth="5"
                                 animationDuration="0.75"
                                 width="20"
                                 visible={true}
                             />
-                    </button>
+                        </button>
                 }
-                
+
             </div>
             <div className='signUpBottomLine'>
                 <p>Already have an account</p>
