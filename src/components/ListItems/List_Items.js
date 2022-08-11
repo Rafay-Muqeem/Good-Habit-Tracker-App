@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCheck, faInfo } from '@fortawesome/free-solid-svg-icons';
-import { doneHabit } from "../services/doneHabit";
-import { delHabits } from "../services/delHabits";
+import { doneHabit } from "../../services/doneHabit";
+import { delHabits } from "../../services/delHabits";
+import './List_Items.css';
 
 async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
     setDoneLoad(false);

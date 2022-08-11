@@ -1,0 +1,626 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    position: relative;
+}
+
+.navLeft {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-left: 50px;
+    padding: 10px 0;
+}
+
+.navLeft h1 {
+    font-size: 22px;
+    font-weight: 400;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+.navRightLogOut .mainMenu {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-right: 50px;
+    padding: 10px 0;
+}
+
+.navRightLogOut .mainMenu button {
+    border-radius: 5px;
+    border: 2px solid;
+    border-image: linear-gradient(145deg, #BE44B2, #446EBE) 1;
+    padding: 8px 15px;
+    font-size: 13px;
+    background: transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    box-shadow: 0 0 4px 0px rgba(255, 255, 255, 0.48);
+    -webkit-transition: box-shadow 0.25s;
+    transition: box-shadow 0.25s;
+}
+
+.navRightLogOut .mainMenu button:hover {
+    border-image: linear-gradient(-145deg, #BE44B2, #446EBE) 1;
+    box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1);
+}
+
+.navRightLogOut .mobileMenu {
+    display: none;
+}
+
+.navRightLogIn {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    margin-right: 50px;
+}
+
+.navRightLogIn .mainMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.navRightLogIn .mainMenu .userSvg {
+    width: 28px;
+    height: 28px;
+}
+
+.navRightLogIn .mainMenu span {
+    color: #FFFFFF;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.navRightLogIn .mainMenu .dropDownSvg {
+    margin-top: 4px;
+    width: 20px;
+    height: 20px;
+}
+
+.navRightLogIn .dropDownMenu {
+    width: fit-content;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 60px;
+    z-index: 2;
+}
+
+.navRightLogIn .dropDownMenu div {
+    cursor: pointer;
+}
+
+.navRightLogIn .dropDownMenu div span {
+    color: black;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.navRightLogIn .mobileMenu {
+    display: none;
+}
+
+.SkeletonAnimationMainMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+.picSkeleton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    animation: skeleton 0.5s ease-in-out infinite alternate;
+}
+
+.nameSkeleton {
+    width: 50px;
+    height: 22px;
+    border-radius: 5px;
+    background-color: #ccc;
+    animation: skeleton 0.5s ease-in-out infinite alternate;
+}
+
+.dropDownSkeleton {
+    width: 13px;
+    height: 13px;
+    border-radius: 2px;
+    background-color: #ccc;
+    animation: skeleton 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton {
+    to {
+        opacity: 0.5;
+    }
+}
+
+
+/* Nav LogOut Menu CSS */
+
+.navLogOutMobileMenu {
+    display: none
+}
+
+/* Nav LogIn Menu CSS */
+
+.navLogInMobileMenu {
+    display: none;
+}
+
+@media screen and (max-width: 630px) {
+
+    .navLeft {
+        margin-left: 30px;
+    }
+
+    .navLeft :first-child {
+        max-width: 40px;
+        max-height: 30px;
+    }
+
+    .navLeft h1 {
+        font-size: 18px;
+    }
+
+    .navRightLogOut {
+        margin-right: 30px;
+    }
+
+    .navRightLogOut .mainMenu {
+        display: none;
+    }
+
+    .navRightLogOut .mobileMenu {
+        display: block;
+        cursor: pointer;
+    }
+
+    .SkeletonAnimationMainMenu {
+        display: none;
+    }
+
+    .navRightLogIn {
+        margin-right: 30px;
+    }
+
+    .navRightLogIn .mainMenu {
+        display: none;
+    }
+
+    .navRightLogIn .dropDownMenu {
+        display: none;
+    }
+
+    .navRightLogIn .mobileMenu {
+        display: block;
+        cursor: pointer;
+    }
+
+    /* Nav LogOut Menu CSS */
+
+    .navLogOutMobileMenu {
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(0deg, rgba(56, 0, 102, 0.2) 40%, rgba(56, 0, 102, 1) 100%);
+        backdrop-filter: brightness(30%);
+        width: 40vw;
+        height: calc(100vh - 50px);
+        position: absolute;
+        top: 50px;
+        left: 0;
+        z-index: 2;
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .navLogOutMobileMenu>* {
+        border-bottom: 0.5px solid #ccc;
+        margin: 0 10px;
+        padding: 13px 5px;
+    }
+
+    .navLogOutMobileMenu span {
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        color: #FFFFFF;
+    }
+
+    /* Nav LogIn Menu CSS */
+
+    .navLogInMobileMenu {
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(0deg, rgba(56, 0, 102, 0.2) 40%, rgba(56, 0, 102, 1) 100%);
+        backdrop-filter: brightness(30%);
+        width: 40vw;
+        height: calc(100vh - 50px);
+        position: absolute;
+        top: 50px;
+        left: 0;
+        z-index: 2;
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .navLogInMobileMenu>* {
+        border-bottom: 0.5px solid #ccc;
+        margin: 0 10px;
+    }
+
+    .navLogInMobileMenu .intro {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        color: #FFFFFF;
+        padding: 20px 5px;
+    }
+
+    .navLogInMobileMenu .intro span {
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .navLogInMobileMenu .intro .userSvg {
+        width: 27px;
+        height: 27px;
+    }
+
+    .navLogInMobileMenu .logOut {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 7px;
+        padding: 10px;
+        color: #FFFFFF;
+        padding: 13px 5px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .navLogInMobileMenu .logOut span {
+        font-size: 15px;
+        font-weight: 500;
+    }
+}
+
+@media screen and (max-width: 530px) {
+
+    .navLeft {
+        margin-left: 15px;
+    }
+
+    .navLeft :first-child{
+        max-width: 35px;
+        max-height: 25px;
+    }
+
+    .navLeft h1 {
+        font-size: 18px;
+    }
+
+    .navRightLogOut {
+        margin-right: 15px;
+    }
+
+    .navRightLogIn {
+        margin-right: 15px;
+    }
+
+    /* Nav LogOut Menu CSS */
+
+    .navLogOutMobileMenu {
+        display: flex;
+        flex-direction: column;
+        width: 40vw;
+        height: calc(100vh - 45px);
+        position: absolute;
+        top: 45px;
+        left: 0;
+        z-index: 2;
+    }
+
+    .navLogOutMobileMenu > * {
+        margin: 0 9px;
+        padding: 12px 5px;
+    }
+
+    .navLogOutMobileMenu span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #FFFFFF;
+    }
+
+    /* Nav LogIn Menu CSS */
+
+    .navLogInMobileMenu {
+        display: flex;
+        flex-direction: column;
+        width: 40vw;
+        height: calc(100vh - 45px);
+        position: absolute;
+        top: 45px;
+        left: 0;
+        z-index: 2;
+    }
+
+    .navLogInMobileMenu > * {
+        margin: 0 9px;
+    }
+
+    .navLogInMobileMenu .intro {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 7px;
+        padding: 18px 5px;
+    }
+
+    .navLogInMobileMenu .intro span {
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .navLogInMobileMenu .intro .userSvg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .navLogInMobileMenu .logOut {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 9px;
+        color: #FFFFFF;
+        padding: 13px 5px;
+        font-size: 14px;
+    }
+
+    .navLogInMobileMenu .logOut span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+}
+
+
+@media screen and (max-width: 430px) {
+
+    .navLeft {
+        margin-left: 12px;
+    }
+
+    .navLeft :first-child{
+        max-width: 33px;
+        max-height: 23px;
+    }
+
+    .navLeft h1 {
+        font-size: 16px;
+    }
+
+    .navRightLogOut {
+        margin-right: 12px;
+    }
+
+    .navRightLogOut .mobileMenu :first-child {
+        width: 28px;
+        height: 28px;
+    }
+
+    .navRightLogIn {
+        margin-right: 12px;
+    }
+
+    .navRightLogIn .mobileMenu :first-child {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Nav LogOut Menu CSS */
+
+    .navLogOutMobileMenu {
+        display: flex;
+        flex-direction: column;
+        width: 40vw;
+        height: calc(100vh - 43px);
+        position: absolute;
+        top: 43px;
+        left: 0;
+        z-index: 2;
+    }
+
+    .navLogOutMobileMenu > * {
+        margin: 0 8px;
+        padding: 10px 4px;
+    }
+
+    .navLogOutMobileMenu span {
+        font-size: 13px;
+        font-weight: 400;
+        color: #FFFFFF;
+    }
+
+    /* Nav LogIn Menu CSS */
+
+    .navLogInMobileMenu {
+        display: flex;
+        flex-direction: column;
+        width: 45vw;
+        height: calc(100vh - 43px);
+        position: absolute;
+        top: 43px;
+        left: 0;
+        z-index: 2;
+    }
+
+    .navLogInMobileMenu > * {
+        margin: 0 8px;
+    }
+
+    .navLogInMobileMenu .intro {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 16px 4px;
+    }
+
+    .navLogInMobileMenu .intro span {
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 400;
+    }
+
+    .navLogInMobileMenu .intro .userSvg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .navLogInMobileMenu .logOut {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 8px;
+        color: #FFFFFF;
+        padding: 12px 4px;
+        font-size: 12px;
+    }
+
+    .navLogInMobileMenu .logOut span {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+}
+
+@media screen and (max-width: 330px) {
+    .navLeft {
+        margin-left: 10px;
+    }
+
+    .navLeft :first-child{
+        max-width: 32px;
+        max-height: 22px;
+    }
+
+    .navLeft h1 {
+        font-size: 15px;
+    }
+
+    .navRightLogOut {
+        margin-right: 10px;
+    }
+
+    .navRightLogOut .mobileMenu{
+        width: 27px;
+        height: 27px;
+    }
+
+    .navRightLogIn {
+        margin-right: 10px;
+    }
+
+    .navRightLogIn .mobileMenu{
+        width: 27px;
+        height: 27px;
+    }
+
+    /* Nav LogOut Menu CSS */
+
+    .navLogOutMobileMenu {
+        display: flex;
+        flex-direction: column;
+        width: 45vw;
+        height: calc(100vh - 42px);
+        position: absolute;
+        top: 42px;
+        left: 0;
+        z-index: 2;
+    }
+
+    .navLogOutMobileMenu>* {
+        margin: 0 7px;
+        padding: 8px 3px;
+    }
+
+    .navLogOutMobileMenu span {
+        font-size: 11px;
+        font-weight: 400;
+        color: #FFFFFF;
+    }
+
+    /* Nav LogIn Menu CSS */
+
+    .navLogInMobileMenu {
+        display: flex;
+        flex-direction: column;
+        width: 50vw;
+        height: calc(100vh - 42px);
+        position: absolute;
+        top: 42px;
+        left: 0;
+        z-index: 2;
+    }
+
+    .navLogInMobileMenu > * {
+        margin: 0 7px;
+    }
+
+    .navLogInMobileMenu .intro {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+        padding: 13px 1px;
+    }
+
+    .navLogInMobileMenu .intro span {
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: 400;
+    }
+
+    .navLogInMobileMenu .intro .userSvg {
+        width: 23px;
+        height: 23px;
+    }
+
+    .navLogInMobileMenu .logOut {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        padding: 6px;
+        color: #FFFFFF;
+        padding: 11px 3px;
+        font-size: 11px;
+    }
+
+    .navLogInMobileMenu .logOut span {
+        font-size: 11px;
+        font-weight: 400;
+    }
+}

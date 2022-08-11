@@ -1,13 +1,14 @@
-import './App.css';
 import React from 'react';
-import {  BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import AnimatedComps from './components/AnimatedComponents';
+import Navbar from './components/Navbar/Navbar';
 
 function App() {
   return (
-    <Router>
-      <AnimatedComps />
-    </Router>
+      <Router>
+        <Navbar />
+        <AnimatedComps />
+      </Router>
   );
 }
 

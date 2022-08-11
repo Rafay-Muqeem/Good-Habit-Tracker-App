@@ -7,11 +7,13 @@ import { signInWithGoogle } from '../../services/signInWithGoogle';
 import { ReactComponent as Google } from './google.svg';
 import { SignInWithGoogle } from '../../Firebase';
 import { RotatingLines } from 'react-loader-spinner';
+import { State } from '../../state/Context';
 
 const SignIn = () => {
 
     const navigate = useNavigate();
 
+    const { dispatch } = State();
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPass, setSignInPass] = useState("");
     const [signInLoad, setSignInLoad] = useState(true);
@@ -20,7 +22,6 @@ const SignIn = () => {
     const [errMessage, setErrMessage] = useState("");
 
     let reqStatusCode = 0;
-
 
     useEffect(() => {
 
@@ -49,6 +50,7 @@ const SignIn = () => {
                 setSignInPass('');
                 setError(false);
                 setSignInLoad(true);
+                dispatch({ type: 'SET_TOKEN', payload: token});
                 localStorage.setItem('Token', JSON.stringify(token));
                 navigate('/dashboard', { replace: true });
             }
@@ -79,6 +81,7 @@ const SignIn = () => {
             const token = await res.json();
             setError(false);
             setGoogleSignInLoad(true);
+            dispatch({ type: 'SET_TOKEN', payload: token});
             localStorage.setItem('Token', JSON.stringify(token));
             navigate('/dashboard', { replace: true });
         } catch (error) {

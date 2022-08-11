@@ -23,6 +23,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 8x;
+    margin-top: 10vh;
 }
 
 .err401Main button{

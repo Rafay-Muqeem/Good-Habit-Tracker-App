@@ -1,26 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import ListItems from './List_Items';
-import { fetctHabits } from "../services/fetchHabits";
+import React, { useEffect, useState } from "react";
+import ListItems from '../ListItems/List_Items';
+import { fetctHabits } from "../../services/fetchHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
-import { getUserDetails } from "../services/getUserDetails";
+import { getUserDetails } from "../../services/getUserDetails";
 import { ThreeDots } from 'react-loader-spinner';
 import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
-import Description from "./Description/Description";
+import Description from "../Description/Description";
+import './Dashboard.css';
+import { State } from '../../state/Context';
 
 const Dashboard = () => {
 
     const navigate = useNavigate();
-
-
-
+    
+    const { state, dispatch } = State()
     const [callAdd, setCallAdd] = useState(false);
     const [listItems, setListItems] = useState([]);
-    const [userInfo, setUserInfo] = useState({});
-    const [logOut, setLogOut] = useState(false);
-    const [loaded, setLoaded] = useState(false);
+    // const [logOut, setLogOut] = useState(false);
+    // const [loaded, setLoaded] = useState(false);
     const [showDes, setShowDes] = useState(false);
     const [modal, setModal] = useState(false);
     const [habitObj, setHabitObj] = useState({});
@@ -29,8 +29,6 @@ const Dashboard = () => {
 
     const timeInSec = moment().endOf('day').valueOf();
     const Interval = timeInSec - Date.now();
-
-    const logOutModalRef = useRef();
 
     const container = {
         hidden: { opacity: 0 },
@@ -58,6 +56,7 @@ const Dashboard = () => {
     });
 
     useEffect(() => {
+        // console.log(state);
 
         const token = JSON.parse(localStorage.getItem('Token'));
         if (token) setToken(token)
@@ -70,6 +69,13 @@ const Dashboard = () => {
                 try {
                     const habitsArr = await fetctHabits(Token);
                     // setResStatusCode(habitsArr.status);
+                    
+                    if(habitsArr.status === 401){
+                        localStorage.removeItem('Token');
+                        localStorage.removeItem('User');
+                        dispatch({ type: "RESET" });
+                        navigate('/');
+                    }
 
                     if (habitsArr.status >= 200 && habitsArr.status <= 299) {
                         setListItems(await habitsArr.json());
@@ -78,13 +84,17 @@ const Dashboard = () => {
                     const UserInfo = await getUserDetails(Token);
 
                     if (UserInfo.status >= 200 && UserInfo.status <= 299) {
-                        setUserInfo(await UserInfo.json());
+                        const user = await UserInfo.json();
+                        dispatch({ type: 'SET_USER', payload: user });
+                        localStorage.setItem('User', JSON.stringify(user));
                     }
-                    setLoaded(true);
+
+                    dispatch({ type: 'SET_DATA_LOAD', payload: true });
                 }
                 catch (error) {
                     console.log(error);
-                    setLoaded(true);
+                    dispatch({ type: 'SET_USER', payload: {}});
+                    dispatch({ type: 'SET_DATA_LOAD', payload: true });
                 }
             }
 
@@ -93,41 +103,23 @@ const Dashboard = () => {
 
     }, [callAdd, Token]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        let handler = (e) => {
-            if (logOut && !logOutModalRef.current.contains(e.target)) {
-                setLogOut(false);
-                setModal(false);
-            }
-        }
-        document.addEventListener("mousedown", handler);
+    //     let handler = (e) => {
+    //         if (state.logOut && !logOutModalRef.current.contains(e.target)) {
+    //             // setLogOut(false);
+    //             dispatch({ type: 'SET_LOGOUT', payload: false });
+    //             setModal(false);
+    //         }
+    //     }
+    //     document.addEventListener("mousedown", handler);
 
-        return () => {
-            document.removeEventListener("mousedown", handler);
-        }
-    })
+    //     return () => {
+    //         document.removeEventListener("mousedown", handler);
+    //     }
+    // })
 
-    const signOutYes = () => {
-        // localStorage.setItem('Token', JSON.stringify(''));
-        localStorage.removeItem('Token')
-        navigate('/signin');
-    }
-
-    function LogOut() {
-        return (
-            <div ref={logOutModalRef} className="logOutCard">
-                <div className="logOutCardContent">
-                    <h1>Log Out</h1>
-                    <span>Do you want to Log out?</span>
-                    <div className="logOut_buttons">
-                        <button onClick={() => { setLogOut(false); setModal(false) }} >No</button>
-                        <button className='logOut_buttons' onClick={signOutYes}>Yes</button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    // console.log(state);
 
     if (Token) {
         return (
@@ -138,18 +130,19 @@ const Dashboard = () => {
                 transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
             >
 
-                <AnimatePresence>
-                    {logOut && (
+                {/* <AnimatePresence>
+                    {state.logOut && (
+                        
                         <motion.div
                             initial={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
                             animate={{ position: "absolute", zIndex: 2, y: 0, opacity: 1 }}
                             exit={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
                             transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
-                        >
+                        >   
                             <LogOut />
                         </motion.div>
                     )}
-                </AnimatePresence>
+                </AnimatePresence> */}
 
                 <AnimatePresence>
                     {showDes && (
@@ -163,18 +156,16 @@ const Dashboard = () => {
                         </motion.div>
                     )}
                 </AnimatePresence>
-
-                <div id={modal ? "backDull" : null} className="card">
+                        
+                <div id={ modal ? "backDull" : null } className="card">
                     <div className="dashboardUpper">
                         <div className="dashboardUpperBar">
                             <Link className="addIcon" to="/dashboard/add" replace={true} state={Token}><FontAwesomeIcon icon={faAdd} /></Link>
-                            <span>{!userInfo.name ? <ThreeDots color="#590C69" width={20} height={20} /> : userInfo.name}</span>
-                            <span className="logOutIcon" onClick={() => { setLogOut(true); setModal(true) }} ><FontAwesomeIcon icon={faSignOut} /></span>
                         </div>
                         <h1>Habits List</h1>
                     </div>
                     {
-                        !loaded ?
+                        !state.mainDataLoad ?
                             <div className="loader">
                                 <ThreeDots color="#590C69" />
                             </div>
@@ -198,6 +189,7 @@ const Dashboard = () => {
                             </div>
                     }
                 </div>
+                
             </motion.div>
         );
     }
