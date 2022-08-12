@@ -19,7 +19,6 @@ const Dashboard = () => {
     const { state, dispatch } = State()
     const [callAdd, setCallAdd] = useState(false);
     const [listItems, setListItems] = useState([]);
-    // const [logOut, setLogOut] = useState(false);
     // const [loaded, setLoaded] = useState(false);
     const [showDes, setShowDes] = useState(false);
     const [modal, setModal] = useState(false);
@@ -56,7 +55,6 @@ const Dashboard = () => {
     });
 
     useEffect(() => {
-        // console.log(state);
 
         const token = JSON.parse(localStorage.getItem('Token'));
         if (token) setToken(token)
@@ -103,24 +101,6 @@ const Dashboard = () => {
 
     }, [callAdd, Token]);
 
-    // useEffect(() => {
-
-    //     let handler = (e) => {
-    //         if (state.logOut && !logOutModalRef.current.contains(e.target)) {
-    //             // setLogOut(false);
-    //             dispatch({ type: 'SET_LOGOUT', payload: false });
-    //             setModal(false);
-    //         }
-    //     }
-    //     document.addEventListener("mousedown", handler);
-
-    //     return () => {
-    //         document.removeEventListener("mousedown", handler);
-    //     }
-    // })
-
-    // console.log(state);
-
     if (Token) {
         return (
             <motion.div
@@ -129,20 +109,6 @@ const Dashboard = () => {
                 exit={{ opacity: 0 }}
                 transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
             >
-
-                {/* <AnimatePresence>
-                    {state.logOut && (
-                        
-                        <motion.div
-                            initial={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
-                            animate={{ position: "absolute", zIndex: 2, y: 0, opacity: 1 }}
-                            exit={{ position: "absolute", zIndex: 2, y: -300, opacity: 0 }}
-                            transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
-                        >   
-                            <LogOut />
-                        </motion.div>
-                    )}
-                </AnimatePresence> */}
 
                 <AnimatePresence>
                     {showDes && (

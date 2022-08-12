@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { ReactComponent as Logo } from './Logo.svg';
-import { ReactComponent as Menu } from './Menu.svg';
 import { ReactComponent as DropDown } from './DropDown.svg';
 import { ReactComponent as User } from './User.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +8,7 @@ import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
 import { State } from '../../state/Context';
+import Menu from '../MenuIcon/Menu';
 
 export default function Navbar() {
 
@@ -18,10 +18,8 @@ export default function Navbar() {
     const dropDownRef = useRef();
 
     const { state, dispatch } = State();
-    const [logOutMenuOpen, setLogOutMenuOpen] = useState(false);
-    const [logInMenuOpen, setLogInMenuOpen] = useState(false);
     const [dropDown, setDropDown] = useState(false);
-    
+
     useEffect(() => {
 
         let handler = (e) => {
@@ -44,7 +42,6 @@ export default function Navbar() {
         if (user) dispatch({ type: 'SET_USER', payload: user });
     }, [state.userToken]);
 
-    // console.log(state.userInfo);
 
     return (
         <div ref={navRef} className='navbar'>
@@ -65,8 +62,8 @@ export default function Navbar() {
                             <button onClick={() => navigate('/signin')}>Sign In</button>
                             <button onClick={() => navigate('/signup')}>Sign Up</button>
                         </div>
-                        <div className='mobileMenu'>
-                            <Menu onClick={() => setLogOutMenuOpen(!logOutMenuOpen)} />
+                        <div onClick={() => dispatch({ type: 'SET_MOBILE_MENU', payload: !state.mobileMenu })} className='mobileMenu'>
+                            <Menu />
                         </div>
 
                     </motion.div>
@@ -140,8 +137,8 @@ export default function Navbar() {
                             }
                         </AnimatePresence>
 
-                        <div className='mobileMenu'>
-                            <Menu onClick={() => setLogInMenuOpen(!logInMenuOpen)} />
+                        <div onClick={() => dispatch({ type: 'SET_MOBILE_MENU', payload: !state.mobileMenu }) } className='mobileMenu'>
+                            <Menu />
                         </div>
 
                     </motion.div>
@@ -149,48 +146,48 @@ export default function Navbar() {
             }
 
             <AnimatePresence>
-                {logOutMenuOpen && (
-                    <motion.div
-                        className='navLogOutMobileMenu'
-                        initial={{ x: -100, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -100, opacity: 0 }}
-                        transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
-                    >
-                        <span onClick={() => { navigate('/signin'); setLogOutMenuOpen(false) }}>Sign In</span>
-                        <span onClick={() => { navigate('/signup'); setLogOutMenuOpen(false) }}>Sign Up</span>
-                    </motion.div>
+                {state.mobileMenu && (
+
+                    !state.userToken ?
+                        <motion.div
+                            className='navLogOutMobileMenu'
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: -100, opacity: 0 }}
+                            transition={{ ease: "easeInOut" }}
+                        >
+                            <span onClick={() => { navigate('/signin'); dispatch({ type: 'SET_MOBILE_MENU', payload: false }) }}>Sign In</span>
+                            <span onClick={() => { navigate('/signup'); dispatch({ type: 'SET_MOBILE_MENU', payload: false }) }}>Sign Up</span>
+                        </motion.div>
+
+                        :
+
+                        <motion.div
+                            className='navLogInMobileMenu'
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: -100, opacity: 0 }}
+                            transition={{ ease: "easeInOut" }}
+                        >
+                            <div className='intro'>
+                                <User className='userSvg' />
+                                <span>{state.userInfo.name}</span>
+                            </div>
+                            <motion.div className='logOut'
+                                onClick={() => {
+                                    dispatch({ type: 'RESET' });
+                                    localStorage.removeItem('Token');
+                                    localStorage.removeItem('User');
+                                    setDropDown(false);
+                                    navigate('/');
+                                }}
+                            >
+                                <span>Sign Out</span><FontAwesomeIcon icon={faSignOut} />
+                            </motion.div>
+                        </motion.div>
                 )}
             </AnimatePresence>
 
-            <AnimatePresence>
-                {logInMenuOpen && (
-                    <motion.div
-                        className='navLogInMobileMenu'
-                        initial={{ x: -100, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -100, opacity: 0 }}
-                        transition={{ ease: "easeInOut" }}
-                    >
-                        <div className='intro'>
-                            <User className='userSvg' />
-                            <span>{state.userInfo.name}</span>
-                        </div>
-                        <div className='logOut'
-                            onClick={() => {
-                                dispatch({ type: 'RESET' });
-                                setLogInMenuOpen(false);
-                                localStorage.removeItem('Token');
-                                localStorage.removeItem('User');
-                                setDropDown(false);
-                                navigate('/');
-                            }}
-                        >
-                            <span>Sign Out</span><FontAwesomeIcon icon={faSignOut} />
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </div>
 
     )

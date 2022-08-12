@@ -8,7 +8,7 @@ const Context = ({children}) => {
     const initialState = {
         userInfo: {},
         userToken:'',
-        logOut: false,
+        mobileMenu: false,
         mainDataLoad: false
     }
     const [state, dispatch] = useReducer(Reducer, initialState)

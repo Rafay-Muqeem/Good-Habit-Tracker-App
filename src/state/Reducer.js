@@ -5,35 +5,35 @@ export const Reducer = (state, action) => {
             return ({
                 userInfo: action.payload,
                 userToken: state.userToken,
-                logOut: state.logOut,
+                mobileMenu: state.mobileMenu,
                 mainDataLoad: state.mainDataLoad
             })
-        case 'SET_LOGOUT':
+        case 'SET_MOBILE_MENU':
             return ({
                 userInfo: state.userInfo,
                 userToken: state.userToken,
-                logOut: action.payload,
+                mobileMenu: action.payload,
                 mainDataLoad: state.mainDataLoad
             })
         case 'SET_TOKEN':
             return({
                 userInfo: state.userInfo,
                 userToken: action.payload,
-                logOut: state.logOut,
+                mobileMenu: state.mobileMenu,
                 mainDataLoad: state.mainDataLoad
             })
         case 'SET_DATA_LOAD':
             return ({
                 userInfo: state.userInfo,
                 userToken: state.userToken,
-                logOut: state.logOut,
+                mobileMenu: state.mobileMenu,
                 mainDataLoad: action.payload
             })
         case 'RESET':
             return ({
                 userInfo: {},
                 userToken: '',
-                logOut: false,
+                mobileMenu: false,
                 mainDataLoad: false
             })
 

@@ -1,5 +1,14 @@
-.homeMain h2{
+.homeMain{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40vh;
+}
+
+.homeMain h2 {
     color: white;
-    font-size: 18px;
-    margin: auto auto
+    font-size: 3vw;
+    font-weight: 500;
 }

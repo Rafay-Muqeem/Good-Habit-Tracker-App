@@ -200,6 +200,7 @@
 
     .navRightLogIn {
         margin-right: 30px;
+
     }
 
     .navRightLogIn .mainMenu {
@@ -213,6 +214,78 @@
     .navRightLogIn .mobileMenu {
         display: block;
         cursor: pointer;
+
+    }
+
+    /* Menu Icon CSS */
+
+    #menu {
+        position: relative;
+        width: 28px;
+        height: 32px;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .5s ease-in-out;
+        -moz-transition: .5s ease-in-out;
+        -o-transition: .5s ease-in-out;
+        transition: .5s ease-in-out;
+        cursor: pointer;
+        color: #ccc;
+    }
+
+    #menu span {
+        display: block;
+        position: absolute;
+        height: 4px;
+        width: 100%;
+        background-color: #FFFFFF;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .25s ease-in-out;
+        -moz-transition: .25s ease-in-out;
+        -o-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+    }
+
+    #menu .close:nth-child(1) {
+        top: 4px;
+    }
+
+    #menu .close:nth-child(2) {
+        top: 14px;
+    }
+
+    #menu .close:nth-child(3) {
+        top: 24px;
+    }
+
+    #menu .open:nth-child(1) {
+        top: 14px;
+        -webkit-transform: rotate(135deg);
+        -moz-transform: rotate(135deg);
+        -o-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    #menu .open:nth-child(2) {
+        opacity: 0;
+        top: 14px;
+        left: -60px;
+    }
+
+    #menu .open:nth-child(3) {
+        top: 14px;
+        -webkit-transform: rotate(-135deg);
+        -moz-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);
+        transform: rotate(-135deg);
     }
 
     /* Nav LogOut Menu CSS */
@@ -301,6 +374,7 @@
         font-size: 15px;
         font-weight: 500;
     }
+
 }
 
 @media screen and (max-width: 530px) {
@@ -309,7 +383,7 @@
         margin-left: 15px;
     }
 
-    .navLeft :first-child{
+    .navLeft :first-child {
         max-width: 35px;
         max-height: 25px;
     }
@@ -326,6 +400,106 @@
         margin-right: 15px;
     }
 
+    /* Menu Icon CSS */
+
+    #menu {
+        position: relative;
+        width: 24px;
+        height: 28px;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .5s ease-in-out;
+        -moz-transition: .5s ease-in-out;
+        -o-transition: .5s ease-in-out;
+        transition: .5s ease-in-out;
+        cursor: pointer;
+        color: #FFFFFF;
+    }
+
+    #menu span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background-color: #FFFFFF;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .25s ease-in-out;
+        -moz-transition: .25s ease-in-out;
+        -o-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+    }
+
+    #menu .close:nth-child(1) {
+        top: 4px;
+    }
+
+    #menu .close:nth-child(2) {
+        top: 12px;
+    }
+
+    #menu .close:nth-child(3) {
+        top: 20px;
+    }
+
+    #menu .open:nth-child(1) {
+        top: 12px;
+        -webkit-transform: rotate(135deg);
+        -moz-transform: rotate(135deg);
+        -o-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    #menu .open:nth-child(2) {
+        opacity: 0;
+        top: 12px;
+        left: -60px;
+    }
+
+    #menu .open:nth-child(3) {
+        top: 12px;
+        -webkit-transform: rotate(-135deg);
+        -moz-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);
+        transform: rotate(-135deg);
+    }
+
+    /* Nav LogOut Menu CSS */
+
+    .navLogOutMobileMenu {
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(0deg, rgba(56, 0, 102, 0.2) 40%, rgba(56, 0, 102, 1) 100%);
+        backdrop-filter: brightness(30%);
+        width: 40vw;
+        height: calc(100vh - 50px);
+        position: absolute;
+        top: 50px;
+        left: 0;
+        z-index: 2;
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .navLogOutMobileMenu>* {
+        border-bottom: 0.5px solid #ccc;
+        margin: 0 10px;
+        padding: 13px 5px;
+    }
+
+    .navLogOutMobileMenu span {
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        color: #FFFFFF;
+    }
+
     /* Nav LogOut Menu CSS */
 
     .navLogOutMobileMenu {
@@ -339,7 +513,7 @@
         z-index: 2;
     }
 
-    .navLogOutMobileMenu > * {
+    .navLogOutMobileMenu>* {
         margin: 0 9px;
         padding: 12px 5px;
     }
@@ -363,7 +537,7 @@
         z-index: 2;
     }
 
-    .navLogInMobileMenu > * {
+    .navLogInMobileMenu>* {
         margin: 0 9px;
     }
 
@@ -411,7 +585,7 @@
         margin-left: 12px;
     }
 
-    .navLeft :first-child{
+    .navLeft :first-child {
         max-width: 33px;
         max-height: 23px;
     }
@@ -438,6 +612,77 @@
         height: 28px;
     }
 
+    /* Menu Icon CSS */
+
+    #menu {
+        position: relative;
+        width: 20px;
+        height: 26px;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .5s ease-in-out;
+        -moz-transition: .5s ease-in-out;
+        -o-transition: .5s ease-in-out;
+        transition: .5s ease-in-out;
+        cursor: pointer;
+        color: #FFFFFF;
+    }
+
+    #menu span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background-color: #FFFFFF;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .25s ease-in-out;
+        -moz-transition: .25s ease-in-out;
+        -o-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+    }
+
+    #menu .close:nth-child(1) {
+        top: 6px;
+    }
+
+    #menu .close:nth-child(2) {
+        top: 12px;
+    }
+
+    #menu .close:nth-child(3) {
+        top: 18px;
+    }
+
+    #menu .open:nth-child(1) {
+        top: 12px;
+        -webkit-transform: rotate(135deg);
+        -moz-transform: rotate(135deg);
+        -o-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+
+    #menu .open:nth-child(2) {
+        opacity: 0;
+        top: 12px;
+        left: -60px;
+    }
+
+    #menu .open:nth-child(3) {
+        top: 12px;
+        -webkit-transform: rotate(-135deg);
+        -moz-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);
+        transform: rotate(-135deg);
+    }
+
     /* Nav LogOut Menu CSS */
 
     .navLogOutMobileMenu {
@@ -451,7 +696,7 @@
         z-index: 2;
     }
 
-    .navLogOutMobileMenu > * {
+    .navLogOutMobileMenu>* {
         margin: 0 8px;
         padding: 10px 4px;
     }
@@ -475,7 +720,7 @@
         z-index: 2;
     }
 
-    .navLogInMobileMenu > * {
+    .navLogInMobileMenu>* {
         margin: 0 8px;
     }
 
@@ -521,7 +766,7 @@
         margin-left: 10px;
     }
 
-    .navLeft :first-child{
+    .navLeft :first-child {
         max-width: 32px;
         max-height: 22px;
     }
@@ -534,7 +779,7 @@
         margin-right: 10px;
     }
 
-    .navRightLogOut .mobileMenu{
+    .navRightLogOut .mobileMenu {
         width: 27px;
         height: 27px;
     }
@@ -543,10 +788,11 @@
         margin-right: 10px;
     }
 
-    .navRightLogIn .mobileMenu{
+    .navRightLogIn .mobileMenu {
         width: 27px;
         height: 27px;
     }
+
 
     /* Nav LogOut Menu CSS */
 
@@ -585,7 +831,7 @@
         z-index: 2;
     }
 
-    .navLogInMobileMenu > * {
+    .navLogInMobileMenu>* {
         margin: 0 7px;
     }
 
