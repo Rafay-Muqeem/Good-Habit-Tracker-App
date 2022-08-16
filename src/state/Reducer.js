@@ -6,35 +6,35 @@ export const Reducer = (state, action) => {
                 userInfo: action.payload,
                 userToken: state.userToken,
                 mobileMenu: state.mobileMenu,
-                mainDataLoad: state.mainDataLoad
+                sessExp: state.mainDataLoad
             })
         case 'SET_MOBILE_MENU':
             return ({
                 userInfo: state.userInfo,
                 userToken: state.userToken,
                 mobileMenu: action.payload,
-                mainDataLoad: state.mainDataLoad
+                sessExp: state.mainDataLoad
             })
         case 'SET_TOKEN':
             return({
                 userInfo: state.userInfo,
                 userToken: action.payload,
                 mobileMenu: state.mobileMenu,
-                mainDataLoad: state.mainDataLoad
+                sessExp: state.mainDataLoad
             })
-        case 'SET_DATA_LOAD':
+        case 'SET_SESSION_EXP':
             return ({
                 userInfo: state.userInfo,
                 userToken: state.userToken,
                 mobileMenu: state.mobileMenu,
-                mainDataLoad: action.payload
+                sessExp: action.payload
             })
         case 'RESET':
             return ({
                 userInfo: {},
                 userToken: '',
                 mobileMenu: false,
-                mainDataLoad: false
+                sessExp: false
             })
 
         default:

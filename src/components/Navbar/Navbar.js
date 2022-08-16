@@ -20,6 +20,28 @@ export default function Navbar() {
     const { state, dispatch } = State();
     const [dropDown, setDropDown] = useState(false);
 
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+
+            if (state.userToken) {
+                const sessExp = JSON.parse(localStorage.getItem('sessionExp'));
+                
+                if (Date.now() >= sessExp) {
+                    dispatch({ type: "RESET" });
+                    dispatch({ type: 'SET_SESSION_EXP', payload: true });
+                    localStorage.removeItem('User');
+                    localStorage.removeItem('Token');
+                    localStorage.removeItem('sessionExp');
+                    navigate('/signin');
+                }
+
+            }
+        }, 65 * 1000);
+
+        return () => clearInterval(timer);
+    });
+
     useEffect(() => {
 
         let handler = (e) => {
@@ -27,6 +49,7 @@ export default function Navbar() {
             if (dropDown && !mainMenuRef.current.contains(e.target) && !dropDownRef.current.contains(e.target)) {
                 setDropDown(false);
             }
+
         }
         document.addEventListener("mousedown", handler);
 
@@ -40,23 +63,23 @@ export default function Navbar() {
         dispatch({ type: 'SET_TOKEN', payload: token });
         const user = JSON.parse(localStorage.getItem('User'));
         if (user) dispatch({ type: 'SET_USER', payload: user });
-    }, [state.userToken]);
-
+    }, []);
 
     return (
         <div ref={navRef} className='navbar'>
 
-            <div className='navLeft'>
+            <div onClick={() => navigate('/')} className='navLeft'>
                 <Logo />
                 <h1>Habit Tracker</h1>
             </div>
             {
                 !state.userToken ?
+
                     <motion.div
                         className='navRightLogOut'
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ type: 'spring', bounce: 0.25, ease: "easeInOut" }}
+                        transition={{ ease: "easeInOut" }}
                     >
                         <div className='mainMenu'>
                             <button onClick={() => navigate('/signin')}>Sign In</button>
@@ -74,7 +97,7 @@ export default function Navbar() {
                         className='navRightLogIn'
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ type: 'spring', bounce: 0.25, ease: "easeInOut" }}
+                        transition={{ ease: "easeInOut" }}
                     >
 
                         {
@@ -125,6 +148,7 @@ export default function Navbar() {
                                                 dispatch({ type: 'RESET' });
                                                 localStorage.removeItem('Token');
                                                 localStorage.removeItem('User');
+                                                localStorage.removeItem('sessionExp');
                                                 setDropDown(false);
                                                 navigate('/');
                                             }}
@@ -137,7 +161,7 @@ export default function Navbar() {
                             }
                         </AnimatePresence>
 
-                        <div onClick={() => dispatch({ type: 'SET_MOBILE_MENU', payload: !state.mobileMenu }) } className='mobileMenu'>
+                        <div onClick={() => dispatch({ type: 'SET_MOBILE_MENU', payload: !state.mobileMenu })} className='mobileMenu'>
                             <Menu />
                         </div>
 
@@ -175,10 +199,11 @@ export default function Navbar() {
                             </div>
                             <motion.div className='logOut'
                                 onClick={() => {
+                                    setDropDown(false);
                                     dispatch({ type: 'RESET' });
                                     localStorage.removeItem('Token');
                                     localStorage.removeItem('User');
-                                    setDropDown(false);
+                                    localStorage.removeItem('sessionExp');
                                     navigate('/');
                                 }}
                             >

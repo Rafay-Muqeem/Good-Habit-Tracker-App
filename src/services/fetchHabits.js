@@ -11,6 +11,6 @@ export async function fetctHabits(token){
         return habitsArray;
     }
     catch(error){
-        console.log(error);
+        throw error;
     }
 }

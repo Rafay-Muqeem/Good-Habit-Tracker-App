@@ -6,11 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import './AddHabit.css';
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
 import { RotatingLines } from 'react-loader-spinner';
+import { State } from "../../state/Context";
 
 const AddHabit = () => {
 
     const navigate = useNavigate();
 
+    const { dispatch } = State();
     const [inputName, setInputName] = useState("");
     const [inputDesc, setInputDesc] = useState("");
     const [error, setError] = useState(false);
@@ -41,7 +43,15 @@ const AddHabit = () => {
 
             try {
                 const res = await addHabits(Token, data);
-                // setResStatusCode(res.status);
+
+                if (res.status === 401) {
+                    dispatch({ type: "RESET" });
+                    dispatch({ type: 'SET_SESSION_EXP', payload: true })
+                    localStorage.removeItem('User');
+                    localStorage.removeItem('Token');
+                    localStorage.removeItem('sessionExp');
+                    navigate('/signin');
+                }
 
                 if (res.status >= 200 && res.status <= 299) {
                     setResMessage("Added Successfully");
@@ -77,10 +87,10 @@ const AddHabit = () => {
     if (Token) {
         return (
             <motion.div
-                initial={{ scale: 0.2 }}
+                initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+                transition={{ ease: "easeInOut" }}
             >
                 <div className="addCard">
                     <Link className="listIcon" to="/dashboard" replace={true}> <FontAwesomeIcon icon={faListCheck} /></Link>

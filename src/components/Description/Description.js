@@ -209,7 +209,7 @@ function Description(props) {
 
           })}
         </div>
-        {props.habitObj.streak === 0 || props.habitObj.streak === 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is <b>{props.habitObj.streak} days</b></p>}
+        {props.habitObj.streak === 0 || props.habitObj.streak === 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is <b style={{color: 'blue'}}>{props.habitObj.streak} Days</b></p>}
       </div>
     );
   }

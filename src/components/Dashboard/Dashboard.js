@@ -4,7 +4,6 @@ import { fetctHabits } from "../../services/fetchHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from "react-router-dom";
-import moment from "moment";
 import { getUserDetails } from "../../services/getUserDetails";
 import { ThreeDots } from 'react-loader-spinner';
 import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
@@ -15,19 +14,15 @@ import { State } from '../../state/Context';
 const Dashboard = () => {
 
     const navigate = useNavigate();
-    
-    const { state, dispatch } = State()
+
+    const { dispatch } = State()
     const [callAdd, setCallAdd] = useState(false);
     const [listItems, setListItems] = useState([]);
-    // const [loaded, setLoaded] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const [showDes, setShowDes] = useState(false);
     const [modal, setModal] = useState(false);
     const [habitObj, setHabitObj] = useState({});
     const [Token, setToken] = useState('');
-    // const [resStatusCode, setResStatusCode] = useState(0);
-
-    const timeInSec = moment().endOf('day').valueOf();
-    const Interval = timeInSec - Date.now();
 
     const container = {
         hidden: { opacity: 0 },
@@ -44,15 +39,6 @@ const Dashboard = () => {
         show: { opacity: 1 }
     };
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCallAdd(!callAdd);
-        }, Interval)
-
-        return () => {
-            clearInterval(timer);
-        }
-    });
 
     useEffect(() => {
 
@@ -66,13 +52,9 @@ const Dashboard = () => {
 
                 try {
                     const habitsArr = await fetctHabits(Token);
-                    // setResStatusCode(habitsArr.status);
-                    
-                    if(habitsArr.status === 401){
-                        localStorage.removeItem('Token');
-                        localStorage.removeItem('User');
-                        dispatch({ type: "RESET" });
-                        navigate('/');
+
+                    if (habitsArr.status === 401) {
+                       
                     }
 
                     if (habitsArr.status >= 200 && habitsArr.status <= 299) {
@@ -86,12 +68,11 @@ const Dashboard = () => {
                         dispatch({ type: 'SET_USER', payload: user });
                         localStorage.setItem('User', JSON.stringify(user));
                     }
-
-                    dispatch({ type: 'SET_DATA_LOAD', payload: true });
+                    setLoaded(true);
                 }
                 catch (error) {
                     console.log(error);
-                    dispatch({ type: 'SET_USER', payload: {}});
+                    dispatch({ type: 'SET_USER', payload: {} });
                     dispatch({ type: 'SET_DATA_LOAD', payload: true });
                 }
             }
@@ -104,10 +85,10 @@ const Dashboard = () => {
     if (Token) {
         return (
             <motion.div
-                initial={{ scale: 1.2 }}
+                initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+                transition={{ ease: "easeInOut" }}
             >
 
                 <AnimatePresence>
@@ -116,14 +97,14 @@ const Dashboard = () => {
                             initial={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
                             animate={{ position: "absolute", zIndex: 2, x: 0, y: 100, opacity: 1 }}
                             exit={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
-                            transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+                            transition={{ type: 'spring', bounce: 0.2, ease: "easeInOut" }}
                         >
                             <Description token={Token} showDes={showDes} setShowDes={setShowDes} callAdd={callAdd} setCallAdd={setCallAdd} setModal={setModal} habitObj={habitObj} setHabitObj={setHabitObj} />
                         </motion.div>
                     )}
                 </AnimatePresence>
-                        
-                <div id={ modal ? "backDull" : null } className="card">
+
+                <div id={modal ? "backDull" : null} className="card">
                     <div className="dashboardUpper">
                         <div className="dashboardUpperBar">
                             <Link className="addIcon" to="/dashboard/add" replace={true} state={Token}><FontAwesomeIcon icon={faAdd} /></Link>
@@ -131,7 +112,7 @@ const Dashboard = () => {
                         <h1>Habits List</h1>
                     </div>
                     {
-                        !state.mainDataLoad ?
+                        !loaded ?
                             <div className="loader">
                                 <ThreeDots color="#590C69" />
                             </div>
@@ -155,7 +136,7 @@ const Dashboard = () => {
                             </div>
                     }
                 </div>
-                
+
             </motion.div>
         );
     }

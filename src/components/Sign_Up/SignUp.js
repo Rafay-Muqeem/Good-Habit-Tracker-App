@@ -74,10 +74,10 @@ const SignUp = () => {
 
     return (
         <motion.div
-            initial={{ x: -window.innerWidth }}
-            animate={{ x: 0 }}
-            exit={{ x: window.innerWidth }}
-            transition={{ type: "spring", bounce: 0.25, ease: "easeInOut" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{opacity: 0 }}
+            transition={{ ease: "easeInOut" }}
             className="SignUpCard"
         >
             <h1>Sign Up</h1>

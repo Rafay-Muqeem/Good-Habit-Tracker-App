@@ -13,12 +13,12 @@ const SignIn = () => {
 
     const navigate = useNavigate();
 
-    const { dispatch } = State();
+    const { state, dispatch } = State();
     const [signInEmail, setSignInEmail] = useState("");
     const [signInPass, setSignInPass] = useState("");
     const [signInLoad, setSignInLoad] = useState(true);
     const [googleSignInLoad, setGoogleSignInLoad] = useState(true);
-    const [error, setError] = useState(false);
+    const [showMes, setShowMes] = useState(false);
     const [errMessage, setErrMessage] = useState("");
 
     let reqStatusCode = 0;
@@ -27,6 +27,11 @@ const SignIn = () => {
 
         const token = JSON.parse(localStorage.getItem('Token'));
         if (token) navigate(-1);
+
+        if(state.sessExp){
+            setErrMessage("Your session time has been expired!");
+            setShowMes(true);
+        }
 
     }, []);
 
@@ -45,24 +50,26 @@ const SignIn = () => {
             reqStatusCode = res.status;
 
             if (reqStatusCode >= 200 && reqStatusCode <= 299) {
-                const token = await res.json();
+                const data = await res.json();
                 setSignInEmail('');
                 setSignInPass('');
-                setError(false);
+                setShowMes(false);
                 setSignInLoad(true);
-                dispatch({ type: 'SET_TOKEN', payload: token});
-                localStorage.setItem('Token', JSON.stringify(token));
-                navigate('/dashboard', { replace: true });
+                dispatch({ type: 'RESET'});
+                dispatch({ type: 'SET_TOKEN', payload: data.token});
+                localStorage.setItem('Token', JSON.stringify(data.token));
+                localStorage.setItem('sessionExp', JSON.stringify(data.sessionExpire));
+                navigate('/dashboard');
             }
             else if (reqStatusCode === 400) {
                 setErrMessage("Oops something wrong! You may provide a wrong email or an empty password field");
                 setSignInLoad(true);
-                setError(true);
+                setShowMes(true);
             }
             else if (reqStatusCode === 404) {
                 setErrMessage("Oops something wrong! This email is not linked with any account. Please Sign Up first");
                 setSignInLoad(true);
-                setError(true);
+                setShowMes(true);
             }
 
         } catch (error) {
@@ -79,8 +86,9 @@ const SignIn = () => {
             setErrMessage("");
             const res = await signInWithGoogle(data);
             const token = await res.json();
-            setError(false);
+            setShowMes(false);
             setGoogleSignInLoad(true);
+            dispatch({ type: 'RESET'});
             dispatch({ type: 'SET_TOKEN', payload: token});
             localStorage.setItem('Token', JSON.stringify(token));
             navigate('/dashboard', { replace: true });
@@ -108,7 +116,7 @@ const SignIn = () => {
         >
             <h1>Sign In</h1>
 
-            {error && (
+            {showMes && (
                 <motion.p
                     className='errText'
                     initial={{ opacity: 0 }}

@@ -9,7 +9,7 @@ const Context = ({children}) => {
         userInfo: {},
         userToken:'',
         mobileMenu: false,
-        mainDataLoad: false
+        sessExp: false
     }
     const [state, dispatch] = useReducer(Reducer, initialState)
 
