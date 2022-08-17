@@ -9,6 +9,7 @@ import './Navbar.css';
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
 import { State } from '../../state/Context';
 import Menu from '../MenuIcon/Menu';
+import { SignOut } from '../../Firebase';
 
 export default function Navbar() {
 
@@ -26,7 +27,7 @@ export default function Navbar() {
 
             if (state.userToken) {
                 const sessExp = JSON.parse(localStorage.getItem('sessionExp'));
-                
+
                 if (Date.now() >= sessExp) {
                     dispatch({ type: "RESET" });
                     dispatch({ type: 'SET_SESSION_EXP', payload: true });
@@ -64,6 +65,32 @@ export default function Navbar() {
         const user = JSON.parse(localStorage.getItem('User'));
         if (user) dispatch({ type: 'SET_USER', payload: user });
     }, []);
+
+    const sign_out = async() => {
+        if (state.userInfo.emailVerifiedByGoogle) {
+            try {
+                await SignOut();
+                dispatch({ type: 'RESET' });
+                localStorage.removeItem('Token');
+                localStorage.removeItem('User');
+                localStorage.removeItem('sessionExp');
+                setDropDown(false);
+                navigate('/');
+
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+        else {
+            dispatch({ type: 'RESET' });
+            localStorage.removeItem('Token');
+            localStorage.removeItem('User');
+            localStorage.removeItem('sessionExp');
+            setDropDown(false);
+            navigate('/');
+        }
+    }
 
     return (
         <div ref={navRef} className='navbar'>
@@ -144,14 +171,7 @@ export default function Navbar() {
                                         <motion.div
                                             whileHover={{ opacity: 0.7 }}
                                             transition={{ ease: 'easeInOut' }}
-                                            onClick={() => {
-                                                dispatch({ type: 'RESET' });
-                                                localStorage.removeItem('Token');
-                                                localStorage.removeItem('User');
-                                                localStorage.removeItem('sessionExp');
-                                                setDropDown(false);
-                                                navigate('/');
-                                            }}
+                                            onClick={() => sign_out()}
                                         >
                                             <span >Sign Out</span>
                                             <FontAwesomeIcon icon={faSignOut} />
@@ -198,14 +218,7 @@ export default function Navbar() {
                                 <span>{state.userInfo.name}</span>
                             </div>
                             <motion.div className='logOut'
-                                onClick={() => {
-                                    setDropDown(false);
-                                    dispatch({ type: 'RESET' });
-                                    localStorage.removeItem('Token');
-                                    localStorage.removeItem('User');
-                                    localStorage.removeItem('sessionExp');
-                                    navigate('/');
-                                }}
+                                onClick={() => sign_out()}
                             >
                                 <span>Sign Out</span><FontAwesomeIcon icon={faSignOut} />
                             </motion.div>
