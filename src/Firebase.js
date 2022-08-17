@@ -34,8 +34,8 @@ export async function SignInWithGoogle() {
 
 export async function SignOut(){
     try {
-        const res = await signOut(auth);
-        console.log("Sign Out");
+        await signOut(auth);
+        
     } catch (error) {
         throw error;
     }  
