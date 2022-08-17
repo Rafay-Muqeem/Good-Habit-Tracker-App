@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
-import { ReactComponent as Construction } from './Construction.svg';
+import { ReactComponent as BackImage } from './BackImage.svg';
 import { motion } from "framer-motion/dist/framer-motion";
 
 export default function Home() {
@@ -25,8 +25,13 @@ export default function Home() {
       exit={{opacity: 0}}
       transition={{ ease: 'easeInOut'}}
     >
-      <h2>Home Page Under Construction...</h2>
-      <Construction className="icon" />
+      <div className='text'>
+        <h2>Track yourself</h2>
+        <h2>in a smart way.</h2>
+      </div>
+      <div className='backImage'>
+          <BackImage className="image"/>
+      </div>
     </motion.div>
   )
 }

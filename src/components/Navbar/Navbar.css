@@ -167,7 +167,14 @@
     display: none;
 }
 
-@media screen and (max-width: 630px) {
+@media screen and (min-width: 630px) and (max-width: 760px) {
+    .navRightLogOut .mainMenu button { 
+        padding: 7px 13px;
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 629px) {
 
     .navLeft {
         margin-left: 30px;
