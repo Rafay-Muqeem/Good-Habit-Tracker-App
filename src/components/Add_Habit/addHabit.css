@@ -24,9 +24,15 @@
     gap: 15px;
     z-index: 1;
     margin-top: 10vh;
+    overflow-x: hidden;
 }
 
-.addCard .listIcon {
+.addCard .upperBar{
+    display: flex;
+    flex-direction: row;
+}
+
+.addCard .upperBar .listIcon {
     color: #590C69;
     font-size: 25px;
     max-width: fit-content;
@@ -34,8 +40,38 @@
     cursor: pointer;
 }
 
-.addCard .listIcon :hover {
+.addCard .upperBar .listIcon :hover {
     opacity: 0.7;
+}
+
+.addCard .upperBar .errText {
+    color: black;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: auto;
+    box-sizing: border-box;
+    padding: 7px;
+    border-left: 3px solid rgb(189, 39, 39);
+    border-radius: 2px;
+    background-color: #f0f0f0;
+    white-space: nowrap;
+}
+
+.addCard .upperBar .succText {
+    color: black;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: auto;
+    box-sizing: border-box;
+    padding: 7px;
+    border-left: 3px solid #1fd655;
+    border-radius: 2px;
+    background-color: #f0f0f0;
+    white-space: nowrap;
 }
 
 .addCard h1 {
@@ -44,22 +80,6 @@
     white-space: nowrap;
     text-align: center;
     font-weight: 700;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.addCard .errText {
-    color: rgb(189, 39, 39);
-    text-align: center;
-    font-size: 15px;
-    font-weight: 500;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.addCard .succText {
-    color: #1fd655;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 500;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -98,22 +118,24 @@
         width: 280px;
     }
 
-    .addCard .listIcon {
+    .addCard .upperBar .listIcon {
         font-size: 22px;
+    }
+
+    .addCard .upperBar .errText {
+        font-size: 11px;
+        font-weight: 400;
+        padding: 5px;
+    }
+    
+    .addCard .upperBar .succText {
+        font-size: 11px;
+        font-weight: 400;
+        padding: 5px;
     }
 
     .addCard h1 {
         font-size: 22px;
-    }
-
-    .addCard .errText {
-        font-size: 11px;
-        font-weight: 400;
-    }
-    
-    .addCard .succText {
-        font-size: 11px;
-        font-weight: 400;
     }
 
     .add_task_inputs input {
@@ -134,22 +156,24 @@
         width: 220px;
     }
 
-    .addCard .listIcon {
+    .addCard .upperBar .listIcon {
         font-size: 18px;
+    }
+
+    .addCard .upperBar .errText {
+        font-size: 9px;
+        font-weight: 400;
+        padding: 3px;
+    }
+    
+    .addCard .upperBar .succText {
+        font-size: 9px;
+        font-weight: 400;
+        padding: 3px;
     }
 
     .addCard h1 {
         font-size: 20px;
-    }
-
-    .addCard .errText {
-        font-size: 9px;
-        font-weight: 400;
-    }
-    
-    .addCard .succText {
-        font-size: 9px;
-        font-weight: 400;
     }
 
     .add_task_inputs input {

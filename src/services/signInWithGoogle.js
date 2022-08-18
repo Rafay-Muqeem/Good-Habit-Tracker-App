@@ -1,7 +1,7 @@
 
 export async function signInWithGoogle(data) {
     try {
-        const res = await fetch('https://habit-app-backend.herokuapp.com/api/auth/loginwithgoogle', {
+        const user = await fetch('https://habit-app-backend.herokuapp.com/api/auth/loginwithgoogle', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -9,7 +9,7 @@ export async function signInWithGoogle(data) {
             body: JSON.stringify(data)
         });
 
-        return res;
+        return user;
 
     } catch (error) {
         console.log(error);

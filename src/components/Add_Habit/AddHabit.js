@@ -93,34 +93,39 @@ const AddHabit = () => {
                 transition={{ ease: "easeInOut" }}
             >
                 <div className="addCard">
-                    <Link className="listIcon" to="/dashboard" replace={true}> <FontAwesomeIcon icon={faListCheck} /></Link>
+                    <div className='upperBar'>
+                        <Link className="listIcon" to="/dashboard" replace={true}> <FontAwesomeIcon icon={faListCheck} /></Link>
+
+                        <AnimatePresence>
+                            {error && (
+                                <motion.span
+                                    className="errText"
+                                    initial={{ opacity:0, width: 0 }}
+                                    animate={{ opacity:1, width: "auto" }}
+                                    exit={{ opacity:0, width: 0 }}
+                                    transition={{ duration: 0.4, ease: 'easeInOut'}}
+                                >
+                                    {resMessage}
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
+
+                        <AnimatePresence>
+                            {added && (
+                                <motion.span
+                                    className="succText"
+                                    initial={{ opacity:0, width: 0 }}
+                                    animate={{ opacity:1, width: "auto" }}
+                                    exit={{ opacity:0, width: 0 }}
+                                    transition={{ duration: 0.4, ease: 'easeInOut'}}
+                                >
+                                    {resMessage}
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
                     <h1>Add Habit</h1>
-
-                    <AnimatePresence>
-                        {error && (
-                            <motion.span
-                                className="errText"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                            >
-                                {resMessage}
-                            </motion.span>
-                        )}
-                    </AnimatePresence>
-
-                    <AnimatePresence>
-                        {added && (
-                            <motion.span
-                                className="succText"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                            >
-                                {resMessage}
-                            </motion.span>
-                        )}
-                    </AnimatePresence>
 
                     <div className="add_task_inputs">
                         <input type="text" value={inputName} placeholder="Enter name here..." onChange={(e) => setInputName(e.target.value)} autoFocus />

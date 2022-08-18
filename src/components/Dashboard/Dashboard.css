@@ -63,22 +63,10 @@
     opacity: 0.7;
 }
 
-.dashboardUpperBar .logOutIcon {
-    color: #590C69;
-    max-width: 10px;
-    font-size: 23px;
-    text-decoration: none;
-    cursor: pointer;
-    margin-left: auto;
-}
-
-.dashboardUpperBar .logOutIcon :hover {
-    opacity: 0.7;
-}
-
 .card .dashboardContent {
     overflow: auto;
     padding: 0 15px;
+    position: relative;
 }
 
 .item_list {
@@ -89,6 +77,15 @@
 .item_list li {
     padding: 15px 10px;
     border-top: 2px solid #eee;
+}
+
+.item_list .emptyListSvg{
+    display: block;
+    margin: 0 auto;
+    margin-top: 5vh;
+    position: relative;
+    width: 250px;
+    height: 200px;
 }
 
 /* Loader */
@@ -117,9 +114,10 @@
         font-size: 20px;
     }
 
-    .dashboardUpperBar .logOutIcon {
-        max-width: 10px;
-        font-size: 20px;
+    .item_list .emptyListSvg{
+        margin-top: 7vh;
+        width: 200px;
+        height: 180px;
     }
 
     /* Loader */
@@ -149,9 +147,10 @@
         font-size: 18px;
     }
 
-    .dashboardUpperBar .logOutIcon {
-        max-width: 8px;
-        font-size: 18px;
+    .item_list .emptyListSvg{
+        margin-top: 10vh;
+        width: 150px;
+        height: 150px;
     }
 
     /* Loader */
@@ -162,4 +161,11 @@
     }
 
 
+}
+
+@media screen and (max-height: 530px) {
+    .item_list .emptyListSvg{
+        width: 150px;
+        height: 120px;
+    }
 }

@@ -50,15 +50,15 @@ const SignIn = () => {
             reqStatusCode = res.status;
 
             if (reqStatusCode >= 200 && reqStatusCode <= 299) {
-                const data = await res.json();
+                const user = await res.json();
                 setSignInEmail('');
                 setSignInPass('');
                 setShowMes(false);
                 setSignInLoad(true);
                 dispatch({ type: 'RESET'});
-                dispatch({ type: 'SET_TOKEN', payload: data.token});
-                localStorage.setItem('Token', JSON.stringify(data.token));
-                localStorage.setItem('sessionExp', JSON.stringify(data.sessionExpire));
+                dispatch({ type: 'SET_TOKEN', payload: user.token});
+                localStorage.setItem('Token', JSON.stringify(user.token));
+                localStorage.setItem('sessionExp', JSON.stringify(user.sessionExpire));
                 navigate('/dashboard');
             }
             else if (reqStatusCode === 400) {
@@ -85,12 +85,13 @@ const SignIn = () => {
         try {
             setErrMessage("");
             const res = await signInWithGoogle(data);
-            const token = await res.json();
+            const user = await res.json();
             setShowMes(false);
             setGoogleSignInLoad(true);
             dispatch({ type: 'RESET'});
-            dispatch({ type: 'SET_TOKEN', payload: token});
-            localStorage.setItem('Token', JSON.stringify(token));
+            dispatch({ type: 'SET_TOKEN', payload: user.token});
+            localStorage.setItem('Token', JSON.stringify(user.token));
+            localStorage.setItem('sessionExp', JSON.stringify(user.sessionExpire));
             navigate('/dashboard', { replace: true });
         } catch (error) {
             console.log(error);

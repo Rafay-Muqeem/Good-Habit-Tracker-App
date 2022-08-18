@@ -7,7 +7,7 @@ body {
   background: linear-gradient(180deg, #0b0023fa 40%, rgba(56, 0, 102, 0.9) 100%);
   position: relative;
   height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .Main {

@@ -38,7 +38,7 @@ export default function Navbar() {
                 }
 
             }
-        }, 65 * 1000);
+        }, 60 * 1000);
 
         return () => clearInterval(timer);
     });

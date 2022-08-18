@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
 import Description from "../Description/Description";
 import './Dashboard.css';
 import { State } from '../../state/Context';
+import { ReactComponent as EmptyList } from './EmptyList.svg';
 
 const Dashboard = () => {
 
@@ -54,7 +55,7 @@ const Dashboard = () => {
                     const habitsArr = await fetctHabits(Token);
 
                     if (habitsArr.status === 401) {
-                       
+
                     }
 
                     if (habitsArr.status >= 200 && habitsArr.status <= 299) {
@@ -95,7 +96,7 @@ const Dashboard = () => {
                     {showDes && (
                         <motion.div
                             initial={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
-                            animate={{ position: "absolute", zIndex: 2, x: 0, y: 100, opacity: 1 }}
+                            animate={{ position: "absolute", zIndex: 2, x: 0, y: 0, opacity: 1 }}
                             exit={{ position: "absolute", zIndex: 2, x: 0, y: -300, opacity: 0 }}
                             transition={{ type: 'spring', bounce: 0.2, ease: "easeInOut" }}
                         >
@@ -120,16 +121,26 @@ const Dashboard = () => {
                             <div className="dashboardContent">
                                 <motion.ul variants={container} initial="hidden" animate="show" className="item_list">
                                     {
-                                        listItems.map((itemval) => {
-                                            return (
-                                                <motion.div
-                                                    variants={listItem}
-                                                    key={itemval._id}
-                                                >
-                                                    <ListItems item={itemval} token={Token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} />
-                                                </motion.div>
-                                            );
-                                        })
+                                        listItems.length !== 0 ?
+
+                                            listItems.map((itemval) => {
+                                                return (
+                                                    <motion.div
+                                                        variants={listItem}
+                                                        key={itemval._id}
+                                                    >
+                                                        <ListItems item={itemval} token={Token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} />
+                                                    </motion.div>
+                                                );
+                                            })
+                                            :
+                                            <motion.div
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ ease: 'easeInOut'}}
+                                            >
+                                            <EmptyList className="emptyListSvg" />
+                                            </motion.div>
                                     }
 
                                 </motion.ul>
