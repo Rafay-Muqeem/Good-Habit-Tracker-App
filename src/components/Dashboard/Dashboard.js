@@ -11,12 +11,13 @@ import Description from "../Description/Description";
 import './Dashboard.css';
 import { State } from '../../state/Context';
 import { ReactComponent as EmptyList } from './EmptyList.svg';
+import { undoneHabit } from '../../services/undoneHabit';
 
 const Dashboard = () => {
 
     const navigate = useNavigate();
 
-    const { dispatch } = State()
+    const { state, dispatch } = State()
     const [callAdd, setCallAdd] = useState(false);
     const [listItems, setListItems] = useState([]);
     const [loaded, setLoaded] = useState(false);
@@ -24,6 +25,7 @@ const Dashboard = () => {
     const [modal, setModal] = useState(false);
     const [habitObj, setHabitObj] = useState({});
     const [Token, setToken] = useState('');
+    const [del, setDel] = useState('');
 
     const container = {
         hidden: { opacity: 0 },
@@ -81,7 +83,25 @@ const Dashboard = () => {
         }
         habits();
 
-    }, [callAdd, Token]);
+    }, [state.refreshDashboard, Token]);
+
+    async function undoneHabits() {
+        
+        dispatch({ type: 'SET_DONE_MESSAGE', payload: false })
+
+        try {
+            await undoneHabit(state.doneId, state.userToken);
+
+            dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
+
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
+        }
+
+        dispatch({ type: 'SET_DONE_ID', payload: '' });
+        
+    }
 
     if (Token) {
         return (
@@ -109,6 +129,39 @@ const Dashboard = () => {
                     <div className="dashboardUpper">
                         <div className="dashboardUpperBar">
                             <Link className="addIcon" to="/dashboard/add" replace={true} state={Token}><FontAwesomeIcon icon={faAdd} /></Link>
+
+                            <AnimatePresence>
+                                {del && (
+                                    <motion.span
+                                        className="errText"
+                                        initial={{ opacity: 0, width: 0 }}
+                                        animate={{ opacity: 1, width: "auto" }}
+                                        exit={{ opacity: 0, width: 0 }}
+                                        transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                    >
+                                        Deleted
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+
+                            <AnimatePresence>
+                                {state.doneMessage && (
+                                    <motion.span
+                                        className="succText"
+                                        initial={{ opacity: 0, width: 0 }}
+                                        animate={{ opacity: 1, width: "auto" }}
+                                        exit={{ opacity: 0, width: 0 }}
+                                        transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                    >
+                                        Done for today
+                                        <button onClick={() => { undoneHabits(); }}>Undo</button>
+                                        {/* or */}
+                                        {/* <button onClick={() => { dispatch({ type: 'SET_DONE_UNDO', payload: false }); }}>Close</button> */}
+
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+
                         </div>
                         <h1>Habits List</h1>
                     </div>
@@ -129,7 +182,7 @@ const Dashboard = () => {
                                                         variants={listItem}
                                                         key={itemval._id}
                                                     >
-                                                        <ListItems item={itemval} token={Token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} />
+                                                        <ListItems item={itemval} token={Token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} setDel={setDel} />
                                                     </motion.div>
                                                 );
                                             })
@@ -137,9 +190,9 @@ const Dashboard = () => {
                                             <motion.div
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
-                                                transition={{ ease: 'easeInOut'}}
+                                                transition={{ ease: 'easeInOut' }}
                                             >
-                                            <EmptyList className="emptyListSvg" />
+                                                <EmptyList className="emptyListSvg" />
                                             </motion.div>
                                     }
 

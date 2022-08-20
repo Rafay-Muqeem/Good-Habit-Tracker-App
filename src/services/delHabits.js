@@ -12,6 +12,6 @@ export async function delHabits(id, token){
         return response.json();
 
     } catch (error) {
-        console.log(error);
+        throw error
     }
 }

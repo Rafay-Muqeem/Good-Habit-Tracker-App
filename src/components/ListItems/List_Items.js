@@ -1,45 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faCheck, faInfo } from '@fortawesome/free-solid-svg-icons';
-import { doneHabit } from "../../services/doneHabit";
 import { delHabits } from "../../services/delHabits";
 import './List_Items.css';
+import { State } from "../../state/Context";
+import { doneHabit } from "../../services/doneHabit";
 
-async function doneHabits(id, token, callAdd, setCallAdd, setDoneLoad) {
-    setDoneLoad(false);
-    try {
-        await doneHabit(id, token);
-        setTimeout( () => {
-            setDoneLoad(true);
-        }, 1000);
-        setCallAdd(!callAdd);
-    } catch (error) {
-        console.log(error);
-        setDoneLoad(true);
-        setCallAdd(!callAdd);
-    }
-}
-
-async function DeList(id, token, callAdd, setCallAdd, setDeleteLoad) {
+async function DeList(id, token, setDeleteLoad, state, dispatch) {
     setDeleteLoad(false);
     try {
         await delHabits(id, token);
-        setTimeout( () => {
+        setTimeout(() => {
             setDeleteLoad(true);
         }, 1000);
-        setCallAdd(!callAdd);
+        dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
     } catch (error) {
         console.log(error);
         setDeleteLoad(true);
-        setCallAdd(!callAdd);
+        dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
     }
 
 }
 
 const List_Items = (props) => {
 
-    const [doneLoad, setDoneLoad] = useState(true);
+    const { state, dispatch } = State()
     const [deleteLoad, setDeleteLoad] = useState(true);
+    const [doneLoad, setDoneLoad] = useState(true);
 
     const weekDays = [
         { day: "SUN", done: false, current: false },
@@ -62,6 +49,37 @@ const List_Items = (props) => {
 
         }
     }
+
+    let timer;
+
+    async function doneHabits(id) {
+
+        setDoneLoad(false);
+
+        try {
+            await doneHabit(id, state.userToken);
+
+            dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
+
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
+        }
+
+        dispatch({ type: 'SET_DONE_MESSAGE', payload: true })
+        setDoneLoad(true);
+
+        timer = setTimeout(() => {
+            dispatch({ type: 'SET_DONE_MESSAGE', payload: false })
+            dispatch({ type: 'SET_DONE_ID', payload: '' });
+        }, 5000)
+
+    }
+
+    useEffect( () => {
+        return () => clearTimeout(timer);
+    }, [])
+
     return (
 
         <li id={props.item._id} >
@@ -74,7 +92,7 @@ const List_Items = (props) => {
                             :
                             props.item.done ?
                                 <span id="check" className="done" ><FontAwesomeIcon icon={faCheck} /></span> :
-                                <span className="done" onClick={() => { doneHabits(props.item._id, props.token, props.callAdd, props.setCallAdd, setDoneLoad) }}></span>
+                                <span className="done" onClick={() => { dispatch({ type: 'SET_DONE_ID', payload: props.item._id }); doneHabits(props.item._id)}}></span>
 
                     }
 
@@ -86,7 +104,7 @@ const List_Items = (props) => {
                         !deleteLoad ?
                             <span className="skeletonDeleteAnimation"></span>
                             :
-                            <span onClick={() => { DeList(props.item._id, props.token, props.callAdd, props.setCallAdd, setDeleteLoad) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
+                            <span onClick={() => { DeList(props.item._id, props.token, setDeleteLoad, state, dispatch) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span>
                     }
 
                 </div>
