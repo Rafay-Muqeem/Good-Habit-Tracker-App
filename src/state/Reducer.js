@@ -21,25 +21,21 @@ export const Reducer = (state, action) => {
                 ...state,
                 sessExp: action.payload
             })
-        case 'SET_DONE_ID':
+        case 'SET_DONE':
             return ({
                 ...state,
-                doneId: action.payload
+                done: {
+                    ...state.done,
+                    ...action.payload
+                }
             })
-        case 'SET_DONE_MESSAGE':
+        case 'SET_DELETE':
             return ({
                 ...state,
-                doneMessage: action.payload
-            })
-        case 'SET_DONE_UNDO':
-            return ({
-                ...state,
-                doneUndo: action.payload
-            })
-        case 'SET_DONE_CALL':
-            return ({
-                ...state,
-                doneCall: action.payload
+                delete: {
+                    ...state.delete,
+                    ...action.payload
+                }
             })
         case 'SET_REFRESH_DASHBOARD':
             return ({
@@ -52,10 +48,14 @@ export const Reducer = (state, action) => {
                 userToken: '',
                 mobileMenu: false,
                 sessExp: false,
-                doneId: '',
-                doneMessage: false,
-                doneUndo: false,
-                doneCall: false,
+                done: {
+                    id: '',
+                    message: false
+                },
+                delete: {
+                    id: '',
+                    message: false
+                },
                 refreshDashboard: false
             })
 

@@ -28,6 +28,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 }
 
 .desUpper :nth-child(1) {
@@ -36,10 +37,41 @@
     color: #590C69;
 }
 
-.desUpper :nth-child(2) {
+.desUpper .errText {
+    color: black;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: auto;
+    box-sizing: border-box;
+    padding: 3px;
+    border-left: 3px solid rgb(189, 39, 39);
+    border-radius: 3px;
+    background-color: #f0f0f0;
+    white-space: nowrap;
+    margin: 0 auto;
+}
+
+.desUpper .succText {
+    color: black;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: auto;
+    box-sizing: border-box;
+    padding: 3px;
+    border-left: 3px solid #1fd655;
+    border-radius: 3px;
+    background-color: #f0f0f0;
+    white-space: nowrap;
+    margin: 0 auto;
+}
+
+.desUpper :nth-child(4) {
     font-size: 18px;
     cursor: pointer;
-    margin-left: auto;
     color: #590C69;
 }
 
@@ -224,7 +256,18 @@
         font-size: 17px;
     }
 
-    .desUpper :nth-child(2) {
+    .desUpper .errText {
+        font-size: 11px;
+        padding: 3px;
+    }
+    
+    .desUpper .succText {
+        font-size: 11px;
+        padding: 3px;
+    }
+    
+
+    .desUpper :nth-child(4) {
         font-size: 15px;
     }
 
@@ -336,7 +379,19 @@
         font-size: 15px;
     }
 
-    .desUpper :nth-child(2) {
+    .desUpper .errText {
+        font-size: 10px;
+        font-weight: 400;
+        padding: 3px;
+    }
+    
+    .desUpper .succText {
+        font-size: 10px;
+        font-weight: 400;
+        padding: 3px;
+    }
+
+    .desUpper :nth-child(4) {
         font-size: 13px;
     }
 

@@ -4,11 +4,15 @@ import { updateHabit } from '../../services/updateHabit';
 import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { State } from "../../state/Context";
 
 function Description(props) {
 
+  const { state, dispatch } = State()
   const [edit, setEdit] = useState(false);
   const [updateLoad, setUpdateLoad] = useState(true);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [editName, setEditName] = useState(props.habitObj.name);
   const [editDesc, setEditDesc] = useState(props.habitObj.description);
   const desModalRef = useRef();
@@ -32,16 +36,30 @@ function Description(props) {
   async function UpdateHabit() {
     setUpdateLoad(false);
     try {
-      if (editName !== '' && props.token) {
+      if (editName !== '') {
         const res = await updateHabit(props.habitObj._id, data, props.token);
-        props.setCallAdd(!props.callAdd);
+        // props.setCallAdd(!props.callAdd);
+        dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
         await props.setHabitObj(res.habit);
         setEditName(res.habit.name);
         setEditDesc(res.habit.description);
+        setSuccess(true);
+        setTimeout( () => {
+          setSuccess(false);
+        }, 3000)
         setTimeout(() => {
           setUpdateLoad(true);
         }, 1000)
         setEdit(false);
+      }
+      else {
+        setUpdateLoad(true);
+        setEdit(false);
+        setError(true);
+        setEditName(props.habitObj.name);
+        setTimeout(() => {
+          setError(false);
+        }, 3000)
       }
 
     } catch (error) {
@@ -111,6 +129,33 @@ function Description(props) {
       <div ref={desModalRef} className="desCard">
         <div className="desUpper">
           <span className="backIcon" onClick={() => { props.setShowDes(false); props.setModal(false) }}><FontAwesomeIcon icon={faTimesCircle} /></span>
+          <AnimatePresence>
+            {error && (
+              <motion.span
+                className="errText"
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                exit={{ opacity: 0, width: 0 }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+              >
+                Name can't be empty
+              </motion.span>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {success && (
+              <motion.span
+                className="succText"
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                exit={{ opacity: 0, width: 0 }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+              >
+                Edit Successfully
+              </motion.span>
+            )}
+          </AnimatePresence>
           <span className="editIcon" onClick={() => setEdit(true)}><FontAwesomeIcon icon={faEdit} /></span>
         </div>
         <div ref={editFormRef} id="skeletonEditFormAnimation" className="desMain">
@@ -210,7 +255,7 @@ function Description(props) {
           })}
         </div>
         {/* {props.habitObj.streak === 0 || props.habitObj.streak === 1 ? <p>No Streak Yet</p> : <p>Habit's Streak is <b style={{color: 'blue'}}>{props.habitObj.streak} Days</b></p>} */}
-        
+
         <div className="streak">
           <span>Habit's Streak</span>
           <span>{props.habitObj.streak}</span>

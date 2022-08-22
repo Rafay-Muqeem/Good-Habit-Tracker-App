@@ -25,7 +25,8 @@ const Dashboard = () => {
     const [modal, setModal] = useState(false);
     const [habitObj, setHabitObj] = useState({});
     const [Token, setToken] = useState('');
-    const [del, setDel] = useState('');
+    const [DelTimer, setDelTimer] = useState('');
+    const [DoneTimer, setDoneTimer] = useState('');
 
     const container = {
         hidden: { opacity: 0 },
@@ -52,13 +53,8 @@ const Dashboard = () => {
         async function habits() {
 
             if (Token !== '') {
-
                 try {
                     const habitsArr = await fetctHabits(Token);
-
-                    if (habitsArr.status === 401) {
-
-                    }
 
                     if (habitsArr.status >= 200 && habitsArr.status <= 299) {
                         setListItems(await habitsArr.json());
@@ -86,11 +82,12 @@ const Dashboard = () => {
     }, [state.refreshDashboard, Token]);
 
     async function undoneHabits() {
-        
-        dispatch({ type: 'SET_DONE_MESSAGE', payload: false })
+
+        clearTimeout(DoneTimer);
+        dispatch({ type: 'SET_DONE', payload: { message: false } });
 
         try {
-            await undoneHabit(state.doneId, state.userToken);
+            await undoneHabit(state.done.id, state.userToken);
 
             dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
 
@@ -99,9 +96,22 @@ const Dashboard = () => {
             dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard });
         }
 
-        dispatch({ type: 'SET_DONE_ID', payload: '' });
-        
+        dispatch({ type: 'SET_DONE', payload: { id: '' } });
+
     }
+
+    let tempArray = [];
+
+    useEffect(() => {
+        
+        if (state.delete.id !== '') {
+            listItems.filter(habit => habit._id !== state.delete.id).map(filtered => {
+                return tempArray.push(filtered)
+            });
+            setListItems(tempArray);
+        }
+
+    }, [state.delete.id])
 
     if (Token) {
         return (
@@ -131,7 +141,7 @@ const Dashboard = () => {
                             <Link className="addIcon" to="/dashboard/add" replace={true} state={Token}><FontAwesomeIcon icon={faAdd} /></Link>
 
                             <AnimatePresence>
-                                {del && (
+                                {state.delete.message && (
                                     <motion.span
                                         className="errText"
                                         initial={{ opacity: 0, width: 0 }}
@@ -139,13 +149,14 @@ const Dashboard = () => {
                                         exit={{ opacity: 0, width: 0 }}
                                         transition={{ duration: 0.4, ease: 'easeInOut' }}
                                     >
-                                        Deleted
+                                        Deleted Successfully
+                                        <button onClick={() => { clearTimeout(DelTimer); dispatch({ type: 'SET_DELETE', payload: { id: '', message: false } }); dispatch({ type: 'SET_REFRESH_DASHBOARD', payload: !state.refreshDashboard }) }}>Undo</button>
                                     </motion.span>
                                 )}
                             </AnimatePresence>
 
                             <AnimatePresence>
-                                {state.doneMessage && (
+                                {state.done.message && (
                                     <motion.span
                                         className="succText"
                                         initial={{ opacity: 0, width: 0 }}
@@ -154,9 +165,7 @@ const Dashboard = () => {
                                         transition={{ duration: 0.4, ease: 'easeInOut' }}
                                     >
                                         Done for today
-                                        <button onClick={() => { undoneHabits(); }}>Undo</button>
-                                        {/* or */}
-                                        {/* <button onClick={() => { dispatch({ type: 'SET_DONE_UNDO', payload: false }); }}>Close</button> */}
+                                        <button onClick={() => undoneHabits()}>Undo</button>
 
                                     </motion.span>
                                 )}
@@ -182,7 +191,7 @@ const Dashboard = () => {
                                                         variants={listItem}
                                                         key={itemval._id}
                                                     >
-                                                        <ListItems item={itemval} token={Token} callAdd={callAdd} setCallAdd={setCallAdd} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} setDel={setDel} />
+                                                        <ListItems item={itemval} setShowDes={setShowDes} setModal={setModal} setHabitObj={setHabitObj} setDelTimer={setDelTimer} setDoneTimer={setDoneTimer} />
                                                     </motion.div>
                                                 );
                                             })

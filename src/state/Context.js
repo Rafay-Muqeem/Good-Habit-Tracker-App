@@ -10,10 +10,14 @@ const Context = ({children}) => {
         userToken:'',
         mobileMenu: false,
         sessExp: false,
-        doneId: '',
-        doneMessage: false,
-        doneUndo: false,
-        doneCall: false,
+        done: {
+            id: '',
+            message: false
+        },
+        delete: {
+            id: '',
+            message: false    
+        },
         refreshDashboard: false
     }
     const [state, dispatch] = useReducer(Reducer, initialState)

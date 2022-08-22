@@ -63,9 +63,21 @@
     box-sizing: border-box;
     padding: 5px;
     border-left: 3px solid rgb(189, 39, 39);
-    border-radius: 2px;
+    border-radius: 3px;
     background-color: #f0f0f0;
     white-space: nowrap;
+}
+
+.card .dashboardUpperBar .errText button{
+    margin-left: 5px;
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: 500;
+    background: #590C69;
+    padding: 3px 8px;
+    font-size: 11px;
+    cursor: pointer;
 }
 
 .card .dashboardUpperBar .succText {
@@ -85,13 +97,13 @@
 
 .card .dashboardUpperBar .succText button{
     margin-left: 5px;
-    border: 2px solid #590C69;
-    border-radius: 4px;
-    color: #590C69;
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
     font-weight: 500;
-    background: transparent;
-    padding: 2px;
-    font-size: 12px;
+    background: #590C69;
+    padding: 3px 8px;
+    font-size: 11px;
     cursor: pointer;
 }
 
