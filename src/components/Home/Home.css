@@ -30,6 +30,13 @@
 }
 
 @media screen and (min-width: 1200px) {
+
+    .homeMain .text :nth-child(2){
+        border: 1px solid ;
+        border-image: linear-gradient(180deg, #ff0000, #0b0023fa) 1;
+        margin-left: 30px;
+    }
+    
     .homeMain .backImage .image {
         max-width: 60vw;
         height: 85vh;
