@@ -1,4 +1,3 @@
-
 export async function signIn(data){
     try {
         const user = await fetch("https://habit-app-backend.herokuapp.com/api/auth/login", {
