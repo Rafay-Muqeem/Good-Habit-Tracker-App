@@ -1,7 +1,7 @@
 
 export async function doneHabit(id, token){
     try {
-        const response = await fetch(`https://habit-app-backend.herokuapp.com/api/habit/donehabit/${id}`, {
+        const response = await fetch(`https://odd-cuff-links-elk.cyclic.app/api/habit/donehabit/${id}`, {
             method: "PUT",
             headers: {
                 "auth-token" : token,

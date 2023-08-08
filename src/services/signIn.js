@@ -1,6 +1,6 @@
 export async function signIn(data){
     try {
-        const user = await fetch("https://habit-app-backend.herokuapp.com/api/auth/login", {
+        const user = await fetch("https://odd-cuff-links-elk.cyclic.app/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

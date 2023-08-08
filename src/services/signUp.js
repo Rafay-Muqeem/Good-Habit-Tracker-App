@@ -1,6 +1,6 @@
 export async function signUp(data){
     try {
-        const res = await fetch("https://habit-app-backend.herokuapp.com/api/auth/createuser", {
+        const res = await fetch("https://odd-cuff-links-elk.cyclic.app/api/auth/createuser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
