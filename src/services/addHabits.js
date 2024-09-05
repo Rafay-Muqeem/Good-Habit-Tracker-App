@@ -2,7 +2,7 @@ require('dotenv').config();
 
 export async function addHabits(token, data){
     try {
-        const response = await fetch("https://odd-cuff-links-elk.cyclic.app/api/habit/addhabit", {
+        const response = await fetch("https://cyan-equable-silence.glitch.me/api/habit/addhabit", {
             method: "POST",
             headers: {
                 "auth-token": token,

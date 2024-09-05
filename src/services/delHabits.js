@@ -1,7 +1,7 @@
 
 export async function delHabits(id, token){
     try {
-        const response = await fetch(`https://odd-cuff-links-elk.cyclic.app/api/habit/deletehabit/${id}`, {
+        const response = await fetch(`https://cyan-equable-silence.glitch.me/api/habit/deletehabit/${id}`, {
             method: "DELETE",
             headers: {
                 "auth-token": token,

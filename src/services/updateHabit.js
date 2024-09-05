@@ -2,7 +2,7 @@
 export async function updateHabit(id, data, token){
 
     try {
-        const response = await fetch(`https://odd-cuff-links-elk.cyclic.app/api/habit/updatehabit/${id}`, {
+        const response = await fetch(`https://cyan-equable-silence.glitch.me/api/habit/updatehabit/${id}`, {
             method: "PUT",
             headers: {
                 "auth-token": token,

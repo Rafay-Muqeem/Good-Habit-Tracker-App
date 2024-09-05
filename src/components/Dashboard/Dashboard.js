@@ -45,11 +45,11 @@ const Dashboard = () => {
 
 
     useEffect(() => {
-
-        const token = JSON.parse(localStorage.getItem('Token'));
-        if (token) setToken(token)
-        if (!token) navigate('/signin')
-
+        if (localStorage.getItem('Token')) {
+            const token = JSON.parse(localStorage.getItem('Token'));
+            if (token) setToken(token)
+            if (!token) navigate('/signin')
+        }
         async function habits() {
 
             if (Token !== '') {
@@ -103,7 +103,7 @@ const Dashboard = () => {
     let tempArray = [];
 
     useEffect(() => {
-        
+
         if (state.delete.id !== '') {
             listItems.filter(habit => habit._id !== state.delete.id).map(filtered => {
                 return tempArray.push(filtered)
@@ -112,7 +112,7 @@ const Dashboard = () => {
         }
 
     }, [state.delete.id])
-    
+
     if (Token) {
         return (
             <motion.div

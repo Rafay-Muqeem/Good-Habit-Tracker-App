@@ -59,11 +59,14 @@ export default function Navbar() {
         }
     });
 
-    useEffect(() => {
-        const token = JSON.parse(localStorage.getItem('Token'));
-        dispatch({ type: 'SET_TOKEN', payload: token });
-        const user = JSON.parse(localStorage.getItem('User'));
-        if (user) dispatch({ type: 'SET_USER', payload: user });
+    useEffect(() => { 
+        console.log(localStorage.getItem('Token'))
+        if (localStorage.getItem('Token')) {
+            const token = JSON.parse(localStorage.getItem('Token'));
+            dispatch({ type: 'SET_TOKEN', payload: token });
+            const user = JSON.parse(localStorage.getItem('User'));
+            if (user) dispatch({ type: 'SET_USER', payload: user });
+        }
     }, []);
 
     const sign_out = async() => {

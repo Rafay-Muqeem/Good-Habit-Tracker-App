@@ -3,7 +3,7 @@ import { addHabits } from "../../services/addHabits";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from "react-router-dom";
-import './AddHabit.css';
+import './addHabit.css';
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion';
 import { RotatingLines } from 'react-loader-spinner';
 import { State } from "../../state/Context";
